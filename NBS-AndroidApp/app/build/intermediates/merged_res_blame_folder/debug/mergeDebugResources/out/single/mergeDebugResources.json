@@ -1,0 +1,182 @@
+[
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_member_checkbox_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/member_checkbox_background.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_people.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_people.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/xml_file_paths.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/xml/file_paths.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_tab_background_selector.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/tab_background_selector.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_gradient_accent.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/gradient_accent.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_gradient_primary.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/gradient_primary.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-xxxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_fragment_items.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_items.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_camera.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_camera.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-xxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_fragment_totals.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_totals.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_circular_button_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/circular_button_background.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-xhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_modern_input_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/modern_input_background.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_dialog_add_member.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/dialog_add_member.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/color_bottom_nav_color.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/color/bottom_nav_color.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_edit.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_edit.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_arrow_back.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_arrow_back.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_item_member_checkbox.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_member_checkbox.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-mdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_fragment_bill_upload.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_bill_upload.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_camera_button_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/camera_button_background.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_modern_card_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/modern_card_background.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/xml_data_extraction_rules.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_copy.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_copy.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_fragment_members.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_members.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-xxxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_activity_main.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_item_bill.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_bill.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_gradient_secondary.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/gradient_secondary.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_button_background_selector.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/button_background_selector.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_item_member.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_member.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-hdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_list.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_list.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_items_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/items_background.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/menu_bottom_nav_menu.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/menu/bottom_nav_menu.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_calculator.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_calculator.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/layout_item_member_breakdown.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_member_breakdown.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/drawable_ic_discount.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/drawable/ic_discount.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-debug-58:/xml_backup_rules.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-60:/xml/backup_rules.xml"
+    }
+]

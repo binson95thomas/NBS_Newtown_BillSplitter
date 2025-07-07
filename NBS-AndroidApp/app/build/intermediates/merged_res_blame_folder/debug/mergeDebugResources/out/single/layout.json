@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/fragment_totals.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_totals.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/fragment_bill_upload.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_bill_upload.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/fragment_items.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_items.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/item_member_breakdown.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_member_breakdown.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/dialog_add_member.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/dialog_add_member.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/item_member_checkbox.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_member_checkbox.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/item_bill.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_bill.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/activity_main.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/fragment_members.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/fragment_members.xml"
+    },
+    {
+        "merged": "com.newtown.billsplitter.app-mergeDebugResources-57:/layout/item_member.xml",
+        "source": "com.newtown.billsplitter.app-main-60:/layout/item_member.xml"
+    }
+]

@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBS - Newtown Bill Splitter - Bill Splitting Made Easy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab.active {
+            color: #4CAF50;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #4CAF50;
+        }
+
+        .tab:hover:not(.active) {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            min-height: 500px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .upload-area {
+            border: 3px dashed #dee2e6;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: #6c757d;
+        }
+
+        .member-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .member-tag {
+            background: #e7f3ff;
+            color: #0066cc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .member-tag .remove-member {
+            cursor: pointer;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .items-grid {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .item-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .item-price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #4CAF50;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #e7f3ff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #4CAF50;
+        }
+
+        .cost-per-person {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 8px;
+            font-weight: 600;
+            color: #2e7d32;
+            text-align: center;
+        }
+
+        .totals-summary {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: between;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .totals-row.final {
+            border-top: 2px solid #4CAF50;
+            padding-top: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #4CAF50;
+        }
+
+        .member-breakdown {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-breakdown {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .member-total {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .member-total:hover {
+            background: #45a049;
+            transform: scale(1.02);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .discount-section {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .discount-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .discount-input input {
+            width: 100px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-receipt"></i>NBS - Newtown Bill Splitter</h1>
+            <p>Upload bills, assign items, and split costs effortlessly!</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('members')">
+                <i class="fas fa-users"></i> Members
+            </button>
+            <button class="tab" onclick="showTab('upload')">
+                <i class="fas fa-camera"></i> Bill Upload
+            </button>
+            <button class="tab" onclick="showTab('items')">
+                <i class="fas fa-list"></i> Items & Assignment
+            </button>
+            <button class="tab" onclick="showTab('totals')">
+                <i class="fas fa-calculator"></i> Member Totals
+            </button>
+        </div>
+
+        <!-- Members Tab -->
+        <div id="members" class="tab-content active">
+            <div class="form-group">
+                <label for="memberName">Add Group Members</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="memberName" class="form-control" placeholder="Enter member name" 
+                           onkeypress="handleMemberKeyPress(event)">
+                    <button class="btn btn-primary" onclick="addMember()">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+            </div>
+            <div class="member-list" id="memberList"></div>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e9ecef;">
+                <h3 style="color: #333; margin-bottom: 15px;">
+                    <i class="fas fa-info-circle"></i> Quick Start Guide
+                </h3>
+                <ol style="color: #666; line-height: 1.8;">
+                    <li>Add all members of your group above</li>
+                    <li>Go to "Bill Upload" to upload a photo of your bill</li>
+                    <li>Assign items to members in "Items & Assignment"</li>
+                    <li>View final totals in "Member Totals" tab</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Upload Tab -->
+        <div id="upload" class="tab-content">
+            <div class="alert alert-success" id="uploadSuccess">
+                <i class="fas fa-check-circle"></i> <span></span>
+            </div>
+            <div class="alert alert-error" id="uploadError">
+                <i class="fas fa-exclamation-circle"></i> <span></span>
+            </div>
+
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Upload Bill Image</h3>
+                <p>Click here or drag & drop your bill image</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">Supports: JPG, PNG, GIF, WebP (Max 16MB)</p>
+            </div>
+            
+            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="handleFileUpload(event)">
+            
+            <div class="loading" id="uploadLoading">
+                <div class="spinner"></div>
+                <p>Processing your bill image...</p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #333; margin-bottom: 15px;">
+                    <i class="fas fa-magic"></i> Smart Extraction Features
+                </h3>
+                <ul style="color: #666; line-height: 1.8;">
+                    <li>Automatically detects item names and prices</li>
+                    <li>Handles various bill formats and layouts</li>
+                    <li>Filters out headers, totals, and non-item text</li>
+                    <li>You can manually add/edit items after extraction</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Items Tab -->
+        <div id="items" class="tab-content">
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 25px;">
+                <h2 style="color: #333;">
+                    <i class="fas fa-utensils"></i> Bill Items
+                </h2>
+                <button class="btn btn-secondary" onclick="showAddItemForm()">
+                    <i class="fas fa-plus"></i> Add Manual Item
+                </button>
+            </div>
+
+            <div id="addItemForm" style="display: none; background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 25px;">
+                <h3 style="margin-bottom: 15px;">Add New Item</h3>
+                <div style="display: flex; gap: 15px; align-items: end;">
+                    <div style="flex: 2;">
+                        <label>Item Name</label>
+                        <input type="text" id="newItemName" class="form-control" placeholder="e.g., Caesar Salad">
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Price ($)</label>
+                        <input type="number" id="newItemPrice" class="form-control" placeholder="0.00" step="0.01" min="0">
+                    </div>
+                    <button class="btn btn-primary" onclick="addManualItem()">Add Item</button>
+                    <button class="btn btn-secondary" onclick="hideAddItemForm()">Cancel</button>
+                </div>
+            </div>
+
+            <div class="discount-section">
+                <h3 style="color: #856404; margin-bottom: 10px;">
+                    <i class="fas fa-percentage"></i> Global Discount
+                </h3>
+                <p style="color: #856404; margin-bottom: 15px;">
+                    Apply a percentage discount to the entire bill (applied proportionally to each member)
+                </p>
+                <div class="discount-input">
+                    <label style="margin: 0; font-weight: 600;">Discount:</label>
+                    <input type="number" id="discountPercent" class="form-control" value="0" min="0" max="100" step="0.1" 
+                           onchange="calculateTotals()">
+                    <span style="font-weight: 600;">%</span>
+                </div>
+            </div>
+
+            <div class="items-grid" id="itemsGrid"></div>
+        </div>
+
+        <!-- Totals Tab -->
+        <div id="totals" class="tab-content">
+            <div class="totals-summary" id="billSummary"></div>
+            <div id="memberBreakdowns"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let members = [];
+        let items = [];
+        let discount = 0;
+
+        // Tab management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            if (tabName === 'totals') {
+                calculateTotals();
+            }
+        }
+
+        // Member management
+        function handleMemberKeyPress(event) {
+            if (event.key === 'Enter') {
+                addMember();
+            }
+        }
+
+        function addMember() {
+            const nameInput = document.getElementById('memberName');
+            const name = nameInput.value.trim();
+            
+            if (name && !members.includes(name)) {
+                members.push(name);
+                nameInput.value = '';
+                updateMemberList();
+                updateItemsGrid();
+            }
+        }
+
+        function removeMember(name) {
+            members = members.filter(member => member !== name);
+            
+            // Remove member from all item assignments
+            items.forEach(item => {
+                if (item.assignedTo) {
+                    item.assignedTo = item.assignedTo.filter(member => member !== name);
+                }
+            });
+            
+            updateMemberList();
+            updateItemsGrid();
+        }
+
+        function updateMemberList() {
+            const memberList = document.getElementById('memberList');
+            memberList.innerHTML = '';
+            
+            members.forEach(member => {
+                const memberTag = document.createElement('div');
+                memberTag.className = 'member-tag';
+                memberTag.innerHTML = `
+                    <i class="fas fa-user"></i>
+                    ${member}
+                    <span class="remove-member" onclick="removeMember('${member}')">&times;</span>
+                `;
+                memberList.appendChild(memberTag);
+            });
+        }
+
+        // File upload handling
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Show loading state
+            document.getElementById('uploadLoading').classList.add('show');
+            hideAlerts();
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('uploadLoading').classList.remove('show');
+                
+                if (data.error) {
+                    showAlert('uploadError', data.error);
+                } else {
+                    showAlert('uploadSuccess', data.message || 'Bill processed successfully!');
+                    
+                    // Add extracted items to our items array
+                    if (data.items && data.items.length > 0) {
+                        items = [...items, ...data.items.map(item => ({
+                            ...item,
+                            assignedTo: []
+                        }))];
+                        updateItemsGrid();
+                        showTab('items'); // Switch to items tab
+                    }
+                }
+            })
+            .catch(error => {
+                document.getElementById('uploadLoading').classList.remove('show');
+                showAlert('uploadError', 'Failed to upload file: ' + error.message);
+            });
+        }
+
+        // Drag and drop functionality
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    document.getElementById('fileInput').files = files;
+                    handleFileUpload({ target: { files: files } });
+                }
+            });
+        }
+
+        // Alert management
+        function showAlert(alertId, message) {
+            const alert = document.getElementById(alertId);
+            alert.querySelector('span').textContent = message;
+            alert.classList.add('show');
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+
+        function hideAlerts() {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.classList.remove('show');
+            });
+        }
+
+        // Manual item management
+        function showAddItemForm() {
+            document.getElementById('addItemForm').style.display = 'block';
+            document.getElementById('newItemName').focus();
+        }
+
+        function hideAddItemForm() {
+            document.getElementById('addItemForm').style.display = 'none';
+            document.getElementById('newItemName').value = '';
+            document.getElementById('newItemPrice').value = '';
+        }
+
+        function addManualItem() {
+            const name = document.getElementById('newItemName').value.trim();
+            const price = parseFloat(document.getElementById('newItemPrice').value);
+            
+            if (name && price > 0) {
+                items.push({
+                    name: name,
+                    price: price,
+                    assignedTo: []
+                });
+                
+                updateItemsGrid();
+                hideAddItemForm();
+            }
+        }
+
+        function removeItem(index) {
+            items.splice(index, 1);
+            updateItemsGrid();
+        }
+
+        // Items grid management
+        function updateItemsGrid() {
+            const itemsGrid = document.getElementById('itemsGrid');
+            itemsGrid.innerHTML = '';
+            
+            if (items.length === 0) {
+                itemsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #6c757d;">
+                        <i class="fas fa-utensils" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <h3>No items yet</h3>
+                        <p>Upload a bill image or add items manually to get started.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            items.forEach((item, index) => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                
+                const assignedCount = item.assignedTo ? item.assignedTo.length : 0;
+                const costPerPerson = assignedCount > 0 ? (item.price / assignedCount).toFixed(2) : '0.00';
+                
+                itemCard.innerHTML = `
+                    <div class="item-header">
+                        <div>
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">${item.price.toFixed(2)}</div>
+                        </div>
+                        <button class="btn btn-danger" onclick="removeItem(${index})" style="padding: 8px 12px;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="checkbox-grid">
+                        ${members.map(member => `
+                            <div class="checkbox-item" onclick="toggleMemberAssignment(${index}, '${member}', event)">
+                                <input type="checkbox" ${item.assignedTo && item.assignedTo.includes(member) ? 'checked' : ''} 
+                                       onchange="event.stopPropagation()">
+                                <span>${member}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${assignedCount > 0 ? `
+                        <div class="cost-per-person">
+                            <i class="fas fa-calculator"></i>
+                            ${costPerPerson} per person (${assignedCount} ${assignedCount === 1 ? 'person' : 'people'})
+                        </div>
+                    ` : ''}
+                `;
+                
+                itemsGrid.appendChild(itemCard);
+            });
+        }
+
+        function toggleMemberAssignment(itemIndex, member, event) {
+            event.stopPropagation();
+            
+            if (!items[itemIndex].assignedTo) {
+                items[itemIndex].assignedTo = [];
+            }
+            
+            const assignedTo = items[itemIndex].assignedTo;
+            const memberIndex = assignedTo.indexOf(member);
+            
+            if (memberIndex > -1) {
+                assignedTo.splice(memberIndex, 1);
+            } else {
+                assignedTo.push(member);
+            }
+            
+            updateItemsGrid();
+        }
+
+        // Calculations
+        function calculateTotals() {
+            const discountPercent = parseFloat(document.getElementById('discountPercent').value) || 0;
+            
+            // Calculate subtotal
+            const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+            const discountAmount = (subtotal * discountPercent) / 100;
+            const finalTotal = subtotal - discountAmount;
+            
+            // Calculate member totals
+            const memberTotals = {};
+            members.forEach(member => {
+                memberTotals[member] = {
+                    total: 0,
+                    items: [],
+                    discount: 0,
+                    finalTotal: 0
+                };
+            });
+            
+            items.forEach(item => {
+                if (item.assignedTo && item.assignedTo.length > 0) {
+                    const pricePerPerson = item.price / item.assignedTo.length;
+                    
+                    item.assignedTo.forEach(member => {
+                        if (memberTotals[member]) {
+                            memberTotals[member].total += pricePerPerson;
+                            memberTotals[member].items.push({
+                                name: item.name,
+                                price: pricePerPerson,
+                                sharedWith: item.assignedTo.length
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Apply discount proportionally
+            members.forEach(member => {
+                if (memberTotals[member] && subtotal > 0) {
+                    const memberDiscount = (memberTotals[member].total / subtotal) * discountAmount;
+                    memberTotals[member].discount = memberDiscount;
+                    memberTotals[member].finalTotal = memberTotals[member].total - memberDiscount;
+                }
+            });
+            
+            updateBillSummary(subtotal, discountPercent, discountAmount, finalTotal);
+            updateMemberBreakdowns(memberTotals);
+        }
+
+        function updateBillSummary(subtotal, discountPercent, discountAmount, finalTotal) {
+            const billSummary = document.getElementById('billSummary');
+            
+            billSummary.innerHTML = `
+                <h2 style="color: #333; margin-bottom: 20px;">
+                    <i class="fas fa-file-invoice-dollar"></i> Bill Summary
+                </h2>
+                
+                <div class="totals-row">
+                    <span>Subtotal:</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                </div>
+                
+                ${discountPercent > 0 ? `
+                    <div class="totals-row">
+                        <span>Discount (${discountPercent}%):</span>
+                        <span style="color: #dc3545;">-${discountAmount.toFixed(2)}</span>
+                    </div>
+                ` : ''}
+                
+                <div class="totals-row final">
+                    <span>Final Total:</span>
+                    <span>${finalTotal.toFixed(2)}</span>
+                </div>
+            `;
+        }
+
+        function updateMemberBreakdowns(memberTotals) {
+            const memberBreakdowns = document.getElementById('memberBreakdowns');
+            memberBreakdowns.innerHTML = '';
+            
+            if (members.length === 0) {
+                memberBreakdowns.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #6c757d;">
+                        <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <h3>No members added yet</h3>
+                        <p>Add members in the first tab to see their totals here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            members.forEach(member => {
+                const memberData = memberTotals[member];
+                if (!memberData) return;
+                
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'member-breakdown';
+                
+                memberDiv.innerHTML = `
+                    <div class="member-name">
+                        <i class="fas fa-user-circle"></i>
+                        ${member}
+                    </div>
+                    
+                    ${memberData.items.length > 0 ? `
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="color: #666; margin-bottom: 10px;">Items:</h4>
+                            ${memberData.items.map(item => `
+                                <div class="item-breakdown">
+                                    <span>${item.name} ${item.sharedWith > 1 ? `(shared with ${item.sharedWith - 1} ${item.sharedWith === 2 ? 'other' : 'others'})` : ''}</span>
+                                    <span style="font-weight: 600;">${item.price.toFixed(2)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Subtotal:</span>
+                                <span>${memberData.total.toFixed(2)}</span>
+                            </div>
+                            ${memberData.discount > 0 ? `
+                                <div style="display: flex; justify-content: space-between; color: #dc3545;">
+                                    <span>Discount:</span>
+                                    <span>-${memberData.discount.toFixed(2)}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : `
+                        <div style="color: #6c757d; padding: 15px; text-align: center; background: #f8f9fa; border-radius: 8px; margin-bottom: 15px;">
+                            <i class="fas fa-info-circle"></i>
+                            No items assigned to this member
+                        </div>
+                    `}
+                    
+                    <div class="member-total" onclick="copyToClipboard('${member}: ${memberData.finalTotal.toFixed(2)}')">
+                        <i class="fas fa-copy"></i>
+                        Total: ${memberData.finalTotal.toFixed(2)}
+                        <div style="font-size: 0.9rem; font-weight: 400; margin-top: 5px;">
+                            Click to copy for NBS - Newtown Bill Splitter
+                        </div>
+                    </div>
+                `;
+                
+                memberBreakdowns.appendChild(memberDiv);
+            });
+        }
+
+        // Utility functions
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showAlert('uploadSuccess', 'Copied to clipboard: ' + text);
+            }).catch(() => {
+                showAlert('uploadError', 'Failed to copy to clipboard');
+            });
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            setupDragAndDrop();
+            
+            // Set up discount change listener
+            document.getElementById('discountPercent').addEventListener('input', calculateTotals);
+            
+            // Add some sample data for demo
+            if (members.length === 0) {
+                // You can remove this in production
+                members = ['Alice', 'Bob', 'Charlie'];
+                updateMemberList();
+            }
+        });
+    </script>
+</body>
+</html>

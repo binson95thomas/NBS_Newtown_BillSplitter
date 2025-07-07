@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_members"
+        android:icon="@drawable/ic_people"
+        android:title="@string/nav_members" />
+    
+    <item
+        android:id="@+id/nav_bill_upload"
+        android:icon="@drawable/ic_camera"
+        android:title="@string/nav_bill_upload" />
+    
+    <item
+        android:id="@+id/nav_items"
+        android:icon="@drawable/ic_list"
+        android:title="@string/nav_items" />
+    
+    <item
+        android:id="@+id/nav_totals"
+        android:icon="@drawable/ic_calculator"
+        android:title="@string/nav_totals" />
+</menu> 

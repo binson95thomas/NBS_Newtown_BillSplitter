@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">NBS - Newtown Bill Splitter</string>
+    
+    <!-- Navigation -->
+    <string name="nav_members">Members</string>
+    <string name="nav_bill_upload">Bill Upload</string>
+    <string name="nav_items">Items &amp; Assignment</string>
+    <string name="nav_totals">Member Totals</string>
+    
+    <!-- Members -->
+    <string name="add_member">Add Group Members</string>
+    <string name="member_name_hint">Enter member name</string>
+    <string name="add">Add</string>
+    <string name="remove_member">Remove member</string>
+    <string name="quick_start_guide">Quick Start Guide</string>
+    <string name="step_1">Add all members of your group above</string>
+    <string name="step_2">Go to "Bill Upload" to upload a photo of your bill</string>
+    <string name="step_3">Assign items to members in "Items &amp; Assignment"</string>
+    <string name="step_4">View final totals in "Member Totals" tab</string>
+    
+    <!-- Bill Upload -->
+    <string name="upload_bill_image">Upload Bill Image</string>
+    <string name="upload_hint">Click here or drag &amp; drop your bill image</string>
+    <string name="supported_formats">Supports: JPG, PNG, GIF, WebP (Max 16MB)</string>
+    <string name="processing_bill">Processing your bill image…</string>
+    <string name="smart_extraction_features">Smart Extraction Features</string>
+    <string name="feature_1">Automatically detects item names and prices</string>
+    <string name="feature_2">Handles various bill formats and layouts</string>
+    <string name="feature_3">Filters out headers, totals, and non-item text</string>
+    <string name="feature_4">You can manually add/edit items after extraction</string>
+    
+    <!-- Items -->
+    <string name="bill_items">Bill Items</string>
+    <string name="add_manual_item">Add Manual Item</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_price">Price (£)</string>
+    <string name="add_item">Add Item</string>
+    <string name="cancel">Cancel</string>
+    <string name="global_discount">Global Discount</string>
+    <string name="discount_description">Apply a percentage discount to the entire bill (applied proportionally to each member)</string>
+    <string name="discount">Discount:</string>
+    <string name="equal_split_enabled">Equal split enabled - all members are selected by default for each item</string>
+    <string name="no_items_yet">No items yet</string>
+    <string name="no_items_message">Upload a bill image or add items manually to get started.</string>
+    <string name="cost_per_person">£%1$s per person (%2$d %3$s)</string>
+    <string name="person">person</string>
+    <string name="people">people</string>
+    <string name="multibuy">Multibuy</string>
+    
+    <!-- Totals -->
+    <string name="bill_summary">Bill Summary</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="discount_amount">Discount (%1$s%%):</string>
+    <string name="final_total">Final Total:</string>
+    <string name="member">Member</string>
+    <string name="items">Items</string>
+    <string name="final_amount">Final Total</string>
+    <string name="copy">Copy</string>
+    <string name="no_members_added">No members added yet</string>
+    <string name="no_members_message">Add members in the first tab to see their totals here.</string>
+    <string name="no_items_assigned">No items assigned</string>
+    <string name="copied_to_clipboard">Copied to clipboard: %1$s</string>
+    <string name="failed_to_copy">Failed to copy to clipboard</string>
+    
+    <!-- Camera -->
+    <string name="take_photo">Take Photo</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="camera_permission_required">Camera permission is required to take photos</string>
+    <string name="storage_permission_required">Storage permission is required to access images</string>
+    
+    <!-- Success/Error Messages -->
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="bill_processed_successfully">Bill processed successfully!</string>
+    <string name="failed_to_upload">Failed to upload file</string>
+    <string name="no_file_uploaded">No file uploaded</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="invalid_file_type">Invalid file type</string>
+    <string name="failed_to_process_image">Failed to process image</string>
+    <string name="members_saved_successfully">Members saved successfully</string>
+    <string name="failed_to_save_members">Failed to save members</string>
+    <string name="calculation_failed">Calculation failed</string>
+    <string name="members_and_items_required">Members and items are required</string>
+    
+    <!-- Currency -->
+    <string name="currency_symbol">£</string>
+    <string name="currency_format">£%.2f</string>
+    <string name="negative_currency_format">-£%.2f</string>
+</resources> 

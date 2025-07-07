@@ -1,0 +1,10 @@
+Flask==2.3.3
+Werkzeug==2.3.7
+Jinja2==3.1.2
+Pillow==10.0.1
+python-multipart==0.0.6
+requests==2.31.0
+opencv-python==4.8.1.78
+pytesseract==0.3.10
+numpy
+anthropic==0.7.8
