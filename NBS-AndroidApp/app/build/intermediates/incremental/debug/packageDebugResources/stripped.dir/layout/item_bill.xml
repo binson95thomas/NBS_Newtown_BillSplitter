@@ -76,11 +76,13 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/memberCheckboxContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:alignItems="center" />
 
         </LinearLayout>
 

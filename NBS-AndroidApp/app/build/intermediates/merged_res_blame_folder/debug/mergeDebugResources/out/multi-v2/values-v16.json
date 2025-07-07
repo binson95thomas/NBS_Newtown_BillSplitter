@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-56:/values-v16/values-v16.xml",
+            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-57:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\binso\\.gradle\\caches\\transforms-4\\3c19d647abddf55ccd6e97060b4e9a1b\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\binso\\.gradle\\caches\\transforms-4\\26b2f4dedca22b31489ff32dac6e8582\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\c7cbaeefdc37cd24560b8fc7fa3163c1\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\0d22882521834a86e542cf7cc54c4b22\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

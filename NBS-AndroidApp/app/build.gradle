@@ -48,6 +48,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.7.4'
     implementation 'androidx.navigation:navigation-ui-ktx:2.7.4'
     
+    // FlexboxLayout for flexible layouts
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    
     // Room database (commented out due to KAPT issues)
     // implementation 'androidx.room:room-runtime:2.6.0'
     // implementation 'androidx.room:room-ktx:2.6.0'

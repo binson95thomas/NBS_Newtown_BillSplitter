@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.flexbox.FlexboxLayout;
 import com.newtown.billsplitter.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -31,11 +31,11 @@ public final class ItemBillBinding implements ViewBinding {
   public final TextView itemPrice;
 
   @NonNull
-  public final LinearLayout memberCheckboxContainer;
+  public final FlexboxLayout memberCheckboxContainer;
 
   private ItemBillBinding(@NonNull CardView rootView, @NonNull ImageButton editItemButton,
       @NonNull TextView itemName, @NonNull TextView itemPrice,
-      @NonNull LinearLayout memberCheckboxContainer) {
+      @NonNull FlexboxLayout memberCheckboxContainer) {
     this.rootView = rootView;
     this.editItemButton = editItemButton;
     this.itemName = itemName;
@@ -89,7 +89,7 @@ public final class ItemBillBinding implements ViewBinding {
       }
 
       id = R.id.memberCheckboxContainer;
-      LinearLayout memberCheckboxContainer = ViewBindings.findChildViewById(rootView, id);
+      FlexboxLayout memberCheckboxContainer = ViewBindings.findChildViewById(rootView, id);
       if (memberCheckboxContainer == null) {
         break missingId;
       }

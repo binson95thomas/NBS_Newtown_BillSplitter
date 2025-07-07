@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="SplitWise"
+            app:title="NBS - Newtown Bill Splitter"
             app:titleTextColor="@color/text_inverse"
             app:titleTextAppearance="@style/TextAppearance.AppCompat.Headline" />
 

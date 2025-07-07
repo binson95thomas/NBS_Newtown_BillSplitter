@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-56:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
+            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-57:/values-h320dp-port-v13/values-h320dp-port-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\binso\\.gradle\\caches\\transforms-4\\02eb24f1a0cc0f2227014b9422579706\\transformed\\material-1.10.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
+                    "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\d1724a1e2b468b75777ff8300e82e0e6\\transformed\\material-1.10.0\\res\\values-h320dp-port-v13\\values-h320dp-port-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,0 +1,16 @@
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\service\GeminiService.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\fragments\MembersFragment.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\adapter\MainPagerAdapter.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\fragments\BillUploadFragment.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\fragments\TotalsFragment.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\adapter\MembersAdapter.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\service\OCRService.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\model\BillItem.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\viewmodel\MainViewModel.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\adapter\MemberBreakdownAdapter.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\model\Member.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\adapter\ItemsAdapter.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\fragments\ItemsFragment.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\MainActivity.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\ui\adapter\MemberCheckboxAdapter.kt
+D:\Personal_Projects\Splitwise\NBS-AndroidApp\app\src\main\java\com\newtown\billsplitter\model\BillTotals.kt
