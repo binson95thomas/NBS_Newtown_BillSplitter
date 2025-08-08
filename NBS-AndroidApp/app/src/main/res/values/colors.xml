@@ -75,9 +75,21 @@
     <color name="background_card">#ffffff</color>
     <color name="background_overlay">#00000080</color>
     
+    <!-- Dark Mode Background Colors -->
+    <color name="background_primary_dark">#121212</color>
+    <color name="background_secondary_dark">#1e1e1e</color>
+    <color name="background_card_dark">#2d2d2d</color>
+    <color name="background_overlay_dark">#000000CC</color>
+    
     <!-- Text Colors -->
     <color name="text_primary">#1e293b</color>
     <color name="text_secondary">#64748b</color>
     <color name="text_tertiary">#94a3b8</color>
     <color name="text_inverse">#ffffff</color>
+    
+    <!-- Dark Mode Text Colors -->
+    <color name="text_primary_dark">#ffffff</color>
+    <color name="text_secondary_dark">#b0b0b0</color>
+    <color name="text_tertiary_dark">#808080</color>
+    <color name="text_inverse_dark">#000000</color>
 </resources> 

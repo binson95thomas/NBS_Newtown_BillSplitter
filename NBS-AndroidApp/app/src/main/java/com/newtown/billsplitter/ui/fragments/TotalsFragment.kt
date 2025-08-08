@@ -21,6 +21,7 @@ class TotalsFragment : Fragment() {
     private var _binding: FragmentTotalsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
+    private lateinit var breakdownAdapter: MemberBreakdownAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +37,12 @@ class TotalsFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         setupDiscountInput()
         observeViewModel()
+
+        breakdownAdapter = MemberBreakdownAdapter(emptyList()) { breakdown ->
+            copyToClipboard(breakdown)
+        }
+        binding.memberBreakdownRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.memberBreakdownRecyclerView.adapter = breakdownAdapter
     }
 
     private fun setupDiscountInput() {
@@ -64,12 +71,14 @@ class TotalsFragment : Fragment() {
                 }
             }
         })
+        
+        // Setup recalculate total button
+        binding.recalculateTotalButton.setOnClickListener {
+            recalculateTotal()
+        }
     }
 
     private fun observeViewModel() {
-        viewModel.totalAmount.observe(viewLifecycleOwner) { 
-            updateBillSummary() 
-        }
         viewModel.discountPercentage.observe(viewLifecycleOwner) { 
             updateBillSummary() 
         }
@@ -77,6 +86,7 @@ class TotalsFragment : Fragment() {
             updateMemberBreakdowns() 
         }
         viewModel.billItems.observe(viewLifecycleOwner) { 
+            updateBillSummary() // Add this to recalculate when items change
             updateMemberBreakdowns() 
         }
     }
@@ -87,20 +97,42 @@ class TotalsFragment : Fragment() {
         val finalTotal = viewModel.getFinalTotal()
         val discountPercentage = viewModel.discountPercentage.value ?: 0.0
         
-        binding.subtotalText.text = "$%.2f".format(subtotal)
-        binding.discountText.text = "- $%.2f (%.1f%%)".format(discountAmount, discountPercentage)
-        binding.totalText.text = "$%.2f".format(finalTotal)
+        // Calculate deals and discounts from items
+        val items = viewModel.billItems.value ?: emptyList()
+        val deals = items.filter { it.itemType == "deal" }
+        val discounts = items.filter { it.itemType == "discount" }
+        val totalDeals = deals.sumOf { kotlin.math.abs(it.price) }
+        val totalDiscounts = discounts.sumOf { kotlin.math.abs(it.price) }
+        
+        android.util.Log.d("TotalsFragment", "updateBillSummary: subtotal=$subtotal, discountAmount=$discountAmount, finalTotal=$finalTotal")
+        android.util.Log.d("TotalsFragment", "updateBillSummary: items count=${items.size}, deals count=${deals.size}, discounts count=${discounts.size}")
+        
+        binding.subtotalText.text = "£%.2f".format(subtotal)
+        binding.discountText.text = "- £%.2f (%.1f%%)".format(discountAmount, discountPercentage)
+        binding.totalText.text = "£%.2f".format(finalTotal)
+        
+        // Show deals and discounts if they exist
+        if (deals.isNotEmpty() || discounts.isNotEmpty()) {
+            binding.dealsDiscountsCard.visibility = View.VISIBLE
+            val dealsText = if (deals.isNotEmpty()) {
+                "Deals Applied: £%.2f".format(totalDeals)
+            } else ""
+            val discountsText = if (discounts.isNotEmpty()) {
+                "Discounts: £%.2f".format(totalDiscounts)
+            } else ""
+            binding.dealsDiscountsText.text = listOf(dealsText, discountsText).filter { it.isNotEmpty() }.joinToString("\n")
+        } else {
+            binding.dealsDiscountsCard.visibility = View.GONE
+        }
     }
 
     private fun updateMemberBreakdowns() {
         val breakdowns = viewModel.getMemberBreakdowns()
-        
-        binding.memberBreakdownRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = MemberBreakdownAdapter(breakdowns) { breakdown ->
-                copyToClipboard(breakdown)
-            }
+        android.util.Log.d("TotalsFragment", "updateMemberBreakdowns: ${breakdowns.size} breakdowns")
+        breakdowns.forEach { breakdown ->
+            android.util.Log.d("TotalsFragment", "Member: ${breakdown.memberName}, Subtotal: ${breakdown.subtotal}, Final: ${breakdown.finalAmount}")
         }
+        breakdownAdapter.updateData(breakdowns)
     }
 
     private fun copyToClipboard(breakdown: MainViewModel.MemberBreakdown) {
@@ -119,10 +151,24 @@ class TotalsFragment : Fragment() {
                 viewModel.setDiscountPercentage(discount)
                 // Force update the UI
                 updateBillSummary()
+                updateMemberBreakdowns()
             } catch (e: NumberFormatException) {
                 // Invalid input, ignore
             }
         }
+    }
+
+    private fun recalculateTotal() {
+        android.util.Log.d("TotalsFragment", "Recalculating total from items...")
+        
+        // Force recalculation from items
+        updateBillSummary()
+        updateMemberBreakdowns()
+        
+        // Show feedback to user
+        Toast.makeText(context, "Total recalculated from items", Toast.LENGTH_SHORT).show()
+        
+        android.util.Log.d("TotalsFragment", "Recalculation complete")
     }
 
     override fun onDestroyView() {

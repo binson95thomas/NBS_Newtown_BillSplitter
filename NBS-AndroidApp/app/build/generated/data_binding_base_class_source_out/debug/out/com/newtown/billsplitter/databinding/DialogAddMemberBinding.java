@@ -4,8 +4,10 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
@@ -20,12 +22,20 @@ public final class DialogAddMemberBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
+  public final TextView emojiPreview;
+
+  @NonNull
   public final EditText memberNameEditText;
 
-  private DialogAddMemberBinding(@NonNull LinearLayout rootView,
-      @NonNull EditText memberNameEditText) {
+  @NonNull
+  public final Button pickEmojiButton;
+
+  private DialogAddMemberBinding(@NonNull LinearLayout rootView, @NonNull TextView emojiPreview,
+      @NonNull EditText memberNameEditText, @NonNull Button pickEmojiButton) {
     this.rootView = rootView;
+    this.emojiPreview = emojiPreview;
     this.memberNameEditText = memberNameEditText;
+    this.pickEmojiButton = pickEmojiButton;
   }
 
   @Override
@@ -55,13 +65,26 @@ public final class DialogAddMemberBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.emojiPreview;
+      TextView emojiPreview = ViewBindings.findChildViewById(rootView, id);
+      if (emojiPreview == null) {
+        break missingId;
+      }
+
       id = R.id.memberNameEditText;
       EditText memberNameEditText = ViewBindings.findChildViewById(rootView, id);
       if (memberNameEditText == null) {
         break missingId;
       }
 
-      return new DialogAddMemberBinding((LinearLayout) rootView, memberNameEditText);
+      id = R.id.pickEmojiButton;
+      Button pickEmojiButton = ViewBindings.findChildViewById(rootView, id);
+      if (pickEmojiButton == null) {
+        break missingId;
+      }
+
+      return new DialogAddMemberBinding((LinearLayout) rootView, emojiPreview, memberNameEditText,
+          pickEmojiButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.newtown.billsplitter.databinding.ItemMemberBinding
 import com.newtown.billsplitter.model.Member
+import android.graphics.drawable.GradientDrawable
+import android.view.View
+import android.widget.TextView
 
 class MembersAdapter(
     private val members: MutableList<Member> = mutableListOf(),
@@ -20,12 +23,19 @@ class MembersAdapter(
 
         fun bind(member: Member) {
             binding.memberName.text = member.name
-            binding.memberEmail.text = "Member #${member.id}"
-            
+            binding.memberEmail.visibility = View.GONE
+            // Set avatar color and emoji
+            val avatarBg = binding.memberAvatarBg
+            val avatarEmoji = binding.memberAvatarEmoji
+            val avatarDrawable = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(member.color)
+            }
+            avatarBg.background = avatarDrawable
+            avatarEmoji.text = member.emoji ?: member.name.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
             binding.root.setOnClickListener {
                 onMemberClick(member)
             }
-            
             binding.deleteButton.setOnClickListener {
                 onMemberDelete(member)
             }

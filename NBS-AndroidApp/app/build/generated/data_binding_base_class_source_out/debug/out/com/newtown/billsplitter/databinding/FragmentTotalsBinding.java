@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -26,6 +27,12 @@ public final class FragmentTotalsBinding implements ViewBinding {
   public final Button applyDiscountButton;
 
   @NonNull
+  public final CardView dealsDiscountsCard;
+
+  @NonNull
+  public final TextView dealsDiscountsText;
+
+  @NonNull
   public final EditText discountEditText;
 
   @NonNull
@@ -35,20 +42,27 @@ public final class FragmentTotalsBinding implements ViewBinding {
   public final RecyclerView memberBreakdownRecyclerView;
 
   @NonNull
+  public final Button recalculateTotalButton;
+
+  @NonNull
   public final TextView subtotalText;
 
   @NonNull
   public final TextView totalText;
 
   private FragmentTotalsBinding(@NonNull ScrollView rootView, @NonNull Button applyDiscountButton,
+      @NonNull CardView dealsDiscountsCard, @NonNull TextView dealsDiscountsText,
       @NonNull EditText discountEditText, @NonNull TextView discountText,
-      @NonNull RecyclerView memberBreakdownRecyclerView, @NonNull TextView subtotalText,
-      @NonNull TextView totalText) {
+      @NonNull RecyclerView memberBreakdownRecyclerView, @NonNull Button recalculateTotalButton,
+      @NonNull TextView subtotalText, @NonNull TextView totalText) {
     this.rootView = rootView;
     this.applyDiscountButton = applyDiscountButton;
+    this.dealsDiscountsCard = dealsDiscountsCard;
+    this.dealsDiscountsText = dealsDiscountsText;
     this.discountEditText = discountEditText;
     this.discountText = discountText;
     this.memberBreakdownRecyclerView = memberBreakdownRecyclerView;
+    this.recalculateTotalButton = recalculateTotalButton;
     this.subtotalText = subtotalText;
     this.totalText = totalText;
   }
@@ -86,6 +100,18 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.dealsDiscountsCard;
+      CardView dealsDiscountsCard = ViewBindings.findChildViewById(rootView, id);
+      if (dealsDiscountsCard == null) {
+        break missingId;
+      }
+
+      id = R.id.dealsDiscountsText;
+      TextView dealsDiscountsText = ViewBindings.findChildViewById(rootView, id);
+      if (dealsDiscountsText == null) {
+        break missingId;
+      }
+
       id = R.id.discountEditText;
       EditText discountEditText = ViewBindings.findChildViewById(rootView, id);
       if (discountEditText == null) {
@@ -104,6 +130,12 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.recalculateTotalButton;
+      Button recalculateTotalButton = ViewBindings.findChildViewById(rootView, id);
+      if (recalculateTotalButton == null) {
+        break missingId;
+      }
+
       id = R.id.subtotalText;
       TextView subtotalText = ViewBindings.findChildViewById(rootView, id);
       if (subtotalText == null) {
@@ -116,8 +148,9 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentTotalsBinding((ScrollView) rootView, applyDiscountButton, discountEditText,
-          discountText, memberBreakdownRecyclerView, subtotalText, totalText);
+      return new FragmentTotalsBinding((ScrollView) rootView, applyDiscountButton,
+          dealsDiscountsCard, dealsDiscountsText, discountEditText, discountText,
+          memberBreakdownRecyclerView, recalculateTotalButton, subtotalText, totalText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

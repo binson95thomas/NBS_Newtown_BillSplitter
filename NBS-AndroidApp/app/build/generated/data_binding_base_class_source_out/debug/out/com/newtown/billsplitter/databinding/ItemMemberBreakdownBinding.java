@@ -33,6 +33,9 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
   public final TextView itemsText;
 
   @NonNull
+  public final View memberAvatar;
+
+  @NonNull
   public final TextView memberName;
 
   @NonNull
@@ -40,12 +43,14 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
 
   private ItemMemberBreakdownBinding(@NonNull CardView rootView, @NonNull ImageButton copyButton,
       @NonNull TextView discountText, @NonNull TextView finalAmountText,
-      @NonNull TextView itemsText, @NonNull TextView memberName, @NonNull TextView subtotalText) {
+      @NonNull TextView itemsText, @NonNull View memberAvatar, @NonNull TextView memberName,
+      @NonNull TextView subtotalText) {
     this.rootView = rootView;
     this.copyButton = copyButton;
     this.discountText = discountText;
     this.finalAmountText = finalAmountText;
     this.itemsText = itemsText;
+    this.memberAvatar = memberAvatar;
     this.memberName = memberName;
     this.subtotalText = subtotalText;
   }
@@ -101,6 +106,12 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.memberAvatar;
+      View memberAvatar = ViewBindings.findChildViewById(rootView, id);
+      if (memberAvatar == null) {
+        break missingId;
+      }
+
       id = R.id.memberName;
       TextView memberName = ViewBindings.findChildViewById(rootView, id);
       if (memberName == null) {
@@ -114,7 +125,7 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
       }
 
       return new ItemMemberBreakdownBinding((CardView) rootView, copyButton, discountText,
-          finalAmountText, itemsText, memberName, subtotalText);
+          finalAmountText, itemsText, memberAvatar, memberName, subtotalText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

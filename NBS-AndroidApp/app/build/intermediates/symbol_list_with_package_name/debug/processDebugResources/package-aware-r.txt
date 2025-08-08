@@ -1432,13 +1432,17 @@ color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
 color background_card
+color background_card_dark
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
 color background_material_light
 color background_overlay
+color background_overlay_dark
 color background_primary
+color background_primary_dark
 color background_secondary
+color background_secondary_dark
 color black
 color blue_100
 color blue_200
@@ -2204,9 +2208,13 @@ color switch_thumb_material_light
 color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color text_inverse
+color text_inverse_dark
 color text_primary
+color text_primary_dark
 color text_secondary
+color text_secondary_dark
 color text_tertiary
+color text_tertiary_dark
 color tooltip_background_dark
 color tooltip_background_light
 color warning_500
@@ -3142,6 +3150,7 @@ drawable ic_camera
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_copy
+drawable ic_delete
 drawable ic_discount
 drawable ic_edit
 drawable ic_keyboard_black_24dp
@@ -3359,6 +3368,7 @@ id checkbox
 id checked
 id chronometer
 id circle_center
+id clearAllButton
 id clear_text
 id clip_horizontal
 id clip_vertical
@@ -3388,11 +3398,15 @@ id cut
 id dark
 id dataBinding
 id date_picker_actions
+id dealsDiscountsCard
+id dealsDiscountsText
+id dealsInfoText
 id decelerate
 id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
 id deleteButton
+id deleteItemButton
 id deltaRelative
 id dependency_ordering
 id design_bottom_sheet
@@ -3429,6 +3443,7 @@ id edit_query
 id edit_text_id
 id elastic
 id embed
+id emojiPreview
 id emptyStateLayout
 id end
 id endToStart
@@ -3538,6 +3553,10 @@ id material_timepicker_ok_button
 id material_timepicker_view
 id material_value_index
 id matrix
+id memberAvatar
+id memberAvatarBg
+id memberAvatarEmoji
+id memberAvatarFrame
 id memberBreakdownRecyclerView
 id memberCheckbox
 id memberCheckboxContainer
@@ -3639,6 +3658,7 @@ id pathRelative
 id peekHeight
 id percent
 id performance
+id pickEmojiButton
 id pin
 id position
 id postLayout
@@ -3648,6 +3668,7 @@ id progress_circular
 id progress_horizontal
 id radio
 id ratio
+id recalculateTotalButton
 id rectangles
 id report_drawn
 id reverseSawtooth
@@ -3706,6 +3727,7 @@ id space_evenly
 id spacer
 id special_effects_controller_view_tag
 id spline
+id splitEvenlyButton
 id split_action_bar
 id spread
 id spread_inside
@@ -4821,7 +4843,6 @@ style Theme_AppCompat_Light_Dialog_MinWidth
 style Theme_AppCompat_Light_DialogWhenLarge
 style Theme_AppCompat_Light_NoActionBar
 style Theme_AppCompat_NoActionBar
-style Theme_BillSplitter
 style Theme_Design
 style Theme_Design_BottomSheetDialog
 style Theme_Design_Light
@@ -4902,6 +4923,8 @@ style Theme_MaterialComponents_Light_NoActionBar
 style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
+style Theme_NewtownBillSplitter
+style Theme_NewtownBillSplitter_Dark
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark

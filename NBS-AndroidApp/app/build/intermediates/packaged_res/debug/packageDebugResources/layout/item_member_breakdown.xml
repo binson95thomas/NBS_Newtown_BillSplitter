@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/background_card_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +22,13 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="12dp">
 
+            <View
+                android:id="@+id/memberAvatar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/circular_button_background" />
+
             <TextView
                 android:id="@+id/memberName"
                 android:layout_width="0dp"
@@ -29,7 +37,7 @@
                 android:text="Member Name"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/blue_700" />
+                android:textColor="@color/white" />
 
             <ImageButton
                 android:id="@+id/copyButton"
@@ -38,7 +46,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_copy"
                 android:contentDescription="Copy amount"
-                android:padding="4dp" />
+                android:padding="4dp"
+                android:tint="@color/white" />
 
         </LinearLayout>
 
@@ -55,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Subtotal: £0.00"
                 android:textSize="14sp"
-                android:textColor="@color/blue_600" />
+                android:textColor="@color/text_secondary_dark" />
 
             <TextView
                 android:id="@+id/discountText"
@@ -63,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="Discount: -£0.00"
                 android:textSize="14sp"
-                android:textColor="@color/blue_600" />
+                android:textColor="@color/text_secondary_dark" />
 
             <TextView
                 android:id="@+id/finalAmountText"
@@ -72,7 +81,7 @@
                 android:text="Final: £0.00"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/blue_800" />
+                android:textColor="@color/accent_500" />
 
         </LinearLayout>
 
@@ -83,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Items: None"
             android:textSize="12sp"
-            android:textColor="@color/blue_500"
+            android:textColor="@color/text_secondary_dark"
             android:background="@drawable/items_background"
             android:padding="8dp" />
 

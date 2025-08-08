@@ -4,6 +4,7 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -24,15 +25,29 @@ public final class ItemMemberBinding implements ViewBinding {
   public final ImageButton deleteButton;
 
   @NonNull
+  public final View memberAvatarBg;
+
+  @NonNull
+  public final TextView memberAvatarEmoji;
+
+  @NonNull
+  public final FrameLayout memberAvatarFrame;
+
+  @NonNull
   public final TextView memberEmail;
 
   @NonNull
   public final TextView memberName;
 
   private ItemMemberBinding(@NonNull CardView rootView, @NonNull ImageButton deleteButton,
-      @NonNull TextView memberEmail, @NonNull TextView memberName) {
+      @NonNull View memberAvatarBg, @NonNull TextView memberAvatarEmoji,
+      @NonNull FrameLayout memberAvatarFrame, @NonNull TextView memberEmail,
+      @NonNull TextView memberName) {
     this.rootView = rootView;
     this.deleteButton = deleteButton;
+    this.memberAvatarBg = memberAvatarBg;
+    this.memberAvatarEmoji = memberAvatarEmoji;
+    this.memberAvatarFrame = memberAvatarFrame;
     this.memberEmail = memberEmail;
     this.memberName = memberName;
   }
@@ -70,6 +85,24 @@ public final class ItemMemberBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.memberAvatarBg;
+      View memberAvatarBg = ViewBindings.findChildViewById(rootView, id);
+      if (memberAvatarBg == null) {
+        break missingId;
+      }
+
+      id = R.id.memberAvatarEmoji;
+      TextView memberAvatarEmoji = ViewBindings.findChildViewById(rootView, id);
+      if (memberAvatarEmoji == null) {
+        break missingId;
+      }
+
+      id = R.id.memberAvatarFrame;
+      FrameLayout memberAvatarFrame = ViewBindings.findChildViewById(rootView, id);
+      if (memberAvatarFrame == null) {
+        break missingId;
+      }
+
       id = R.id.memberEmail;
       TextView memberEmail = ViewBindings.findChildViewById(rootView, id);
       if (memberEmail == null) {
@@ -82,7 +115,8 @@ public final class ItemMemberBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemMemberBinding((CardView) rootView, deleteButton, memberEmail, memberName);
+      return new ItemMemberBinding((CardView) rootView, deleteButton, memberAvatarBg,
+          memberAvatarEmoji, memberAvatarFrame, memberEmail, memberName);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

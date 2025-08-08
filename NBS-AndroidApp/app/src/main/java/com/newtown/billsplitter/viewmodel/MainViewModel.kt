@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.newtown.billsplitter.model.BillItem
 import com.newtown.billsplitter.model.Member
+import com.newtown.billsplitter.model.MEMBER_COLORS
 import com.newtown.billsplitter.service.GeminiService
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,7 @@ class MainViewModel : ViewModel() {
     private val _isProcessing = MutableLiveData<Boolean>()
     val isProcessing: LiveData<Boolean> = _isProcessing
 
-    private lateinit var sharedPreferences: SharedPreferences
+    private var sharedPreferences: SharedPreferences? = null
     private val gson = Gson()
     private var geminiService: GeminiService? = null
 
@@ -49,27 +50,32 @@ class MainViewModel : ViewModel() {
     }
 
     private fun loadMembers() {
-        val membersJson = sharedPreferences.getString("members", "[]")
+        val prefs = sharedPreferences ?: return
+        val membersJson = prefs.getString("members", "[]")
         val type = object : TypeToken<List<Member>>() {}.type
         val membersList: List<Member> = gson.fromJson(membersJson, type)
         _members.value = membersList
     }
 
     private fun saveMembers() {
+        val prefs = sharedPreferences ?: return
         val membersJson = gson.toJson(_members.value)
-        sharedPreferences.edit().putString("members", membersJson).apply()
+        prefs.edit().putString("members", membersJson).apply()
     }
 
     fun addMember(member: Member) {
         val currentMembers = _members.value.orEmpty().toMutableList()
-        currentMembers.add(member)
+        // Assign color in round-robin fashion
+        val color = MEMBER_COLORS[currentMembers.size % MEMBER_COLORS.size]
+        val memberWithColor = member.copy(color = color)
+        currentMembers.add(memberWithColor)
         _members.value = currentMembers
         saveMembers()
     }
 
     fun removeMember(member: Member) {
         val currentMembers = _members.value.orEmpty().toMutableList()
-        currentMembers.remove(member)
+        currentMembers.removeAll { it.id == member.id }
         _members.value = currentMembers
         saveMembers()
     }
@@ -77,17 +83,16 @@ class MainViewModel : ViewModel() {
     fun addBillItem(item: BillItem) {
         val currentItems = _billItems.value.orEmpty().toMutableList()
         val currentMembers = _members.value.orEmpty()
-        
         // Auto-assign to all members for equal splitting by default
         val itemWithDefaultAssignment = if (currentMembers.isNotEmpty()) {
-            item.copy(assignedTo = currentMembers.map { it.name })
+            item.copy(assignedTo = currentMembers.map { it.id })
         } else {
             item
         }
-        
         currentItems.add(itemWithDefaultAssignment)
         _billItems.value = currentItems
         updateTotalAmount()
+        android.util.Log.d("MainViewModel", "Added item: ${item.name}, price: ${item.price}, type: ${item.itemType}, assignedTo: ${itemWithDefaultAssignment.assignedTo}")
     }
 
     fun updateBillItem(updatedItem: BillItem) {
@@ -102,19 +107,20 @@ class MainViewModel : ViewModel() {
 
     fun removeBillItem(item: BillItem) {
         val currentItems = _billItems.value.orEmpty().toMutableList()
-        currentItems.remove(item)
+        currentItems.removeAll { it.id == item.id }
         _billItems.value = currentItems
         updateTotalAmount()
     }
 
-    fun toggleItemMemberAssignment(item: BillItem, memberName: String, isAssigned: Boolean) {
+    fun toggleItemMemberAssignment(item: BillItem, memberId: Long, isAssigned: Boolean) {
         val currentItems = _billItems.value.orEmpty().toMutableList()
         val index = currentItems.indexOfFirst { it.id == item.id }
         if (index != -1) {
+            val currentItem = currentItems[index]
             val updatedItem = if (isAssigned) {
-                item.copy(assignedTo = item.assignedTo + memberName)
+                currentItem.copy(assignedTo = currentItem.assignedTo + memberId)
             } else {
-                item.copy(assignedTo = item.assignedTo - memberName)
+                currentItem.copy(assignedTo = currentItem.assignedTo.filter { it != memberId })
             }
             currentItems[index] = updatedItem
             _billItems.value = currentItems
@@ -123,8 +129,19 @@ class MainViewModel : ViewModel() {
     }
 
     private fun updateTotalAmount() {
-        val total = _billItems.value?.sumOf { it.price } ?: 0.0
-        _totalAmount.value = total
+        try {
+            val items = _billItems.value ?: emptyList()
+            // Include all items (positive and negative) except colleague discounts
+            // Negative items are item-specific deals that should be included in splitting
+            val total = items.filter { 
+                it.itemType != "colleague_discount"
+            }.sumOf { it.price }
+            _totalAmount.value = total
+            android.util.Log.d("MainViewModel", "Updated total: $total, items count: ${items.size}")
+        } catch (e: Exception) {
+            android.util.Log.e("MainViewModel", "Error updating total amount", e)
+            _totalAmount.value = 0.0
+        }
     }
 
     fun setDiscountPercentage(percentage: Double) {
@@ -132,17 +149,43 @@ class MainViewModel : ViewModel() {
     }
 
     fun getSubtotal(): Double {
-        return _totalAmount.value ?: 0.0
+        val items = _billItems.value ?: emptyList()
+        // Include all items (positive and negative) except colleague discounts
+        // Negative items are item-specific deals that should be included in splitting
+        val filteredItems = items.filter { 
+            it.itemType != "colleague_discount"
+        }
+        val subtotal = filteredItems.sumOf { it.price }
+        
+        android.util.Log.d("MainViewModel", "getSubtotal: ${items.size} total items, ${filteredItems.size} filtered items")
+        android.util.Log.d("MainViewModel", "getSubtotal: subtotal = $subtotal")
+        filteredItems.forEach { item ->
+            android.util.Log.d("MainViewModel", "getSubtotal: item=${item.name}, price=${item.price}, type=${item.itemType}")
+        }
+        
+        return subtotal
     }
 
     fun getDiscountAmount(): Double {
         val subtotal = getSubtotal()
-        val percentage = _discountPercentage.value ?: 0.0
-        return subtotal * (percentage / 100.0)
+        val discountPercentage = _discountPercentage.value ?: 0.0
+        return (subtotal * discountPercentage) / 100.0
     }
 
     fun getFinalTotal(): Double {
-        return getSubtotal() - getDiscountAmount()
+        val subtotal = getSubtotal()
+        val discountAmount = getDiscountAmount()
+        return subtotal - discountAmount
+    }
+
+    fun getTotalDeals(): Double {
+        val items = _billItems.value ?: emptyList()
+        return items.filter { it.itemType == "deal" }.sumOf { kotlin.math.abs(it.price) }
+    }
+
+    fun getTotalDiscounts(): Double {
+        val items = _billItems.value ?: emptyList()
+        return items.filter { it.itemType == "discount" }.sumOf { kotlin.math.abs(it.price) }
     }
 
     fun getPerPersonAmount(): Double {
@@ -164,16 +207,20 @@ class MainViewModel : ViewModel() {
         val totalDiscount = getDiscountAmount()
         val subtotal = getSubtotal()
         
+        android.util.Log.d("MainViewModel", "getMemberBreakdowns: ${members.size} members, ${items.size} items, subtotal: $subtotal, discount: $totalDiscount")
+        
         if (members.isEmpty()) {
+            android.util.Log.d("MainViewModel", "No members found")
             return emptyList()
         }
-
+        
         return members.map { member ->
             val memberItems = items.filter { item ->
-                item.assignedTo.contains(member.name)
+                item.assignedTo.contains(member.id) && item.itemType != "colleague_discount"
             }
+            android.util.Log.d("MainViewModel", "Member ${member.name}: ${memberItems.size} items assigned")
             
-            // Calculate member's share of each item
+            // Calculate member's share of each item (include both positive and negative items)
             val memberSubtotal = memberItems.sumOf { item ->
                 if (item.assignedTo.isNotEmpty()) {
                     item.price / item.assignedTo.size
@@ -181,16 +228,16 @@ class MainViewModel : ViewModel() {
                     0.0
                 }
             }
-            
-            // Calculate discount share equally
-            val memberDiscountShare = if (members.isNotEmpty()) {
-                totalDiscount / members.size
+            // Calculate discount share proportionally based on member's subtotal
+            val memberDiscountShare = if (subtotal > 0) {
+                (memberSubtotal / subtotal) * totalDiscount
             } else {
                 0.0
             }
-            
             val memberFinalAmount = memberSubtotal - memberDiscountShare
-
+            
+            android.util.Log.d("MainViewModel", "Member ${member.name}: subtotal=$memberSubtotal, discount=$memberDiscountShare, final=$memberFinalAmount")
+            
             MemberBreakdown(
                 memberName = member.name,
                 items = memberItems,
@@ -202,14 +249,36 @@ class MainViewModel : ViewModel() {
     }
 
     fun clearAll() {
+        // Only clear items and totals, NOT members
+        _billItems.value = emptyList()
+        _totalAmount.value = 0.0
+        _discountPercentage.value = 0.0
+        // Don't clear members - they should persist
+    }
+
+    fun clearAllData() {
+        // This method clears everything including members (for fresh start)
         _members.value = emptyList()
         _billItems.value = emptyList()
         _totalAmount.value = 0.0
+        _discountPercentage.value = 0.0
         saveMembers()
+    }
+
+    fun clearItemsOnly() {
+        // Clear only items and totals, keep members
+        _billItems.value = emptyList()
+        _totalAmount.value = 0.0
+        _discountPercentage.value = 0.0
     }
 
     fun processBillImage(imageUri: String) {
         _isProcessing.value = true
+        
+        // Clear all data except members when processing a new bill
+        _billItems.value = emptyList()
+        _totalAmount.value = 0.0
+        _discountPercentage.value = 0.0
         
         viewModelScope.launch {
             try {

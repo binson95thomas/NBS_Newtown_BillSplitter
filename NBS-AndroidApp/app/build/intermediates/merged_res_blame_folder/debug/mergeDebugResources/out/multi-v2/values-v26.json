@@ -4,7 +4,7 @@
             "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-57:/values-v26/values-v26.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\c7cbaeefdc37cd24560b8fc7fa3163c1\\transformed\\appcompat-1.6.1\\res\\values-v26\\values-v26.xml",
+                    "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\10b754c5eaf5303cd55b0d9873bcb4ef\\transformed\\appcompat-1.6.1\\res\\values-v26\\values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",

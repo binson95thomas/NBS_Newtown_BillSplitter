@@ -16,101 +16,162 @@ import kotlinx.coroutines.launch
 
 class GeminiService(private val context: Context) {
     
-    private val apiKey = try {
-        val key = com.newtown.billsplitter.BuildConfig.GEMINI_API_KEY
-        // Ensure the key is properly formatted
-        if (key.startsWith("AIza")) {
-            key
-        } else {
-            throw Exception("Invalid API key format")
-        }
-    } catch (e: Exception) {
-        Log.e("GeminiService", "Failed to read API key from BuildConfig: ${e.message}")
-        // Fallback to hardcoded key for testing
-        "AIzaSyCBRosZdx4b3HdOsZiEyjQOUjeeA6uPBrQ"
-    }
-    
-    private val model = GenerativeModel(
-        modelName = "gemini-1.5-flash",
-        apiKey = apiKey
-    )
+    private var model: GenerativeModel? = null
     
     init {
-        Log.d("GeminiService", "API Key length: ${apiKey.length}")
-        Log.d("GeminiService", "API Key starts with: ${apiKey.take(10)}...")
-        
-        // Test the API key with a simple text request
-        testApiKey()
-    }
-    
-    private fun testApiKey() {
-        // This will run in background to test the API key
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val testResponse = model.generateContent("Hello")
-                Log.d("GeminiService", "API key test successful")
-            } catch (e: Exception) {
-                Log.e("GeminiService", "API key test failed: ${e.message}")
+        try {
+            Log.d("GeminiService", "Starting GeminiService initialization...")
+            val apiKey = com.newtown.billsplitter.BuildConfig.GEMINI_API_KEY
+            Log.d("GeminiService", "Raw API Key: '$apiKey'")
+            Log.d("GeminiService", "API Key length: ${apiKey.length}")
+            Log.d("GeminiService", "API Key starts with: ${apiKey.take(10)}...")
+            Log.d("GeminiService", "API Key ends with: ...${apiKey.takeLast(10)}")
+            
+            if (apiKey.isEmpty() || apiKey == "\"\"") {
+                Log.e("GeminiService", "API Key is empty or not set properly")
+                throw Exception("API Key not configured")
             }
+            
+            if (!apiKey.startsWith("AIza")) {
+                Log.e("GeminiService", "API Key format is invalid - should start with 'AIza'")
+                throw Exception("Invalid API Key format")
+            }
+            
+            model = GenerativeModel(
+                modelName = "gemini-1.5-flash",
+                apiKey = apiKey
+            )
+            Log.d("GeminiService", "GeminiService initialized successfully")
+        } catch (e: Exception) {
+            Log.e("GeminiService", "Failed to initialize GeminiService", e)
+            Log.e("GeminiService", "Exception message: ${e.message}")
+            Log.e("GeminiService", "Exception stack trace: ${e.stackTraceToString()}")
         }
     }
     
     suspend fun processBillImage(imageUri: String): List<BillItem> = withContext(Dispatchers.IO) {
         try {
             Log.d("GeminiService", "Starting bill image processing...")
-            val uri = Uri.parse(imageUri)
-            val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-            val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
             
-            if (bitmap == null) {
-                throw Exception("Failed to decode image")
+            if (model == null) {
+                Log.e("GeminiService", "Model not initialized - API key may be missing")
+                throw Exception("Gemini model not initialized. Please check your API key configuration.")
             }
             
-            Log.d("GeminiService", "Image decoded successfully, calling Gemini API...")
-            
             val prompt = """
-                Analyze this bill/receipt image and extract all items with their prices.
+                Analyze this bill/receipt image and extract all items with their prices. Focus on accurate item extraction and pricing.
                 
                 Please return the items in this exact JSON format:
-                [
-                    {"name": "Item Name", "price": 0.00},
-                    {"name": "Another Item", "price": 0.00}
-                ]
+                {
+                    "items": [
+                        {"name": "Item Name", "price": 0.00, "type": "item"},
+                        {"name": "Weight Item (1.5kg @ £2.00/kg)", "price": 3.00, "type": "item"},
+                        {"name": "Zero Cost Item", "price": 0.00, "type": "item"},
+                        {"name": "BIRDSEYE 4 FOR £4.98", "price": -3.94, "type": "deal"}
+                    ],
+                    "summary": {
+                        "subtotal": 0.00,
+                        "colleague_discount": 0.00,
+                        "final_total": 0.00
+                    }
+                }
                 
-                Rules:
-                1. Only include items that have prices
-                2. Use the exact item names as they appear
-                3. Convert all prices to decimal format (e.g., £5.99 = 5.99)
-                4. Ignore totals, taxes, and service charges
-                5. If you can't read the image clearly, return an empty array []
+                CRITICAL RULES:
+                1. **ITEM-SPECIFIC DEALS HANDLING**: 
+                   - Extract item-specific deals (e.g., "BIRDSEYE 4 FOR £4.98" with negative price -£3.94) as separate items
+                   - Use NEGATIVE prices for deals (e.g., -3.94)
+                   - Set type as "deal" for item-specific deals
+                   - These deals should be included in subtotal calculation
                 
-                Return only the JSON array, nothing else.
+                2. **COLLEAGUE DISCOUNT HANDLING**: 
+                   - DO NOT include colleague discounts (e.g., "Colleague Disc", "Employee Discount") in the items list
+                   - Colleague discounts should only be mentioned in the summary section
+                   - The subtotal should be the amount BEFORE colleague discount (the first TOTAL on receipt)
+                   - The final_total should be the amount AFTER colleague discount (the final TOTAL on receipt)
+                   - The colleague_discount field should be the difference between subtotal and final_total
+                
+                3. **ITEM EXTRACTION RULES**:
+                   - Extract ALL items including zero-cost items (e.g., "BAG EXCHANGE" £0.00)
+                   - For weight-based items, include weight info in name (e.g., "HB MIX MEAT (1.042kg @ £10.90/kg)")
+                   - Clean up OCR artifacts when possible (e.g., "PRGLES BLZN" → "Pringles Blazin")
+                   - Use exact names as they appear, but improve readability when obvious
+                   - Pay special attention to deals with negative prices on the receipt
+                   - EXCLUDE colleague discounts from items list
+                
+                4. **IGNORE THESE ELEMENTS**:
+                   - Promotional text (e.g., "For a chance to win £1,000!")
+                   - Store information (e.g., "ASDA STORES LTD", "WWW.ASDA.COM")
+                   - Payment method details (e.g., "AMERICAN EXPRESS", "A/C No.")
+                   - Transaction IDs and manager names
+                   - QR codes and barcodes
+                   - Colleague discounts (these go in summary only)
+                
+                5. **PRICING RULES**:
+                   - Convert all prices to decimal format (e.g., £5.99 = 5.99)
+                   - Include service charges, taxes, and fees as separate items
+                   - For weight items, calculate the total price (weight × unit price)
+                   - Zero-cost items should have price: 0.00
+                   - Item-specific deals should have NEGATIVE prices
+                
+                6. **CALCULATION RULES**:
+                   - subtotal = sum of all items (including deals, excluding colleague discounts)
+                   - colleague_discount = difference between first TOTAL and final TOTAL on receipt
+                   - final_total = subtotal - colleague_discount
+                   - Ensure calculations match the receipt's final amount
+                
+                7. **FALLBACK**:
+                   - If you can't read clearly, return {"items": [], "summary": {"subtotal": 0, "colleague_discount": 0, "final_total": 0}}
+                
+                Return only the JSON object, nothing else.
             """.trimIndent()
             
-            val response = model.generateContent(
+            val response = model?.generateContent(
                 content {
                     text(prompt)
-                    image(bitmap)
+                    image(loadImageFromUri(imageUri))
                 }
             )
             
             Log.d("GeminiService", "Gemini API response received")
-            val responseText = response.text ?: "[]"
+            val responseText = response?.text ?: "[]"
             Log.d("GeminiService", "Response text: $responseText")
             
             return@withContext parseGeminiResponse(responseText)
             
         } catch (e: Exception) {
-            Log.e("GeminiService", "Gemini processing failed", e)
-            throw Exception("Gemini processing failed: ${e.message}")
+            Log.e("GeminiService", "Error processing bill image", e)
+            when {
+                e.message?.contains("unregistered callers") == true -> {
+                    throw Exception("API Key authentication failed. Please check your GEMINI_API_KEY configuration.")
+                }
+                e.message?.contains("API Key not configured") == true -> {
+                    throw Exception("API Key not configured. Please set GEMINI_API_KEY in your environment.")
+                }
+                else -> {
+                    throw Exception("Failed to process bill image: ${e.message}")
+                }
+            }
         }
+    }
+    
+    private fun loadImageFromUri(imageUri: String): Bitmap {
+        val uri = Uri.parse(imageUri)
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
+        
+        if (bitmap == null) {
+            throw Exception("Failed to decode image")
+        }
+        
+        Log.d("GeminiService", "Image decoded successfully")
+        return bitmap
     }
     
     private fun parseGeminiResponse(response: String): List<BillItem> {
         return try {
             // Clean the response to extract just the JSON
-            val jsonStart = response.indexOf('[')
-            val jsonEnd = response.lastIndexOf(']') + 1
+            val jsonStart = response.indexOf('{')
+            val jsonEnd = response.lastIndexOf('}') + 1
             
             if (jsonStart == -1 || jsonEnd == 0) {
                 return emptyList()
@@ -120,17 +181,19 @@ class GeminiService(private val context: Context) {
             
             // Parse the JSON response
             val gson = com.google.gson.Gson()
-            val items = gson.fromJson(jsonString, Array<BillItemResponse>::class.java)
+            val billData = gson.fromJson(jsonString, BillResponse::class.java)
             
-            items.map { item ->
+            billData.items.mapIndexed { index, item ->
                 BillItem(
-                    id = System.currentTimeMillis() + items.indexOf(item),
+                    id = System.currentTimeMillis() + index + (index * 1000), // Ensure unique IDs
                     name = item.name,
-                    price = item.price
+                    price = item.price,
+                    itemType = item.type
                 )
             }
             
         } catch (e: Exception) {
+            Log.e("GeminiService", "JSON parsing failed, trying fallback", e)
             // Fallback to basic parsing if JSON parsing fails
             parseFallbackResponse(response)
         }
@@ -153,9 +216,10 @@ class GeminiService(private val context: Context) {
                     val itemName = trimmedLine.replace(priceMatch.value, "").trim()
                     if (itemName.isNotEmpty()) {
                         items.add(BillItem(
-                            id = System.currentTimeMillis() + items.size,
+                            id = System.currentTimeMillis() + items.size + (items.size * 1000), // Ensure unique IDs
                             name = itemName,
-                            price = price
+                            price = price,
+                            itemType = "item"
                         ))
                     }
                 }
@@ -167,6 +231,18 @@ class GeminiService(private val context: Context) {
     
     private data class BillItemResponse(
         val name: String,
-        val price: Double
+        val price: Double,
+        val type: String = "item"
+    )
+    
+    private data class BillSummary(
+        val subtotal: Double,
+        val colleague_discount: Double,
+        val final_total: Double
+    )
+    
+    private data class BillResponse(
+        val items: List<BillItemResponse>,
+        val summary: BillSummary
     )
 } 

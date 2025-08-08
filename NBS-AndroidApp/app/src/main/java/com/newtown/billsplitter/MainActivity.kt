@@ -15,6 +15,7 @@ import android.widget.EditText
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.app.AlertDialog
 import com.newtown.billsplitter.model.Member
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
     
@@ -23,6 +24,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Add global exception handler
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            android.util.Log.e("MainActivity", "Uncaught exception in thread ${thread.name}", throwable)
+        }
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -73,6 +80,45 @@ class MainActivity : AppCompatActivity() {
     fun showAddMemberDialog() {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_member, null)
         val nameEditText = dialogView.findViewById<EditText>(R.id.memberNameEditText)
+        val emojiPreview = dialogView.findViewById<TextView>(R.id.emojiPreview)
+        val pickEmojiButton = dialogView.findViewById<View>(R.id.pickEmojiButton)
+        var selectedEmoji = "😀"
+        emojiPreview.text = selectedEmoji
+        pickEmojiButton.setOnClickListener {
+            // Simple emoji picker dialog (grid)
+            val emojis = listOf("😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","😘","🥰","😗","😙","😚","🙂","🤗","🤩","🤔","🤨","😐","😑","😶","🙄","😏","😣","😥","😮","🤐","😯","😪","😫","🥱","😴","😌","😛","😜","😝","🤤","😒","😓","😔","😕","🙃","🤑","😲","☹️","🙁","😖","😞","😟","😤","😢","😭","😦","😧","😨","😩","🤯","😬","😰","😱","🥵","🥶","😳","🤪","😵","😡","😠","🤬","😷","🤒","🤕","🤢","🤮","🥴","😇","🥳","🥺","🤠","🤡","🤥","🤫","🤭","🧐","🤓","😈","👿","👹","👺","💀","👻","👽","🤖","💩")
+            val emojiGrid = android.widget.GridView(this).apply {
+                numColumns = 8
+                adapter = object : android.widget.BaseAdapter() {
+                    override fun getCount() = emojis.size
+                    override fun getItem(position: Int) = emojis[position]
+                    override fun getItemId(position: Int) = position.toLong()
+                    override fun getView(position: Int, convertView: View?, parent: android.view.ViewGroup?): View {
+                        val tv = TextView(this@MainActivity)
+                        tv.text = emojis[position]
+                        tv.textSize = 24f
+                        tv.gravity = android.view.Gravity.CENTER
+                        tv.setPadding(8, 8, 8, 8)
+                        return tv
+                    }
+                }
+                setOnItemClickListener { _, _, pos, _ ->
+                    selectedEmoji = emojis[pos]
+                    emojiPreview.text = selectedEmoji
+                    (it as android.app.AlertDialog).dismiss()
+                }
+            }
+            val dialog = android.app.AlertDialog.Builder(this)
+                .setTitle("Pick Emoji")
+                .setView(emojiGrid)
+                .create()
+            emojiGrid.setOnItemClickListener { _, _, pos, _ ->
+                selectedEmoji = emojis[pos]
+                emojiPreview.text = selectedEmoji
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
 
         AlertDialog.Builder(this)
             .setTitle("Add Member")
@@ -80,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("Add") { _, _ ->
                 val name = nameEditText.text.toString().trim()
                 if (name.isNotEmpty()) {
-                    viewModel.addMember(Member(name = name))
+                    viewModel.addMember(Member(id = System.currentTimeMillis(), name = name, emoji = selectedEmoji))
                 }
             }
             .setNegativeButton("Cancel", null)

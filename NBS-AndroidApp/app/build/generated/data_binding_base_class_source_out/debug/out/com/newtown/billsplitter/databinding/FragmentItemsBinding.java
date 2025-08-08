@@ -4,6 +4,7 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -24,6 +25,12 @@ public final class FragmentItemsBinding implements ViewBinding {
   public final LinearLayout addItemButton;
 
   @NonNull
+  public final Button clearAllButton;
+
+  @NonNull
+  public final TextView dealsInfoText;
+
+  @NonNull
   public final LinearLayout emptyStateLayout;
 
   @NonNull
@@ -33,10 +40,13 @@ public final class FragmentItemsBinding implements ViewBinding {
   public final TextView totalAmountText;
 
   private FragmentItemsBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout addItemButton,
+      @NonNull Button clearAllButton, @NonNull TextView dealsInfoText,
       @NonNull LinearLayout emptyStateLayout, @NonNull RecyclerView itemsRecyclerView,
       @NonNull TextView totalAmountText) {
     this.rootView = rootView;
     this.addItemButton = addItemButton;
+    this.clearAllButton = clearAllButton;
+    this.dealsInfoText = dealsInfoText;
     this.emptyStateLayout = emptyStateLayout;
     this.itemsRecyclerView = itemsRecyclerView;
     this.totalAmountText = totalAmountText;
@@ -75,6 +85,18 @@ public final class FragmentItemsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.clearAllButton;
+      Button clearAllButton = ViewBindings.findChildViewById(rootView, id);
+      if (clearAllButton == null) {
+        break missingId;
+      }
+
+      id = R.id.dealsInfoText;
+      TextView dealsInfoText = ViewBindings.findChildViewById(rootView, id);
+      if (dealsInfoText == null) {
+        break missingId;
+      }
+
       id = R.id.emptyStateLayout;
       LinearLayout emptyStateLayout = ViewBindings.findChildViewById(rootView, id);
       if (emptyStateLayout == null) {
@@ -93,8 +115,8 @@ public final class FragmentItemsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentItemsBinding((LinearLayout) rootView, addItemButton, emptyStateLayout,
-          itemsRecyclerView, totalAmountText);
+      return new FragmentItemsBinding((LinearLayout) rootView, addItemButton, clearAllButton,
+          dealsInfoText, emptyStateLayout, itemsRecyclerView, totalAmountText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

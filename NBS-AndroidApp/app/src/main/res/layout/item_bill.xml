@@ -32,47 +32,86 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Item Name"
-                    android:textColor="@color/text_primary"
+                    android:textColor="?android:textColorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/itemPrice"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_marginTop="4dp"
-                    android:text="$0.00"
-                    android:textColor="@color/accent_500"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/itemPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="£0.00"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/splitEvenlyButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/button_background_selector"
+                        android:text="Split Evenly"
+                        android:textColor="@color/white"
+                        android:drawableLeft="@drawable/ic_people"
+                        android:drawablePadding="8dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:textSize="12sp"
+                        android:elevation="2dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:gravity="center" />
+                </LinearLayout>
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/editItemButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/circular_button_background"
-                android:contentDescription="Edit item"
-                android:padding="8dp"
-                android:src="@drawable/ic_edit"
-                android:tint="@color/accent_500" />
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageButton
+                    android:id="@+id/editItemButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circular_button_background"
+                    android:contentDescription="Edit item"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit"
+                    android:tint="@color/accent_500" />
+                <ImageButton
+                    android:id="@+id/deleteItemButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circular_button_background"
+                    android:contentDescription="Delete item"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete"
+                    android:tint="@color/error_500" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Member Assignment Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="8dp"
                 android:text="👥 Assigned to:"
-                android:textColor="@color/text_secondary"
+                android:textColor="?android:textColorSecondary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
