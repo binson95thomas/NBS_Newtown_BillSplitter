@@ -83,6 +83,7 @@ MERGED from [androidx.customview:customview:1.1.0] C:\Users\binso\.gradle\caches
 MERGED from [androidx.transition:transition:1.4.1] C:\Users\binso\.gradle\caches\8.13\transforms\20843f5fa8d438f3c386c945918d1314\transformed\transition-1.4.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:17:1-30:12
 MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\45fb6f92ad59237ffc19daaf7a5988ca\transformed\core-ktx-1.12.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-splashscreen:1.0.1] C:\Users\binso\.gradle\caches\8.13\transforms\51fdf0f82b0621f324d934d88d000590\transformed\core-splashscreen-1.0.1\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.flexbox:flexbox:3.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\f36087880a75541f0d35e2338d336c74\transformed\flexbox-3.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.1] C:\Users\binso\.gradle\caches\8.13\transforms\0ac3f19ba22708235f94417c634b5beb\transformed\annotation-experimental-1.3.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\296ecfdf861cc3384111fb9506b146b3\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -413,6 +414,8 @@ MERGED from [androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\trans
 MERGED from [androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\45fb6f92ad59237ffc19daaf7a5988ca\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\45fb6f92ad59237ffc19daaf7a5988ca\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-splashscreen:1.0.1] C:\Users\binso\.gradle\caches\8.13\transforms\51fdf0f82b0621f324d934d88d000590\transformed\core-splashscreen-1.0.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core-splashscreen:1.0.1] C:\Users\binso\.gradle\caches\8.13\transforms\51fdf0f82b0621f324d934d88d000590\transformed\core-splashscreen-1.0.1\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.flexbox:flexbox:3.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\f36087880a75541f0d35e2338d336c74\transformed\flexbox-3.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.flexbox:flexbox:3.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\f36087880a75541f0d35e2338d336c74\transformed\flexbox-3.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.annotation:annotation-experimental:1.3.1] C:\Users\binso\.gradle\caches\8.13\transforms\0ac3f19ba22708235f94417c634b5beb\transformed\annotation-experimental-1.3.1\AndroidManifest.xml:20:5-44

@@ -34,6 +34,11 @@
         <item name="cardElevation">4dp</item>
     </style>
 
+    <!-- Minimal splash theme that won't block startup; uses layer-list background -->
+    <style name="Theme.NBS.Splash" parent="Theme.Material3.DayNight">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
     <!-- Custom Text Appearances -->
     <style name="TabTextAppearance" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">14sp</item>

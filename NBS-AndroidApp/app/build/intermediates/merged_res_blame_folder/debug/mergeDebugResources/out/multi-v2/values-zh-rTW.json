@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-57:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-58:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\af4f40f8e3503b3a7dc4c70b64214628\\transformed\\play-services-base-18.1.0\\res\\values-zh-rTW\\values.xml",

@@ -8,13 +8,15 @@
     android:padding="16dp">
 
     <!-- Header Card -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@color/background_card"
         app:cardCornerRadius="20dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        app:strokeColor="@color/gray_200"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,16 +45,18 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Add Member Button -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@color/background_card"
         app:cardCornerRadius="16dp"
-        app:cardElevation="4dp">
+        app:cardElevation="4dp"
+        app:strokeColor="@color/gray_200"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:id="@+id/addMemberButton"
@@ -82,7 +86,7 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Members RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

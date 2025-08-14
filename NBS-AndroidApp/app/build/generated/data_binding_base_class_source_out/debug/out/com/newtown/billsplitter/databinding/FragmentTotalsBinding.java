@@ -4,16 +4,16 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.newtown.billsplitter.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -24,10 +24,7 @@ public final class FragmentTotalsBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
-  public final Button applyDiscountButton;
-
-  @NonNull
-  public final CardView dealsDiscountsCard;
+  public final MaterialCardView dealsDiscountsCard;
 
   @NonNull
   public final TextView dealsDiscountsText;
@@ -39,10 +36,13 @@ public final class FragmentTotalsBinding implements ViewBinding {
   public final TextView discountText;
 
   @NonNull
-  public final RecyclerView memberBreakdownRecyclerView;
+  public final RecyclerView memberCarouselRecyclerView;
 
   @NonNull
-  public final Button recalculateTotalButton;
+  public final TextView memberPagerTitle;
+
+  @NonNull
+  public final MaterialButton recalculateButton;
 
   @NonNull
   public final TextView subtotalText;
@@ -50,19 +50,20 @@ public final class FragmentTotalsBinding implements ViewBinding {
   @NonNull
   public final TextView totalText;
 
-  private FragmentTotalsBinding(@NonNull ScrollView rootView, @NonNull Button applyDiscountButton,
-      @NonNull CardView dealsDiscountsCard, @NonNull TextView dealsDiscountsText,
+  private FragmentTotalsBinding(@NonNull ScrollView rootView,
+      @NonNull MaterialCardView dealsDiscountsCard, @NonNull TextView dealsDiscountsText,
       @NonNull EditText discountEditText, @NonNull TextView discountText,
-      @NonNull RecyclerView memberBreakdownRecyclerView, @NonNull Button recalculateTotalButton,
-      @NonNull TextView subtotalText, @NonNull TextView totalText) {
+      @NonNull RecyclerView memberCarouselRecyclerView, @NonNull TextView memberPagerTitle,
+      @NonNull MaterialButton recalculateButton, @NonNull TextView subtotalText,
+      @NonNull TextView totalText) {
     this.rootView = rootView;
-    this.applyDiscountButton = applyDiscountButton;
     this.dealsDiscountsCard = dealsDiscountsCard;
     this.dealsDiscountsText = dealsDiscountsText;
     this.discountEditText = discountEditText;
     this.discountText = discountText;
-    this.memberBreakdownRecyclerView = memberBreakdownRecyclerView;
-    this.recalculateTotalButton = recalculateTotalButton;
+    this.memberCarouselRecyclerView = memberCarouselRecyclerView;
+    this.memberPagerTitle = memberPagerTitle;
+    this.recalculateButton = recalculateButton;
     this.subtotalText = subtotalText;
     this.totalText = totalText;
   }
@@ -94,14 +95,8 @@ public final class FragmentTotalsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.applyDiscountButton;
-      Button applyDiscountButton = ViewBindings.findChildViewById(rootView, id);
-      if (applyDiscountButton == null) {
-        break missingId;
-      }
-
       id = R.id.dealsDiscountsCard;
-      CardView dealsDiscountsCard = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView dealsDiscountsCard = ViewBindings.findChildViewById(rootView, id);
       if (dealsDiscountsCard == null) {
         break missingId;
       }
@@ -124,15 +119,21 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.memberBreakdownRecyclerView;
-      RecyclerView memberBreakdownRecyclerView = ViewBindings.findChildViewById(rootView, id);
-      if (memberBreakdownRecyclerView == null) {
+      id = R.id.memberCarouselRecyclerView;
+      RecyclerView memberCarouselRecyclerView = ViewBindings.findChildViewById(rootView, id);
+      if (memberCarouselRecyclerView == null) {
         break missingId;
       }
 
-      id = R.id.recalculateTotalButton;
-      Button recalculateTotalButton = ViewBindings.findChildViewById(rootView, id);
-      if (recalculateTotalButton == null) {
+      id = R.id.memberPagerTitle;
+      TextView memberPagerTitle = ViewBindings.findChildViewById(rootView, id);
+      if (memberPagerTitle == null) {
+        break missingId;
+      }
+
+      id = R.id.recalculateButton;
+      MaterialButton recalculateButton = ViewBindings.findChildViewById(rootView, id);
+      if (recalculateButton == null) {
         break missingId;
       }
 
@@ -148,9 +149,9 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentTotalsBinding((ScrollView) rootView, applyDiscountButton,
-          dealsDiscountsCard, dealsDiscountsText, discountEditText, discountText,
-          memberBreakdownRecyclerView, recalculateTotalButton, subtotalText, totalText);
+      return new FragmentTotalsBinding((ScrollView) rootView, dealsDiscountsCard,
+          dealsDiscountsText, discountEditText, discountText, memberCarouselRecyclerView,
+          memberPagerTitle, recalculateButton, subtotalText, totalText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

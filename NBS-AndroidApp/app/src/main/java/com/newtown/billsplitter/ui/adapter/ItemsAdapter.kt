@@ -28,10 +28,12 @@ class ItemsAdapter(
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
         val itemPrice: TextView = itemView.findViewById(R.id.itemPrice)
+        val splitEvenlyButton: Button = itemView.findViewById(R.id.splitEvenlyButton)
+        // Optional confidence badge; if not present in layout, we'll ignore
+        val confidenceBadge: TextView? = itemView.findViewById(R.id.itemConfidence)
         val editItemButton: ImageButton = itemView.findViewById(R.id.editItemButton)
         val deleteItemButton: ImageButton = itemView.findViewById(R.id.deleteItemButton)
         val memberCheckboxContainer: FlexboxLayout = itemView.findViewById(R.id.memberCheckboxContainer)
-        val splitEvenlyButton: Button = itemView.findViewById(R.id.splitEvenlyButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -44,6 +46,21 @@ class ItemsAdapter(
         val item = items[position]
         holder.itemName.text = item.name
         holder.itemPrice.text = item.getDisplayPrice()
+        holder.confidenceBadge?.let { badge ->
+            val conf = item.confidence
+            if (conf != null) {
+                badge.visibility = View.VISIBLE
+                badge.text = "%.0f%%".format(conf * 100)
+                if (conf < 0.7) {
+                    // low confidence -> highlight
+                    badge.setBackgroundResource(R.drawable.badge_warning)
+                } else {
+                    badge.setBackgroundResource(R.drawable.badge_ok)
+                }
+            } else {
+                badge.visibility = View.GONE
+            }
+        }
         
         // Style deals and discounts differently
         if (item.price < 0) {
@@ -93,6 +110,10 @@ class ItemsAdapter(
 
     private fun setupMemberCheckboxes(container: FlexboxLayout, item: BillItem, animate: Boolean) {
         container.removeAllViews()
+        val density = container.resources.displayMetrics.density
+        val margin = (8 * density).toInt()
+        val padding = (12 * density).toInt()
+        val minHeightPx = (56 * density).toInt()
         members.forEach { member ->
             val checkbox = CheckBox(container.context).apply {
                 text = member.emoji?.let { "${it} ${member.name}" } ?: member.name
@@ -102,13 +123,18 @@ class ItemsAdapter(
                 }
                 setTextColor(member.color)
                 buttonTintList = android.content.res.ColorStateList.valueOf(member.color)
-                // Make checkbox and text bigger
-                textSize = 16f
-                minHeight = 48
-                // Add padding for better touch area
-                setPadding(8, 8, 8, 8)
+                // Make checkbox and text bigger with comfortable touch targets
+                textSize = 18f
+                minHeight = minHeightPx
+                setPadding(padding, padding / 2, padding, padding / 2)
             }
-            container.addView(checkbox)
+            val lp = FlexboxLayout.LayoutParams(
+                FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                FlexboxLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(margin, margin, margin, margin)
+            }
+            container.addView(checkbox, lp)
             if (animate && item.assignedTo.contains(member.id)) {
                 checkbox.scaleX = 0.7f
                 checkbox.scaleY = 0.7f

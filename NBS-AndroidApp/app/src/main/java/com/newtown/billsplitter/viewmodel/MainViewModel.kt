@@ -31,9 +31,19 @@ class MainViewModel : ViewModel() {
     private val _isProcessing = MutableLiveData<Boolean>()
     val isProcessing: LiveData<Boolean> = _isProcessing
 
+    data class ProcessingResult(val success: Boolean, val message: String)
+    private val _processingResult = MutableLiveData<ProcessingResult?>()
+    val processingResult: LiveData<ProcessingResult?> = _processingResult
+
     private var sharedPreferences: SharedPreferences? = null
     private val gson = Gson()
     private var geminiService: GeminiService? = null
+    
+    fun setPromptModeEnhanced(isEnhanced: Boolean) {
+        geminiService?.setPromptMode(
+            if (isEnhanced) GeminiService.PromptMode.ENHANCED else GeminiService.PromptMode.LEGACY
+        )
+    }
 
     init {
         _members.value = emptyList()
@@ -41,12 +51,14 @@ class MainViewModel : ViewModel() {
         _totalAmount.value = 0.0
         _discountPercentage.value = 0.0
         _isProcessing.value = false
+        _processingResult.value = null
     }
 
     fun initialize(context: Context) {
         sharedPreferences = context.getSharedPreferences("BillSplitterPrefs", Context.MODE_PRIVATE)
         geminiService = GeminiService(context)
         loadMembers()
+        loadDiscountPercentage()
     }
 
     private fun loadMembers() {
@@ -57,10 +69,24 @@ class MainViewModel : ViewModel() {
         _members.value = membersList
     }
 
+    private fun loadDiscountPercentage() {
+        val prefs = sharedPreferences ?: return
+        val percentage = prefs.getFloat("discount_percentage", 0.0f).toDouble()
+        _discountPercentage.value = percentage
+        android.util.Log.d("MainViewModel", "Loaded discount percentage: $percentage")
+    }
+
     private fun saveMembers() {
         val prefs = sharedPreferences ?: return
         val membersJson = gson.toJson(_members.value)
         prefs.edit().putString("members", membersJson).apply()
+    }
+
+    private fun saveDiscountPercentage() {
+        val prefs = sharedPreferences ?: return
+        val percentage = _discountPercentage.value ?: 0.0
+        prefs.edit().putFloat("discount_percentage", percentage.toFloat()).apply()
+        android.util.Log.d("MainViewModel", "Saved discount percentage: $percentage")
     }
 
     fun addMember(member: Member) {
@@ -144,8 +170,14 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun setDiscountPercentage(percentage: Double) {
-        _discountPercentage.value = percentage.coerceIn(0.0, 100.0)
+    fun setDiscountPercentage(percentage: Double?) {
+        val safePercentage = when (percentage) {
+            null -> 0.0
+            else -> percentage.coerceIn(0.0, 100.0)
+        }
+        _discountPercentage.value = safePercentage
+        saveDiscountPercentage()
+        android.util.Log.d("MainViewModel", "Set discount percentage: $safePercentage (input was: $percentage)")
     }
 
     fun getSubtotal(): Double {
@@ -170,6 +202,10 @@ class MainViewModel : ViewModel() {
         val subtotal = getSubtotal()
         val discountPercentage = _discountPercentage.value ?: 0.0
         return (subtotal * discountPercentage) / 100.0
+    }
+
+    fun getDiscountPercentageSafe(): Double {
+        return _discountPercentage.value ?: 0.0
     }
 
     fun getFinalTotal(): Double {
@@ -274,6 +310,7 @@ class MainViewModel : ViewModel() {
 
     fun processBillImage(imageUri: String) {
         _isProcessing.value = true
+        _processingResult.value = null
         
         // Clear all data except members when processing a new bill
         _billItems.value = emptyList()
@@ -290,6 +327,9 @@ class MainViewModel : ViewModel() {
                     extractedItems.forEach { item ->
                         addBillItem(item) // This will auto-assign to all members
                     }
+
+                    val count = extractedItems.size
+                    _processingResult.value = ProcessingResult(true, if (count > 0) "$count items extracted successfully" else "No items found. Please try a clearer photo.")
                 } else {
                     // Fallback: add a placeholder item
                     val placeholderItem = BillItem(
@@ -298,6 +338,7 @@ class MainViewModel : ViewModel() {
                         price = 0.0
                     )
                     addBillItem(placeholderItem)
+                    _processingResult.value = ProcessingResult(false, "AI service unavailable. Added a placeholder item.")
                 }
             } catch (e: Exception) {
                 // Handle Gemini error
@@ -307,6 +348,7 @@ class MainViewModel : ViewModel() {
                     price = 0.0
                 )
                 addBillItem(errorItem)
+                _processingResult.value = ProcessingResult(false, e.message ?: "Failed to process the image")
             } finally {
                 _isProcessing.value = false
             }

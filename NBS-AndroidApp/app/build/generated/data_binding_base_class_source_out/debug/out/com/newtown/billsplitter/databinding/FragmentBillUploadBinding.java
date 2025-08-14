@@ -7,11 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
+import androidx.camera.view.PreviewView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.newtown.billsplitter.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -25,26 +29,93 @@ public final class FragmentBillUploadBinding implements ViewBinding {
   public final LinearLayout cameraButton;
 
   @NonNull
+  public final PreviewView cameraPreview;
+
+  @NonNull
+  public final LinearLayout cameraPreviewContainer;
+
+  @NonNull
+  public final MaterialButton cancelCaptureButton;
+
+  @NonNull
+  public final MaterialButton captureButton;
+
+  @NonNull
+  public final ImageView capturedImageView;
+
+  @NonNull
+  public final MaterialButton flashAutoButton;
+
+  @NonNull
+  public final MaterialButton flashOffButton;
+
+  @NonNull
+  public final MaterialButton flashOnButton;
+
+  @NonNull
   public final LinearLayout galleryButton;
 
   @NonNull
-  public final CardView imagePreviewCard;
+  public final MaterialCardView imagePreviewCard;
 
   @NonNull
-  public final CardView processingCard;
+  public final LinearLayout photoPreviewContainer;
+
+  @NonNull
+  public final MaterialCardView processingCard;
+
+  @NonNull
+  public final MaterialSwitch promptModeSwitch;
+
+  @NonNull
+  public final MaterialCardView resultCard;
+
+  @NonNull
+  public final ImageView resultIcon;
+
+  @NonNull
+  public final TextView resultText;
+
+  @NonNull
+  public final MaterialButton retakeButton;
+
+  @NonNull
+  public final MaterialButton submitButton;
 
   @NonNull
   public final ImageView uploadedImageView;
 
   private FragmentBillUploadBinding(@NonNull ScrollView rootView,
-      @NonNull LinearLayout cameraButton, @NonNull LinearLayout galleryButton,
-      @NonNull CardView imagePreviewCard, @NonNull CardView processingCard,
-      @NonNull ImageView uploadedImageView) {
+      @NonNull LinearLayout cameraButton, @NonNull PreviewView cameraPreview,
+      @NonNull LinearLayout cameraPreviewContainer, @NonNull MaterialButton cancelCaptureButton,
+      @NonNull MaterialButton captureButton, @NonNull ImageView capturedImageView,
+      @NonNull MaterialButton flashAutoButton, @NonNull MaterialButton flashOffButton,
+      @NonNull MaterialButton flashOnButton, @NonNull LinearLayout galleryButton,
+      @NonNull MaterialCardView imagePreviewCard, @NonNull LinearLayout photoPreviewContainer,
+      @NonNull MaterialCardView processingCard, @NonNull MaterialSwitch promptModeSwitch,
+      @NonNull MaterialCardView resultCard, @NonNull ImageView resultIcon,
+      @NonNull TextView resultText, @NonNull MaterialButton retakeButton,
+      @NonNull MaterialButton submitButton, @NonNull ImageView uploadedImageView) {
     this.rootView = rootView;
     this.cameraButton = cameraButton;
+    this.cameraPreview = cameraPreview;
+    this.cameraPreviewContainer = cameraPreviewContainer;
+    this.cancelCaptureButton = cancelCaptureButton;
+    this.captureButton = captureButton;
+    this.capturedImageView = capturedImageView;
+    this.flashAutoButton = flashAutoButton;
+    this.flashOffButton = flashOffButton;
+    this.flashOnButton = flashOnButton;
     this.galleryButton = galleryButton;
     this.imagePreviewCard = imagePreviewCard;
+    this.photoPreviewContainer = photoPreviewContainer;
     this.processingCard = processingCard;
+    this.promptModeSwitch = promptModeSwitch;
+    this.resultCard = resultCard;
+    this.resultIcon = resultIcon;
+    this.resultText = resultText;
+    this.retakeButton = retakeButton;
+    this.submitButton = submitButton;
     this.uploadedImageView = uploadedImageView;
   }
 
@@ -81,6 +152,54 @@ public final class FragmentBillUploadBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.cameraPreview;
+      PreviewView cameraPreview = ViewBindings.findChildViewById(rootView, id);
+      if (cameraPreview == null) {
+        break missingId;
+      }
+
+      id = R.id.cameraPreviewContainer;
+      LinearLayout cameraPreviewContainer = ViewBindings.findChildViewById(rootView, id);
+      if (cameraPreviewContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.cancelCaptureButton;
+      MaterialButton cancelCaptureButton = ViewBindings.findChildViewById(rootView, id);
+      if (cancelCaptureButton == null) {
+        break missingId;
+      }
+
+      id = R.id.captureButton;
+      MaterialButton captureButton = ViewBindings.findChildViewById(rootView, id);
+      if (captureButton == null) {
+        break missingId;
+      }
+
+      id = R.id.capturedImageView;
+      ImageView capturedImageView = ViewBindings.findChildViewById(rootView, id);
+      if (capturedImageView == null) {
+        break missingId;
+      }
+
+      id = R.id.flashAutoButton;
+      MaterialButton flashAutoButton = ViewBindings.findChildViewById(rootView, id);
+      if (flashAutoButton == null) {
+        break missingId;
+      }
+
+      id = R.id.flashOffButton;
+      MaterialButton flashOffButton = ViewBindings.findChildViewById(rootView, id);
+      if (flashOffButton == null) {
+        break missingId;
+      }
+
+      id = R.id.flashOnButton;
+      MaterialButton flashOnButton = ViewBindings.findChildViewById(rootView, id);
+      if (flashOnButton == null) {
+        break missingId;
+      }
+
       id = R.id.galleryButton;
       LinearLayout galleryButton = ViewBindings.findChildViewById(rootView, id);
       if (galleryButton == null) {
@@ -88,14 +207,56 @@ public final class FragmentBillUploadBinding implements ViewBinding {
       }
 
       id = R.id.imagePreviewCard;
-      CardView imagePreviewCard = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView imagePreviewCard = ViewBindings.findChildViewById(rootView, id);
       if (imagePreviewCard == null) {
         break missingId;
       }
 
+      id = R.id.photoPreviewContainer;
+      LinearLayout photoPreviewContainer = ViewBindings.findChildViewById(rootView, id);
+      if (photoPreviewContainer == null) {
+        break missingId;
+      }
+
       id = R.id.processingCard;
-      CardView processingCard = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView processingCard = ViewBindings.findChildViewById(rootView, id);
       if (processingCard == null) {
+        break missingId;
+      }
+
+      id = R.id.promptModeSwitch;
+      MaterialSwitch promptModeSwitch = ViewBindings.findChildViewById(rootView, id);
+      if (promptModeSwitch == null) {
+        break missingId;
+      }
+
+      id = R.id.resultCard;
+      MaterialCardView resultCard = ViewBindings.findChildViewById(rootView, id);
+      if (resultCard == null) {
+        break missingId;
+      }
+
+      id = R.id.resultIcon;
+      ImageView resultIcon = ViewBindings.findChildViewById(rootView, id);
+      if (resultIcon == null) {
+        break missingId;
+      }
+
+      id = R.id.resultText;
+      TextView resultText = ViewBindings.findChildViewById(rootView, id);
+      if (resultText == null) {
+        break missingId;
+      }
+
+      id = R.id.retakeButton;
+      MaterialButton retakeButton = ViewBindings.findChildViewById(rootView, id);
+      if (retakeButton == null) {
+        break missingId;
+      }
+
+      id = R.id.submitButton;
+      MaterialButton submitButton = ViewBindings.findChildViewById(rootView, id);
+      if (submitButton == null) {
         break missingId;
       }
 
@@ -105,8 +266,11 @@ public final class FragmentBillUploadBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentBillUploadBinding((ScrollView) rootView, cameraButton, galleryButton,
-          imagePreviewCard, processingCard, uploadedImageView);
+      return new FragmentBillUploadBinding((ScrollView) rootView, cameraButton, cameraPreview,
+          cameraPreviewContainer, cancelCaptureButton, captureButton, capturedImageView,
+          flashAutoButton, flashOffButton, flashOnButton, galleryButton, imagePreviewCard,
+          photoPreviewContainer, processingCard, promptModeSwitch, resultCard, resultIcon,
+          resultText, retakeButton, submitButton, uploadedImageView);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -13,13 +13,15 @@
         android:padding="16dp">
 
         <!-- Header Card -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/background_card"
             app:cardCornerRadius="20dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:strokeColor="@color/gray_200"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,22 +49,48 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Upload Options Card -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardBackgroundColor="@color/background_card"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:strokeColor="@color/gray_200"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
+
+                <!-- Prompt Mode Toggle -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Enhanced extraction"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"/>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/promptModeSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text=""/>
+                </LinearLayout>
 
                 <!-- Camera Button -->
                 <LinearLayout
@@ -144,12 +172,187 @@
 
                 </LinearLayout>
 
+                <!-- Camera Preview (Hidden by default) -->
+                <LinearLayout
+                    android:id="@+id/cameraPreviewContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Camera Preview -->
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/cameraPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:background="@color/gray_100"
+                        android:scaleType="fitCenter" />
+
+                    <!-- Flash Control -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flash:"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="8dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/flashAutoButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="AUTO"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/flashOnButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="ON"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/flashOffButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="OFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    </LinearLayout>
+
+                    <!-- Camera Controls -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/captureButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:text="CAPTURE"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:icon="@drawable/ic_camera"
+                            app:iconGravity="textStart"
+                            app:iconSize="24dp"
+                            style="@style/Widget.Material3.Button" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cancelCaptureButton"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="CANCEL"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:icon="@drawable/ic_arrow_back"
+                            app:iconGravity="textStart"
+                            app:iconSize="24dp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                    </LinearLayout>
+
+                    <!-- Photo Preview (Hidden by default) -->
+                    <LinearLayout
+                        android:id="@+id/photoPreviewContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Photo Preview"
+                            android:textColor="@color/text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:padding="16dp" />
+
+                        <ImageView
+                            android:id="@+id/capturedImageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:background="@color/gray_100"
+                            android:contentDescription="Captured bill image"
+                            android:scaleType="centerCrop"
+                            android:padding="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/retakeButton"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_marginEnd="12dp"
+                                android:layout_weight="1"
+                                android:text="RETAKE"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:icon="@drawable/ic_camera"
+                                app:iconGravity="textStart"
+                                app:iconSize="24dp"
+                                style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/submitButton"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:text="SUBMIT"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:icon="@drawable/ic_check"
+                                app:iconGravity="textStart"
+                                app:iconSize="24dp"
+                                style="@style/Widget.Material3.Button" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Uploaded Image Preview -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/imagePreviewCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,7 +360,9 @@
             android:visibility="gone"
             app:cardBackgroundColor="@color/background_card"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:strokeColor="@color/gray_200"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -184,10 +389,10 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Processing Status -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/processingCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -195,7 +400,9 @@
             android:visibility="gone"
             app:cardBackgroundColor="@color/background_card"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:strokeColor="@color/gray_200"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -230,7 +437,48 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Processing Result -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/resultCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/gray_200"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/resultIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:tint="@color/text_primary"
+                    android:src="@drawable/ic_check"/>
+
+                <TextView
+                    android:id="@+id/resultText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:text="Items extracted successfully"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

@@ -50,6 +50,20 @@
                         android:textColor="?android:textColorPrimary"
                         android:textSize="17sp"
                         android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/itemConfidence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="95%"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:background="@drawable/badge_ok"
+                        android:visibility="gone"/>
                     <Button
                         android:id="@+id/splitEvenlyButton"
                         android:layout_width="wrap_content"

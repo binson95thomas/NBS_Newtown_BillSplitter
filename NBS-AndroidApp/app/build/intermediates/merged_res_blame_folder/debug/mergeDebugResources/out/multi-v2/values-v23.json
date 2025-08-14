@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-57:/values-v23/values-v23.xml",
+            "outputFile": "com.newtown.billsplitter.app-mergeDebugResources-58:/values-v23/values-v23.xml",
             "map": [
                 {
                     "source": "C:\\Users\\binso\\.gradle\\caches\\8.13\\transforms\\b1963d65292208921b2f06d1eb025ae9\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",

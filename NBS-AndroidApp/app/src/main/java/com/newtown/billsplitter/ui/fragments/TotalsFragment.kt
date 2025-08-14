@@ -13,6 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import com.newtown.billsplitter.ui.adapter.MemberCarouselAdapter
 import com.newtown.billsplitter.databinding.FragmentTotalsBinding
 import com.newtown.billsplitter.ui.adapter.MemberBreakdownAdapter
 import com.newtown.billsplitter.viewmodel.MainViewModel
@@ -22,6 +24,7 @@ class TotalsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
     private lateinit var breakdownAdapter: MemberBreakdownAdapter
+    private var carouselAdapter: MemberCarouselAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,48 +41,37 @@ class TotalsFragment : Fragment() {
         setupDiscountInput()
         observeViewModel()
 
-        breakdownAdapter = MemberBreakdownAdapter(emptyList()) { breakdown ->
+        // Setup carousel RecyclerView with snap helper
+        carouselAdapter = MemberCarouselAdapter(emptyList()) { breakdown ->
             copyToClipboard(breakdown)
         }
-        binding.memberBreakdownRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.memberBreakdownRecyclerView.adapter = breakdownAdapter
-    }
+        binding.memberCarouselRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = carouselAdapter
+            PagerSnapHelper().attachToRecyclerView(this)
+        }
 
-    private fun setupDiscountInput() {
-        binding.applyDiscountButton.setOnClickListener {
-            applyDiscount()
-        }
-        
-        binding.discountEditText.setOnEditorActionListener { _, _, _ ->
-            applyDiscount()
-            true
-        }
-        
-        binding.discountEditText.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                applyDiscount()
-            }
-        }
-        
-        // Add text change listener for real-time updates
-        binding.discountEditText.addTextChangedListener(object : android.text.TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: android.text.Editable?) {
-                if (s.toString().isNotEmpty()) {
-                    applyDiscount()
-                }
-            }
-        })
-        
-        // Setup recalculate total button
-        binding.recalculateTotalButton.setOnClickListener {
+        // Setup recalculate button
+        binding.recalculateButton.setOnClickListener {
             recalculateTotal()
         }
     }
 
+    private fun setupDiscountInput() {
+        // Only recalculate on editor action (Enter key) or manual button click
+        binding.discountEditText.setOnEditorActionListener { _, _, _ ->
+            applyDiscount()
+            true
+        }
+    }
+
     private fun observeViewModel() {
-        viewModel.discountPercentage.observe(viewLifecycleOwner) { 
+        viewModel.discountPercentage.observe(viewLifecycleOwner) { percentage -> 
+            // Update the input field to show the current discount percentage
+            val safePercentage = percentage ?: 0.0
+            if (binding.discountEditText.text.toString() != safePercentage.toString()) {
+                binding.discountEditText.setText(safePercentage.toString())
+            }
             updateBillSummary() 
         }
         viewModel.members.observe(viewLifecycleOwner) { 
@@ -95,7 +87,7 @@ class TotalsFragment : Fragment() {
         val subtotal = viewModel.getSubtotal()
         val discountAmount = viewModel.getDiscountAmount()
         val finalTotal = viewModel.getFinalTotal()
-        val discountPercentage = viewModel.discountPercentage.value ?: 0.0
+        val discountPercentage = viewModel.getDiscountPercentageSafe()
         
         // Calculate deals and discounts from items
         val items = viewModel.billItems.value ?: emptyList()
@@ -128,11 +120,10 @@ class TotalsFragment : Fragment() {
 
     private fun updateMemberBreakdowns() {
         val breakdowns = viewModel.getMemberBreakdowns()
-        android.util.Log.d("TotalsFragment", "updateMemberBreakdowns: ${breakdowns.size} breakdowns")
-        breakdowns.forEach { breakdown ->
-            android.util.Log.d("TotalsFragment", "Member: ${breakdown.memberName}, Subtotal: ${breakdown.subtotal}, Final: ${breakdown.finalAmount}")
+        carouselAdapter?.update(breakdowns)
+        if (breakdowns.isNotEmpty()) {
+            binding.memberPagerTitle.text = breakdowns.first().memberName
         }
-        breakdownAdapter.updateData(breakdowns)
     }
 
     private fun copyToClipboard(breakdown: MainViewModel.MemberBreakdown) {
@@ -153,20 +144,32 @@ class TotalsFragment : Fragment() {
                 updateBillSummary()
                 updateMemberBreakdowns()
             } catch (e: NumberFormatException) {
-                // Invalid input, ignore
+                // Invalid input, treat as 0%
+                viewModel.setDiscountPercentage(0.0)
+                updateBillSummary()
+                updateMemberBreakdowns()
             }
+        } else {
+            // Empty text means 0%
+            viewModel.setDiscountPercentage(0.0)
+            updateBillSummary()
+            updateMemberBreakdowns()
         }
     }
 
     private fun recalculateTotal() {
         android.util.Log.d("TotalsFragment", "Recalculating total from items...")
         
-        // Force recalculation from items
+        // First apply the current discount percentage from the input field
+        applyDiscount()
+        
+        // Then force recalculation from items using existing ViewModel methods
+        // This will use the current formula: Final Total = Subtotal - Discount Amount
         updateBillSummary()
         updateMemberBreakdowns()
         
         // Show feedback to user
-        Toast.makeText(context, "Total recalculated from items", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Total recalculated using current formula", Toast.LENGTH_SHORT).show()
         
         android.util.Log.d("TotalsFragment", "Recalculation complete")
     }

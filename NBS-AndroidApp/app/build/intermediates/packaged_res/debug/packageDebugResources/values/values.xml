@@ -38,7 +38,8 @@
     <color name="gray_700">#616161</color>
     <color name="gray_800">#424242</color>
     <color name="gray_900">#212121</color>
-    <color name="ic_launcher_background">#FF6200EE</color>
+    <color name="ic_launcher_background">@android:color/transparent</color>
+    <color name="ic_launcher_background_white">#FFFFFF</color>
     <color name="on_surface_variant">#64748B</color>
     <color name="primary_500">#667eea</color>
     <color name="primary_600">#5a6fd8</color>
@@ -158,6 +159,9 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_secondary</item>
+    </style>
+    <style name="Theme.NBS.Splash" parent="Theme.Material3.DayNight">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
     <style name="Theme.NewtownBillSplitter" parent="Theme.Material3.DayNight">
         

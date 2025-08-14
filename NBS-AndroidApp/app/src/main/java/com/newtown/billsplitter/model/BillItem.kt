@@ -7,7 +7,8 @@ data class BillItem(
     val assignedTo: List<Long> = emptyList(), // Use member IDs
     val isMultibuy: Boolean = false,
     val itemType: String = "item", // "item", "deal", "discount", "colleague_discount"
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val confidence: Double? = null
 ) {
     fun getDisplayPrice(): String {
         val absPrice = kotlin.math.abs(price)

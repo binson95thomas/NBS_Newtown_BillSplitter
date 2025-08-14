@@ -29,6 +29,9 @@ public final class ItemBillBinding implements ViewBinding {
   public final ImageButton editItemButton;
 
   @NonNull
+  public final TextView itemConfidence;
+
+  @NonNull
   public final TextView itemName;
 
   @NonNull
@@ -41,11 +44,13 @@ public final class ItemBillBinding implements ViewBinding {
   public final Button splitEvenlyButton;
 
   private ItemBillBinding(@NonNull CardView rootView, @NonNull ImageButton deleteItemButton,
-      @NonNull ImageButton editItemButton, @NonNull TextView itemName, @NonNull TextView itemPrice,
+      @NonNull ImageButton editItemButton, @NonNull TextView itemConfidence,
+      @NonNull TextView itemName, @NonNull TextView itemPrice,
       @NonNull FlexboxLayout memberCheckboxContainer, @NonNull Button splitEvenlyButton) {
     this.rootView = rootView;
     this.deleteItemButton = deleteItemButton;
     this.editItemButton = editItemButton;
+    this.itemConfidence = itemConfidence;
     this.itemName = itemName;
     this.itemPrice = itemPrice;
     this.memberCheckboxContainer = memberCheckboxContainer;
@@ -91,6 +96,12 @@ public final class ItemBillBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.itemConfidence;
+      TextView itemConfidence = ViewBindings.findChildViewById(rootView, id);
+      if (itemConfidence == null) {
+        break missingId;
+      }
+
       id = R.id.itemName;
       TextView itemName = ViewBindings.findChildViewById(rootView, id);
       if (itemName == null) {
@@ -115,8 +126,8 @@ public final class ItemBillBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemBillBinding((CardView) rootView, deleteItemButton, editItemButton, itemName,
-          itemPrice, memberCheckboxContainer, splitEvenlyButton);
+      return new ItemBillBinding((CardView) rootView, deleteItemButton, editItemButton,
+          itemConfidence, itemName, itemPrice, memberCheckboxContainer, splitEvenlyButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
