@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Outer glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#400066FF" />
+            <corners android:radius="20dp" />
+            <padding android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp" />
+        </shape>
+    </item>
+    
+    <!-- Main card background with dark gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#1A1A2E"
+                android:centerColor="#16213E"
+                android:endColor="#0F3460" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner highlight -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="#20FFFFFF" />
+            <corners android:radius="18dp" />
+            <padding android:top="3dp" />
+        </shape>
+    </item>
+    
+</layer-list>

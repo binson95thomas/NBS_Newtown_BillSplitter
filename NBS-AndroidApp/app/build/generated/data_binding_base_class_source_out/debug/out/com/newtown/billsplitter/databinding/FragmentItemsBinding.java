@@ -4,7 +4,6 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -25,7 +24,7 @@ public final class FragmentItemsBinding implements ViewBinding {
   public final LinearLayout addItemButton;
 
   @NonNull
-  public final Button clearAllButton;
+  public final LinearLayout clearAllButton;
 
   @NonNull
   public final TextView dealsInfoText;
@@ -40,7 +39,7 @@ public final class FragmentItemsBinding implements ViewBinding {
   public final TextView totalAmountText;
 
   private FragmentItemsBinding(@NonNull LinearLayout rootView, @NonNull LinearLayout addItemButton,
-      @NonNull Button clearAllButton, @NonNull TextView dealsInfoText,
+      @NonNull LinearLayout clearAllButton, @NonNull TextView dealsInfoText,
       @NonNull LinearLayout emptyStateLayout, @NonNull RecyclerView itemsRecyclerView,
       @NonNull TextView totalAmountText) {
     this.rootView = rootView;
@@ -86,7 +85,7 @@ public final class FragmentItemsBinding implements ViewBinding {
       }
 
       id = R.id.clearAllButton;
-      Button clearAllButton = ViewBindings.findChildViewById(rootView, id);
+      LinearLayout clearAllButton = ViewBindings.findChildViewById(rootView, id);
       if (clearAllButton == null) {
         break missingId;
       }

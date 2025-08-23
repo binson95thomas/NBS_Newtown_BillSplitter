@@ -146,17 +146,35 @@ class GeminiService(private val context: Context) {
             try {
                 val enhanced = gson.fromJson(jsonString, EnhancedBillResponse::class.java)
                 if (enhanced.items != null) {
-                    return enhanced.items.mapIndexed { index, item ->
-                        val priceDouble = item.price?.replace(',', '.')?.toDoubleOrNull()
-                            ?: (item.price_minor?.let { it.toDouble() / 100.0 } ?: 0.0)
-                        BillItem(
-                            id = System.currentTimeMillis() + index + (index * 1000),
-                            name = item.name ?: "Item",
-                            price = priceDouble,
-                            itemType = item.type ?: "item",
-                            confidence = item.confidence
-                        )
+                    Log.d("GeminiService", "Processing ${enhanced.items.size} items from enhanced schema")
+                    val filteredItems = enhanced.items.filter { item -> 
+                        // Completely filter out colleague discount items
+                        val itemName = item.name?.lowercase() ?: ""
+                        val itemType = item.type?.lowercase() ?: ""
+                        val isColleagueDiscount = itemName.contains("colleague") || 
+                                                  itemName.contains("employee") || 
+                                                  itemName.contains("disc") ||
+                                                  itemType == "colleague_discount"
+                        
+                        if (isColleagueDiscount) {
+                            Log.d("GeminiService", "Filtered out colleague discount item: ${item.name}")
+                        }
+                        
+                        !isColleagueDiscount
                     }
+                    Log.d("GeminiService", "After filtering: ${filteredItems.size} items remaining")
+                    return filteredItems
+                        .mapIndexed { index, item ->
+                            val priceDouble = item.price?.replace(',', '.')?.toDoubleOrNull()
+                                ?: (item.price_minor?.let { it.toDouble() / 100.0 } ?: 0.0)
+                            BillItem(
+                                id = System.currentTimeMillis() + index + (index * 1000),
+                                name = item.name ?: "Item",
+                                price = priceDouble,
+                                itemType = item.type ?: "item",
+                                confidence = item.confidence
+                            )
+                        }
                 }
             } catch (ignored: Exception) {
                 // Fall through to legacy parse
@@ -164,14 +182,31 @@ class GeminiService(private val context: Context) {
 
             // Fallback to legacy schema
             val legacy = gson.fromJson(jsonString, BillResponse::class.java)
-            legacy.items.mapIndexed { index, item ->
-                BillItem(
-                    id = System.currentTimeMillis() + index + (index * 1000),
-                    name = item.name,
-                    price = item.price,
-                    itemType = item.type
-                )
+            Log.d("GeminiService", "Processing ${legacy.items.size} items from legacy schema")
+            val filteredLegacyItems = legacy.items.filter { item ->
+                // Completely filter out colleague discount items
+                val itemName = item.name.lowercase()
+                val isColleagueDiscount = itemName.contains("colleague") || 
+                                          itemName.contains("employee") || 
+                                          itemName.contains("disc") ||
+                                          item.type == "colleague_discount"
+                
+                if (isColleagueDiscount) {
+                    Log.d("GeminiService", "Filtered out colleague discount item: ${item.name}")
+                }
+                
+                !isColleagueDiscount
             }
+            Log.d("GeminiService", "After filtering: ${filteredLegacyItems.size} items remaining")
+            filteredLegacyItems
+                .mapIndexed { index, item ->
+                    BillItem(
+                        id = System.currentTimeMillis() + index + (index * 1000),
+                        name = item.name,
+                        price = item.price,
+                        itemType = item.type
+                    )
+                }
         } catch (e: Exception) {
             Log.e("GeminiService", "JSON parsing failed, trying fallback", e)
             parseFallbackResponse(response)
@@ -188,6 +223,12 @@ class GeminiService(private val context: Context) {
         for (line in lines) {
             val trimmedLine = line.trim()
             if (trimmedLine.isEmpty()) continue
+            
+            // Skip colleague discount lines completely
+            val lowerLine = trimmedLine.lowercase()
+            if (lowerLine.contains("colleague") || lowerLine.contains("employee") || lowerLine.contains("disc")) {
+                continue
+            }
             
             val priceMatch = pricePattern.findAll(trimmedLine).lastOrNull()
             if (priceMatch != null) {
@@ -218,7 +259,6 @@ class GeminiService(private val context: Context) {
     
     private data class BillSummary(
         val subtotal: Double,
-        val colleague_discount: Double,
         val final_total: Double
     )
     
@@ -238,12 +278,10 @@ class GeminiService(private val context: Context) {
     )
 
     private data class EnhancedBillSummary(
-        val items_total_before_colleague: String?,
-        val items_total_before_colleague_minor: Int?,
-        val colleague_discount_amount: String?,
-        val colleague_discount_amount_minor: Int?,
-        val final_total_after_colleague: String?,
-        val final_total_after_colleague_minor: Int?
+        val subtotal: String?,
+        val subtotal_minor: Int?,
+        val final_total: String?,
+        val final_total_minor: Int?
     )
 
     private data class EnhancedBillResponse(
@@ -265,7 +303,6 @@ class GeminiService(private val context: Context) {
             ],
             "summary": {
                 "subtotal": 0.00,
-                "colleague_discount": 0.00,
                 "final_total": 0.00
             }
         }
@@ -277,12 +314,11 @@ class GeminiService(private val context: Context) {
            - Set type as "deal" for item-specific deals
            - These deals should be included in subtotal calculation
         
-        2. **COLLEAGUE DISCOUNT HANDLING**: 
-           - DO NOT include colleague discounts (e.g., "Colleague Disc", "Employee Discount") in the items list
-           - Colleague discounts should only be mentioned in the summary section
-           - The subtotal should be the amount BEFORE colleague discount (the first TOTAL on receipt)
-           - The final_total should be the amount AFTER colleague discount (the final TOTAL on receipt)
-           - The colleague_discount field should be the difference between subtotal and final_total
+        2. **DISCOUNT HANDLING**: 
+           - Extract item-specific deals (e.g., "BIRDSEYE 4 FOR £4.98" with negative price -£3.94) as separate items
+           - Use NEGATIVE prices for deals (e.g., -3.94)
+           - Set type as "deal" for item-specific deals
+           - These deals should be included in subtotal calculation
         
         3. **ITEM EXTRACTION RULES**:
            - Extract ALL items including zero-cost items (e.g., "BAG EXCHANGE" £0.00)
@@ -290,7 +326,6 @@ class GeminiService(private val context: Context) {
            - Clean up OCR artifacts when possible (e.g., "PRGLES BLZN" → "Pringles Blazin")
            - Use exact names as they appear, but improve readability when obvious
            - Pay special attention to deals with negative prices on the receipt
-           - EXCLUDE colleague discounts from items list
         
         4. **IGNORE THESE ELEMENTS**:
            - Promotional text (e.g., "For a chance to win £1,000!")
@@ -298,7 +333,6 @@ class GeminiService(private val context: Context) {
            - Payment method details (e.g., "AMERICAN EXPRESS", "A/C No.")
            - Transaction IDs and manager names
            - QR codes and barcodes
-           - Colleague discounts (these go in summary only)
         
         5. **PRICING RULES**:
            - Convert all prices to decimal format (e.g., £5.99 = 5.99)
@@ -308,13 +342,12 @@ class GeminiService(private val context: Context) {
            - Item-specific deals should have NEGATIVE prices
         
         6. **CALCULATION RULES**:
-           - subtotal = sum of all items (including deals, excluding colleague discounts)
-           - colleague_discount = difference between first TOTAL and final TOTAL on receipt
-           - final_total = subtotal - colleague_discount
+           - subtotal = sum of all items (including deals)
+           - final_total = subtotal (no colleague discount handling)
            - Ensure calculations match the receipt's final amount
         
         7. **FALLBACK**:
-           - If you can't read clearly, return {"items": [], "summary": {"subtotal": 0, "colleague_discount": 0, "final_total": 0}}
+           - If you can't read clearly, return {"items": [], "summary": {"subtotal": 0, "final_total": 0}}
         
         Return only the JSON object, nothing else.
     """.trimIndent()
@@ -326,13 +359,14 @@ class GeminiService(private val context: Context) {
         Goal:
         - Return every purchased line as an item.
         - Include item-specific deals as separate negative items.
-        - EXCLUDE colleague/employee discount from the items list. If present, report it in summary only.
-        - The subtotal we care about is sum(items) including deals (should match the first printed TOTAL before colleague discount).
+        - IGNORE colleague/employee discounts completely - do not process them at all.
+        - The subtotal is sum(items) including deals.
 
         Formatting rules:
         - Currency: GBP. Dot as decimal separator. Exactly two decimals in strings.
         - Read the rightmost price on each item line; do not infer quantities or weight math. Zero-cost items stay 0.00.
         - Ignore headers, promos, payment, "Asda Rewards", manager names, transaction IDs.
+        - IGNORE colleague discount lines completely.
 
         JSON schema:
         {
@@ -340,12 +374,10 @@ class GeminiService(private val context: Context) {
             {"name":"string","price":"0.00","price_minor":0,"type":"item|deal","original_text":"string","confidence":0.0}
           ],
           "summary": {
-            "items_total_before_colleague":"0.00",
-            "items_total_before_colleague_minor":0,
-            "colleague_discount_amount":"0.00",
-            "colleague_discount_amount_minor":0,
-            "final_total_after_colleague":"0.00",
-            "final_total_after_colleague_minor":0
+            "subtotal":"0.00",
+            "subtotal_minor":0,
+            "final_total":"0.00",
+            "final_total_minor":0
           }
         }
 
@@ -353,7 +385,8 @@ class GeminiService(private val context: Context) {
         - "BIRDSEYE 4 FOR £4.98                   -£3.94" -> {"name":"BIRDSEYE 4 FOR £4.98","price":"-3.94","price_minor":-394,"type":"deal","original_text":"BIRDSEYE 4 FOR £4.98 -£3.94","confidence":0.95}
 
         Validation:
-        - Ensure sum(items.price_minor) ≈ summary.items_total_before_colleague_minor (±2 pence). Do NOT include colleague discount lines in items.
+        - Ensure sum(items.price_minor) ≈ summary.subtotal_minor (±2 pence).
+        - Do NOT process colleague discount lines at all.
 
         Return ONLY the JSON object.
     """.trimIndent()

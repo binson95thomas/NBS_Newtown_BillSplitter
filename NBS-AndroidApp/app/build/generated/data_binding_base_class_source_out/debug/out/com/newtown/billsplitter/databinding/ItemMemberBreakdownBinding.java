@@ -4,6 +4,7 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -33,25 +34,33 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
   public final TextView itemsText;
 
   @NonNull
-  public final View memberAvatar;
+  public final FrameLayout memberAvatar;
+
+  @NonNull
+  public final TextView memberEmoji;
 
   @NonNull
   public final TextView memberName;
+
+  @NonNull
+  public final TextView memberPill;
 
   @NonNull
   public final TextView subtotalText;
 
   private ItemMemberBreakdownBinding(@NonNull CardView rootView, @NonNull ImageButton copyButton,
       @NonNull TextView discountText, @NonNull TextView finalAmountText,
-      @NonNull TextView itemsText, @NonNull View memberAvatar, @NonNull TextView memberName,
-      @NonNull TextView subtotalText) {
+      @NonNull TextView itemsText, @NonNull FrameLayout memberAvatar, @NonNull TextView memberEmoji,
+      @NonNull TextView memberName, @NonNull TextView memberPill, @NonNull TextView subtotalText) {
     this.rootView = rootView;
     this.copyButton = copyButton;
     this.discountText = discountText;
     this.finalAmountText = finalAmountText;
     this.itemsText = itemsText;
     this.memberAvatar = memberAvatar;
+    this.memberEmoji = memberEmoji;
     this.memberName = memberName;
+    this.memberPill = memberPill;
     this.subtotalText = subtotalText;
   }
 
@@ -107,14 +116,26 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
       }
 
       id = R.id.memberAvatar;
-      View memberAvatar = ViewBindings.findChildViewById(rootView, id);
+      FrameLayout memberAvatar = ViewBindings.findChildViewById(rootView, id);
       if (memberAvatar == null) {
+        break missingId;
+      }
+
+      id = R.id.memberEmoji;
+      TextView memberEmoji = ViewBindings.findChildViewById(rootView, id);
+      if (memberEmoji == null) {
         break missingId;
       }
 
       id = R.id.memberName;
       TextView memberName = ViewBindings.findChildViewById(rootView, id);
       if (memberName == null) {
+        break missingId;
+      }
+
+      id = R.id.memberPill;
+      TextView memberPill = ViewBindings.findChildViewById(rootView, id);
+      if (memberPill == null) {
         break missingId;
       }
 
@@ -125,7 +146,8 @@ public final class ItemMemberBreakdownBinding implements ViewBinding {
       }
 
       return new ItemMemberBreakdownBinding((CardView) rootView, copyButton, discountText,
-          finalAmountText, itemsText, memberAvatar, memberName, subtotalText);
+          finalAmountText, itemsText, memberAvatar, memberEmoji, memberName, memberPill,
+          subtotalText);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

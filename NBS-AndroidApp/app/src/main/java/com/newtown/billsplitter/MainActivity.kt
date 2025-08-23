@@ -16,6 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.app.AlertDialog
 import com.newtown.billsplitter.model.Member
 import android.widget.TextView
+import com.newtown.billsplitter.utils.HapticUtils
+import com.newtown.billsplitter.utils.AnimationUtils
 
 class MainActivity : AppCompatActivity() {
     
@@ -37,10 +39,6 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.initialize(this)
 
-        // Setup toolbar
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
         // Setup ViewPager and TabLayout
         val pagerAdapter = MainPagerAdapter(this)
         binding.viewPager.adapter = pagerAdapter
@@ -55,8 +53,10 @@ class MainActivity : AppCompatActivity() {
             }
         }.attach()
 
-        // Setup Floating Action Button
+        // Setup Floating Action Button with haptic feedback
         binding.fabAddMember.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
             showAddMemberDialog()
         }
 
@@ -67,9 +67,11 @@ class MainActivity : AppCompatActivity() {
             binding.fabAddMember.visibility = if (currentTab == 0) View.VISIBLE else View.GONE
         }
 
-        // Update FAB visibility when tab changes
+        // Update FAB visibility when tab changes with haptic feedback
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                // Light haptic feedback for tab selection
+                tab?.view?.let { HapticUtils.lightTap(it) }
                 binding.fabAddMember.visibility = if (tab?.position == 0) View.VISIBLE else View.GONE
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}

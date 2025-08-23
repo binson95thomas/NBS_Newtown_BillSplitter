@@ -30,297 +30,275 @@
 19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 19-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:12:5-79
 19-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:12:22-76
-20
-21    <!-- Camera features -->
-22    <uses-feature
-22-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:15:5-17:36
-23        android:name="android.hardware.camera"
-23-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:16:9-47
-24        android:required="false" />
-24-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:17:9-33
-25    <uses-feature
-25-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:18:5-20:36
-26        android:name="android.hardware.camera.autofocus"
-26-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:19:9-57
-27        android:required="false" />
-27-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:20:9-33
-28
-29    <permission
-29-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
-30        android:name="com.newtown.billsplitter.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-30-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
-31        android:protectionLevel="signature" />
-31-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
-32
-33    <uses-permission android:name="com.newtown.billsplitter.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-33-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
-33-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
-34
-35    <application
-35-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:22:5-71:19
-36        android:allowBackup="true"
-36-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:23:9-35
-37        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-37-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
-38        android:dataExtractionRules="@xml/data_extraction_rules"
-38-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:24:9-65
-39        android:debuggable="true"
-40        android:extractNativeLibs="false"
-41        android:fullBackupContent="@xml/backup_rules"
-41-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:25:9-54
-42        android:icon="@mipmap/ic_launcher"
-42-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:26:9-43
-43        android:label="@string/app_name"
-43-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:27:9-41
-44        android:roundIcon="@mipmap/ic_launcher_round"
-44-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:28:9-54
-45        android:supportsRtl="true"
-45-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:29:9-35
-46        android:theme="@style/Theme.NewtownBillSplitter" >
-46-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:30:9-57
-47        <activity
-47-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:33:9-41:20
-48            android:name="com.newtown.billsplitter.MainActivity"
-48-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:34:13-41
-49            android:exported="true"
-49-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:35:13-36
-50            android:theme="@style/Theme.NewtownBillSplitter" >
-50-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:36:13-61
-51            <intent-filter>
-51-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:37:13-40:29
-52                <action android:name="android.intent.action.MAIN" />
-52-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:38:17-69
-52-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:38:25-66
-53
-54                <category android:name="android.intent.category.LAUNCHER" />
-54-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:39:17-77
-54-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:39:27-74
-55            </intent-filter>
-56        </activity>
-57        <activity
-57-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:43:9-46:52
-58            android:name="com.newtown.billsplitter.ui.camera.CameraActivity"
-58-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:44:13-53
-59            android:exported="false"
-59-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:45:13-37
-60            android:screenOrientation="portrait" />
-60-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:46:13-49
-61        <activity
-61-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:48:9-50:40
-62            android:name="com.newtown.billsplitter.ui.bill.BillDetailActivity"
-62-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:49:13-55
-63            android:exported="false" />
-63-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:50:13-37
-64        <activity
-64-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:52:9-54:40
-65            android:name="com.newtown.billsplitter.ui.members.MembersActivity"
-65-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:53:13-55
-66            android:exported="false" />
-66-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:54:13-37
-67        <activity
-67-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:56:9-58:40
-68            android:name="com.newtown.billsplitter.ui.totals.TotalsActivity"
-68-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:57:13-53
-69            android:exported="false" />
-69-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:58:13-37
+20    <uses-permission android:name="android.permission.VIBRATE" />
+20-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:13:5-66
+20-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:13:22-63
+21
+22    <!-- Camera features -->
+23    <uses-feature
+23-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:16:5-18:36
+24        android:name="android.hardware.camera"
+24-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:17:9-47
+25        android:required="false" />
+25-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:18:9-33
+26    <uses-feature
+26-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:19:5-21:36
+27        android:name="android.hardware.camera.autofocus"
+27-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:20:9-57
+28        android:required="false" />
+28-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:21:9-33
+29
+30    <permission
+30-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+31        android:name="com.newtown.billsplitter.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+31-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+32        android:protectionLevel="signature" />
+32-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+33
+34    <uses-permission android:name="com.newtown.billsplitter.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+34-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+34-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+35
+36    <application
+36-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:23:5-57:19
+37        android:allowBackup="true"
+37-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:24:9-35
+38        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+38-->[androidx.core:core:1.12.0] C:\Users\binso\.gradle\caches\8.13\transforms\e096c3010c9c5064d394a86e87deb480\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+39        android:dataExtractionRules="@xml/data_extraction_rules"
+39-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:25:9-65
+40        android:debuggable="true"
+41        android:extractNativeLibs="false"
+42        android:fullBackupContent="@xml/backup_rules"
+42-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:26:9-54
+43        android:icon="@mipmap/ic_launcher"
+43-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:27:9-43
+44        android:label="@string/app_name"
+44-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:28:9-41
+45        android:roundIcon="@mipmap/ic_launcher_round"
+45-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:29:9-54
+46        android:supportsRtl="true"
+46-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:30:9-35
+47        android:testOnly="true"
+48        android:theme="@style/Theme.NewtownBillSplitter" >
+48-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:31:9-57
+49        <activity
+49-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:34:9-42:20
+50            android:name="com.newtown.billsplitter.MainActivity"
+50-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:35:13-41
+51            android:exported="true"
+51-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:36:13-36
+52            android:theme="@style/Theme.NewtownBillSplitter" >
+52-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:37:13-61
+53            <intent-filter>
+53-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:38:13-41:29
+54                <action android:name="android.intent.action.MAIN" />
+54-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:39:17-69
+54-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:39:25-66
+55
+56                <category android:name="android.intent.category.LAUNCHER" />
+56-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:40:17-77
+56-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:40:27-74
+57            </intent-filter>
+58        </activity>
+59
+60        <!-- File provider for camera -->
+61        <provider
+62            android:name="androidx.core.content.FileProvider"
+62-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:48:13-62
+63            android:authorities="com.newtown.billsplitter.fileprovider"
+63-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:49:13-64
+64            android:exported="false"
+64-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:50:13-37
+65            android:grantUriPermissions="true" >
+65-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:51:13-47
+66            <meta-data
+66-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:52:13-54:54
+67                android:name="android.support.FILE_PROVIDER_PATHS"
+67-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:53:17-67
+68                android:resource="@xml/file_paths" />
+68-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:54:17-51
+69        </provider>
 70
-71        <!-- File provider for camera -->
-72        <provider
-73            android:name="androidx.core.content.FileProvider"
-73-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:62:13-62
-74            android:authorities="com.newtown.billsplitter.fileprovider"
-74-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:63:13-64
-75            android:exported="false"
-75-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:64:13-37
-76            android:grantUriPermissions="true" >
-76-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:65:13-47
-77            <meta-data
-77-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:66:13-68:54
-78                android:name="android.support.FILE_PROVIDER_PATHS"
-78-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:67:17-67
-79                android:resource="@xml/file_paths" />
-79-->D:\Personal_Projects\NBS\NBS-AndroidApp\app\src\main\AndroidManifest.xml:68:17-51
-80        </provider>
-81
-82        <service
-82-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:24:9-33:19
-83            android:name="androidx.camera.core.impl.MetadataHolderService"
-83-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:25:13-75
-84            android:enabled="false"
-84-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:26:13-36
-85            android:exported="false" >
-85-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:27:13-37
-86            <meta-data
-86-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:30:13-32:89
-87                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
-87-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:31:17-103
-88                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
-88-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:32:17-86
-89        </service>
-90
-91        <provider
-91-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
-92            android:name="androidx.startup.InitializationProvider"
-92-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
-93            android:authorities="com.newtown.billsplitter.androidx-startup"
-93-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
-94            android:exported="false" >
-94-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
-95            <meta-data
-95-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
-96                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-96-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
-97                android:value="androidx.startup" />
-97-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
-98            <meta-data
-98-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\binso\.gradle\caches\8.13\transforms\ee2b606c4e3510e1a5322fef506cf3dc\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
-99                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-99-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\binso\.gradle\caches\8.13\transforms\ee2b606c4e3510e1a5322fef506cf3dc\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
-100                android:value="androidx.startup" />
-100-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\binso\.gradle\caches\8.13\transforms\ee2b606c4e3510e1a5322fef506cf3dc\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
-101            <meta-data
-101-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-102                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-102-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-103                android:value="androidx.startup" />
-103-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-104        </provider>
-105
-106        <service
-106-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:9:9-15:19
-107            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
-107-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:10:13-91
-108            android:directBootAware="true"
-108-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:17:13-43
-109            android:exported="false" >
-109-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:11:13-37
-110            <meta-data
-110-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:12:13-14:85
-111                android:name="com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar"
-111-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:13:17-114
-112                android:value="com.google.firebase.components.ComponentRegistrar" />
-112-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:14:17-82
-113            <meta-data
-113-->[com.google.mlkit:vision-common:17.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\2f2434431a8ae08b71dba77a7accd3b4\transformed\vision-common-17.3.0\AndroidManifest.xml:12:13-14:85
-114                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
-114-->[com.google.mlkit:vision-common:17.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\2f2434431a8ae08b71dba77a7accd3b4\transformed\vision-common-17.3.0\AndroidManifest.xml:13:17-124
-115                android:value="com.google.firebase.components.ComponentRegistrar" />
-115-->[com.google.mlkit:vision-common:17.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\2f2434431a8ae08b71dba77a7accd3b4\transformed\vision-common-17.3.0\AndroidManifest.xml:14:17-82
-116            <meta-data
-116-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:20:13-22:85
-117                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
-117-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:21:17-120
-118                android:value="com.google.firebase.components.ComponentRegistrar" />
-118-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:22:17-82
-119        </service>
+71        <service
+71-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:24:9-33:19
+72            android:name="androidx.camera.core.impl.MetadataHolderService"
+72-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:25:13-75
+73            android:enabled="false"
+73-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:26:13-36
+74            android:exported="false" >
+74-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:27:13-37
+75            <meta-data
+75-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:30:13-32:89
+76                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+76-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:31:17-103
+77                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+77-->[androidx.camera:camera-camera2:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\b11ea2eac7d12001d02ce54f27258cd2\transformed\camera-camera2-1.3.0\AndroidManifest.xml:32:17-86
+78        </service>
+79
+80        <provider
+80-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+81            android:name="androidx.startup.InitializationProvider"
+81-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+82            android:authorities="com.newtown.billsplitter.androidx-startup"
+82-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+83            android:exported="false" >
+83-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+84            <meta-data
+84-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+85                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+85-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+86                android:value="androidx.startup" />
+86-->[androidx.emoji2:emoji2:1.2.0] C:\Users\binso\.gradle\caches\8.13\transforms\258c989c781b387ae8d035c739a35fc8\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+87            <meta-data
+87-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\binso\.gradle\caches\8.13\transforms\ee2b606c4e3510e1a5322fef506cf3dc\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+88                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+88-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\binso\.gradle\caches\8.13\transforms\ee2b606c4e3510e1a5322fef506cf3dc\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+89                android:value="androidx.startup" />
+89-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\binso\.gradle\caches\8.13\transforms\ee2b606c4e3510e1a5322fef506cf3dc\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+90            <meta-data
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+91                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+92                android:value="androidx.startup" />
+92-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+93        </provider>
+94
+95        <service
+95-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:9:9-15:19
+96            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+96-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:10:13-91
+97            android:directBootAware="true"
+97-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:17:13-43
+98            android:exported="false" >
+98-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:11:13-37
+99            <meta-data
+99-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:12:13-14:85
+100                android:name="com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar"
+100-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:13:17-114
+101                android:value="com.google.firebase.components.ComponentRegistrar" />
+101-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\72c764483e8c79b28395e4a758675dfa\transformed\play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:14:17-82
+102            <meta-data
+102-->[com.google.mlkit:vision-common:17.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\2f2434431a8ae08b71dba77a7accd3b4\transformed\vision-common-17.3.0\AndroidManifest.xml:12:13-14:85
+103                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+103-->[com.google.mlkit:vision-common:17.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\2f2434431a8ae08b71dba77a7accd3b4\transformed\vision-common-17.3.0\AndroidManifest.xml:13:17-124
+104                android:value="com.google.firebase.components.ComponentRegistrar" />
+104-->[com.google.mlkit:vision-common:17.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\2f2434431a8ae08b71dba77a7accd3b4\transformed\vision-common-17.3.0\AndroidManifest.xml:14:17-82
+105            <meta-data
+105-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:20:13-22:85
+106                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+106-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:21:17-120
+107                android:value="com.google.firebase.components.ComponentRegistrar" />
+107-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:22:17-82
+108        </service>
+109
+110        <provider
+110-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:9:9-13:38
+111            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+111-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:10:13-78
+112            android:authorities="com.newtown.billsplitter.mlkitinitprovider"
+112-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:11:13-69
+113            android:exported="false"
+113-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:12:13-37
+114            android:initOrder="99" />
+114-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:13:13-35
+115
+116        <activity
+116-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+117            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+117-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+118            android:exported="false"
+118-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+119            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+119-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
 120
-121        <provider
-121-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:9:9-13:38
-122            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
-122-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:10:13-78
-123            android:authorities="com.newtown.billsplitter.mlkitinitprovider"
-123-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:11:13-69
-124            android:exported="false"
-124-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:12:13-37
-125            android:initOrder="99" />
-125-->[com.google.mlkit:common:18.8.0] C:\Users\binso\.gradle\caches\8.13\transforms\ec8d1a2b73188e08466b26b4d6e0a74c\transformed\common-18.8.0\AndroidManifest.xml:13:13-35
-126
-127        <activity
-127-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
-128            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-128-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
-129            android:exported="false"
-129-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
-130            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-130-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\af4f40f8e3503b3a7dc4c70b64214628\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
-131
-132        <uses-library
-132-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
-133            android:name="androidx.window.extensions"
-133-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
-134            android:required="false" />
-134-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
-135        <uses-library
-135-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
-136            android:name="androidx.window.sidecar"
-136-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
-137            android:required="false" />
-137-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
-138
-139        <receiver
-139-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-140            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-140-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-141            android:directBootAware="false"
-141-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-142            android:enabled="true"
-142-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-143            android:exported="true"
-143-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-144            android:permission="android.permission.DUMP" >
-144-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-145            <intent-filter>
-145-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-146                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-146-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-146-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-147            </intent-filter>
-148            <intent-filter>
-148-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-149                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-149-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-149-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-150            </intent-filter>
-151            <intent-filter>
-151-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-152                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-152-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-152-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-153            </intent-filter>
-154            <intent-filter>
-154-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-155                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-155-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-155-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-156            </intent-filter>
-157        </receiver>
-158
-159        <meta-data
-159-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\d672a54f7900b05d5d963f6d5e7b9716\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
-160            android:name="com.google.android.gms.version"
-160-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\d672a54f7900b05d5d963f6d5e7b9716\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
-161            android:value="@integer/google_play_services_version" />
-161-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\d672a54f7900b05d5d963f6d5e7b9716\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
-162
-163        <service
-163-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
-164            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-164-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
-165            android:exported="false" >
-165-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
-166            <meta-data
-166-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
-167                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-167-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
-168                android:value="cct" />
-168-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
-169        </service>
-170        <service
-170-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
-171            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-171-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
-172            android:exported="false"
-172-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
-173            android:permission="android.permission.BIND_JOB_SERVICE" >
-173-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
-174        </service>
-175
-176        <receiver
-176-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
-177            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-177-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
-178            android:exported="false" />
-178-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
-179    </application>
-180
-181</manifest>
+121        <uses-library
+121-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+122            android:name="androidx.window.extensions"
+122-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+123            android:required="false" />
+123-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+124        <uses-library
+124-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+125            android:name="androidx.window.sidecar"
+125-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+126            android:required="false" />
+126-->[androidx.window:window:1.0.0] C:\Users\binso\.gradle\caches\8.13\transforms\a81fd60fd9ee24fc1f78e13c749ab608\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+127
+128        <receiver
+128-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+129            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+129-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+130            android:directBootAware="false"
+130-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+131            android:enabled="true"
+131-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+132            android:exported="true"
+132-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+133            android:permission="android.permission.DUMP" >
+133-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+134            <intent-filter>
+134-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+135                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+135-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+135-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+136            </intent-filter>
+137            <intent-filter>
+137-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+138                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+138-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+139            </intent-filter>
+140            <intent-filter>
+140-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+141                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+141-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+141-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+142            </intent-filter>
+143            <intent-filter>
+143-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+144                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+144-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\binso\.gradle\caches\8.13\transforms\405cf04056c8da7039b0f9667ef1a1a4\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+145            </intent-filter>
+146        </receiver>
+147
+148        <meta-data
+148-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\d672a54f7900b05d5d963f6d5e7b9716\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+149            android:name="com.google.android.gms.version"
+149-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\d672a54f7900b05d5d963f6d5e7b9716\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+150            android:value="@integer/google_play_services_version" />
+150-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\binso\.gradle\caches\8.13\transforms\d672a54f7900b05d5d963f6d5e7b9716\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+151
+152        <service
+152-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
+153            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+153-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
+154            android:exported="false" >
+154-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
+155            <meta-data
+155-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
+156                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+156-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
+157                android:value="cct" />
+157-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\binso\.gradle\caches\8.13\transforms\863366dfb49f19373be5f75bdecaa1af\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
+158        </service>
+159        <service
+159-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
+160            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+160-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
+161            android:exported="false"
+161-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
+162            android:permission="android.permission.BIND_JOB_SERVICE" >
+162-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
+163        </service>
+164
+165        <receiver
+165-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
+166            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+166-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
+167            android:exported="false" />
+167-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\binso\.gradle\caches\8.13\transforms\eca86877260227af1b1aff7cf86d4af6\transformed\transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
+168    </application>
+169
+170</manifest>

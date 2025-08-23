@@ -107,6 +107,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun addBillItem(item: BillItem) {
+        // Completely reject colleague discount items
+        val itemName = item.name.lowercase()
+        if (itemName.contains("colleague") || itemName.contains("employee") || itemName.contains("disc") || item.itemType == "colleague_discount") {
+            android.util.Log.d("MainViewModel", "Rejected colleague discount item: ${item.name}")
+            return
+        }
+        
         val currentItems = _billItems.value.orEmpty().toMutableList()
         val currentMembers = _members.value.orEmpty()
         // Auto-assign to all members for equal splitting by default

@@ -44,19 +44,16 @@ public final class FragmentBillUploadBinding implements ViewBinding {
   public final ImageView capturedImageView;
 
   @NonNull
-  public final MaterialButton flashAutoButton;
-
-  @NonNull
-  public final MaterialButton flashOffButton;
-
-  @NonNull
-  public final MaterialButton flashOnButton;
+  public final MaterialButton flashToggleButton;
 
   @NonNull
   public final LinearLayout galleryButton;
 
   @NonNull
   public final MaterialCardView imagePreviewCard;
+
+  @NonNull
+  public final ImageView oceanLoadingAnimation;
 
   @NonNull
   public final LinearLayout photoPreviewContainer;
@@ -89,13 +86,13 @@ public final class FragmentBillUploadBinding implements ViewBinding {
       @NonNull LinearLayout cameraButton, @NonNull PreviewView cameraPreview,
       @NonNull LinearLayout cameraPreviewContainer, @NonNull MaterialButton cancelCaptureButton,
       @NonNull MaterialButton captureButton, @NonNull ImageView capturedImageView,
-      @NonNull MaterialButton flashAutoButton, @NonNull MaterialButton flashOffButton,
-      @NonNull MaterialButton flashOnButton, @NonNull LinearLayout galleryButton,
-      @NonNull MaterialCardView imagePreviewCard, @NonNull LinearLayout photoPreviewContainer,
-      @NonNull MaterialCardView processingCard, @NonNull MaterialSwitch promptModeSwitch,
-      @NonNull MaterialCardView resultCard, @NonNull ImageView resultIcon,
-      @NonNull TextView resultText, @NonNull MaterialButton retakeButton,
-      @NonNull MaterialButton submitButton, @NonNull ImageView uploadedImageView) {
+      @NonNull MaterialButton flashToggleButton, @NonNull LinearLayout galleryButton,
+      @NonNull MaterialCardView imagePreviewCard, @NonNull ImageView oceanLoadingAnimation,
+      @NonNull LinearLayout photoPreviewContainer, @NonNull MaterialCardView processingCard,
+      @NonNull MaterialSwitch promptModeSwitch, @NonNull MaterialCardView resultCard,
+      @NonNull ImageView resultIcon, @NonNull TextView resultText,
+      @NonNull MaterialButton retakeButton, @NonNull MaterialButton submitButton,
+      @NonNull ImageView uploadedImageView) {
     this.rootView = rootView;
     this.cameraButton = cameraButton;
     this.cameraPreview = cameraPreview;
@@ -103,11 +100,10 @@ public final class FragmentBillUploadBinding implements ViewBinding {
     this.cancelCaptureButton = cancelCaptureButton;
     this.captureButton = captureButton;
     this.capturedImageView = capturedImageView;
-    this.flashAutoButton = flashAutoButton;
-    this.flashOffButton = flashOffButton;
-    this.flashOnButton = flashOnButton;
+    this.flashToggleButton = flashToggleButton;
     this.galleryButton = galleryButton;
     this.imagePreviewCard = imagePreviewCard;
+    this.oceanLoadingAnimation = oceanLoadingAnimation;
     this.photoPreviewContainer = photoPreviewContainer;
     this.processingCard = processingCard;
     this.promptModeSwitch = promptModeSwitch;
@@ -182,21 +178,9 @@ public final class FragmentBillUploadBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.flashAutoButton;
-      MaterialButton flashAutoButton = ViewBindings.findChildViewById(rootView, id);
-      if (flashAutoButton == null) {
-        break missingId;
-      }
-
-      id = R.id.flashOffButton;
-      MaterialButton flashOffButton = ViewBindings.findChildViewById(rootView, id);
-      if (flashOffButton == null) {
-        break missingId;
-      }
-
-      id = R.id.flashOnButton;
-      MaterialButton flashOnButton = ViewBindings.findChildViewById(rootView, id);
-      if (flashOnButton == null) {
+      id = R.id.flashToggleButton;
+      MaterialButton flashToggleButton = ViewBindings.findChildViewById(rootView, id);
+      if (flashToggleButton == null) {
         break missingId;
       }
 
@@ -209,6 +193,12 @@ public final class FragmentBillUploadBinding implements ViewBinding {
       id = R.id.imagePreviewCard;
       MaterialCardView imagePreviewCard = ViewBindings.findChildViewById(rootView, id);
       if (imagePreviewCard == null) {
+        break missingId;
+      }
+
+      id = R.id.oceanLoadingAnimation;
+      ImageView oceanLoadingAnimation = ViewBindings.findChildViewById(rootView, id);
+      if (oceanLoadingAnimation == null) {
         break missingId;
       }
 
@@ -268,7 +258,7 @@ public final class FragmentBillUploadBinding implements ViewBinding {
 
       return new FragmentBillUploadBinding((ScrollView) rootView, cameraButton, cameraPreview,
           cameraPreviewContainer, cancelCaptureButton, captureButton, capturedImageView,
-          flashAutoButton, flashOffButton, flashOnButton, galleryButton, imagePreviewCard,
+          flashToggleButton, galleryButton, imagePreviewCard, oceanLoadingAnimation,
           photoPreviewContainer, processingCard, promptModeSwitch, resultCard, resultIcon,
           resultText, retakeButton, submitButton, uploadedImageView);
     }

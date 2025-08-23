@@ -72,7 +72,7 @@ class ItemsAdapter(
             holder.itemName.setTextColor(android.graphics.Color.parseColor("#059669")) // Darker green
         } else {
             holder.itemPrice.setTextColor(android.graphics.Color.parseColor("#4FACFE")) // Blue for regular items
-            holder.itemName.setTextColor(android.graphics.Color.parseColor("#1E293B")) // Dark for regular items
+            holder.itemName.setTextColor(android.graphics.Color.WHITE) // White for better readability
         }
         
         // Setup member checkboxes and avatars
@@ -149,13 +149,14 @@ class ItemsAdapter(
 
     fun updateItems(newItems: List<BillItem>) {
         val oldItems = items.toList()
-        items = newItems
+        // Filter out colleague discount items completely
+        items = newItems.filter { it.itemType != "colleague_discount" }
         
         // Use notifyItemChanged for better performance and state preservation
-        if (oldItems.size == newItems.size) {
+        if (oldItems.size == items.size) {
             // Same size, update each item individually
-            for (i in newItems.indices) {
-                if (i < oldItems.size && oldItems[i] != newItems[i]) {
+            for (i in items.indices) {
+                if (i < oldItems.size && oldItems[i] != items[i]) {
                     notifyItemChanged(i)
                 }
             }

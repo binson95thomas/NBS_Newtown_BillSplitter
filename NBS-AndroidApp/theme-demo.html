@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBS Bill Splitter - Theme Selection Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .themes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .theme-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .theme-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .preview-container {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .upload-card {
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .upload-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upload-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .buttons-demo {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .totals-card {
+            padding: 20px;
+            position: relative;
+        }
+
+        .totals-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 8px;
+        }
+
+        .member-pills {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .theme-description {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* Current Theme - Purple/Blue */
+        .theme-current .upload-card { background: linear-gradient(135deg, #667eea, #764ba2, #f093fb); }
+        .theme-current .totals-card { background: linear-gradient(135deg, #4facfe, #00f2fe, #667eea); }
+        .theme-current .btn { background: rgba(255,255,255,0.2); }
+        .theme-current .pill { background: rgba(255,255,255,0.3); }
+
+        /* Emerald Green Theme */
+        .theme-emerald .upload-card { background: linear-gradient(135deg, #10b981, #059669, #34d399); }
+        .theme-emerald .totals-card { background: linear-gradient(135deg, #047857, #065f46, #6ee7b7); }
+        .theme-emerald .btn { background: rgba(255,255,255,0.2); }
+        .theme-emerald .pill { background: rgba(255,255,255,0.3); }
+
+        /* Sunset Orange Theme */
+        .theme-sunset .upload-card { background: linear-gradient(135deg, #f59e0b, #d97706, #fb923c); }
+        .theme-sunset .totals-card { background: linear-gradient(135deg, #ea580c, #c2410c, #fdba74); }
+        .theme-sunset .btn { background: rgba(255,255,255,0.2); }
+        .theme-sunset .pill { background: rgba(255,255,255,0.3); }
+
+        /* Rose Pink Theme */
+        .theme-rose .upload-card { background: linear-gradient(135deg, #e11d48, #be185d, #f43f5e); }
+        .theme-rose .totals-card { background: linear-gradient(135deg, #9f1239, #881337, #fb7185); }
+        .theme-rose .btn { background: rgba(255,255,255,0.2); }
+        .theme-rose .pill { background: rgba(255,255,255,0.3); }
+
+        /* Ocean Teal Theme */
+        .theme-ocean .upload-card { background: linear-gradient(135deg, #0891b2, #0e7490, #22d3ee); }
+        .theme-ocean .totals-card { background: linear-gradient(135deg, #155e75, #164e63, #67e8f9); }
+        .theme-ocean .btn { background: rgba(255,255,255,0.2); }
+        .theme-ocean .pill { background: rgba(255,255,255,0.3); }
+
+        /* Dark Galaxy Theme */
+        .theme-galaxy .upload-card { background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95); }
+        .theme-galaxy .totals-card { background: linear-gradient(135deg, #581c87, #6b21a8, #a855f7); }
+        .theme-galaxy .btn { background: rgba(255,255,255,0.2); }
+        .theme-galaxy .pill { background: rgba(255,255,255,0.3); }
+
+        /* Golden Amber Theme */
+        .theme-amber .upload-card { background: linear-gradient(135deg, #d97706, #b45309, #f59e0b); }
+        .theme-amber .totals-card { background: linear-gradient(135deg, #92400e, #78350f, #fbbf24); }
+        .theme-amber .btn { background: rgba(255,255,255,0.2); }
+        .theme-amber .pill { background: rgba(255,255,255,0.3); }
+
+        /* Violet Purple Theme */
+        .theme-violet .upload-card { background: linear-gradient(135deg, #7c3aed, #6d28d9, #a78bfa); }
+        .theme-violet .totals-card { background: linear-gradient(135deg, #5b21b6, #4c1d95, #c4b5fd); }
+        .theme-violet .btn { background: rgba(255,255,255,0.2); }
+        .theme-violet .pill { background: rgba(255,255,255,0.3); }
+
+        /* Fresh Mint Theme */
+        .theme-mint .upload-card { background: linear-gradient(135deg, #06b6d4, #0891b2, #67e8f9); }
+        .theme-mint .totals-card { background: linear-gradient(135deg, #0e7490, #155e75, #a7f3d0); }
+        .theme-mint .btn { background: rgba(255,255,255,0.2); }
+        .theme-mint .pill { background: rgba(255,255,255,0.3); }
+
+        @media (max-width: 768px) {
+            .themes-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons-demo {
+                justify-content: center;
+            }
+        }
+
+        .recommendation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .best-match {
+            border: 2px solid #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 NBS Bill Splitter - Theme Gallery</h1>
+        <p>Choose your perfect color scheme for a modern, vibrant experience</p>
+    </div>
+
+    <div class="themes-container">
+        <!-- Current Theme -->
+        <div class="theme-card theme-current">
+            <div class="theme-name">Current - Purple/Blue Fusion</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #667eea;"></div>
+                <div class="color-dot" style="background: #764ba2;"></div>
+                <div class="color-dot" style="background: #f093fb;"></div>
+                <div class="color-dot" style="background: #4facfe;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Your current theme with perfect balance of professionalism and vibrancy. Excellent for dark mode compatibility.
+            </div>
+        </div>
+
+        <!-- Emerald Green Theme -->
+        <div class="theme-card theme-emerald best-match">
+            <div class="theme-name">✨ Emerald Forest</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #10b981;"></div>
+                <div class="color-dot" style="background: #059669;"></div>
+                <div class="color-dot" style="background: #34d399;"></div>
+                <div class="color-dot" style="background: #047857;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Fresh and trustworthy! Perfect for financial apps. Represents growth, money, and success. Excellent readability in all lighting conditions.
+            </div>
+        </div>
+
+        <!-- Sunset Orange Theme -->
+        <div class="theme-card theme-sunset">
+            <div class="theme-name">🌅 Sunset Warmth</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #f59e0b;"></div>
+                <div class="color-dot" style="background: #d97706;"></div>
+                <div class="color-dot" style="background: #fb923c;"></div>
+                <div class="color-dot" style="background: #ea580c;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Energetic and welcoming! Creates a warm, friendly atmosphere. Perfect for social apps where friends split bills together.
+            </div>
+        </div>
+
+        <!-- Rose Pink Theme -->
+        <div class="theme-card theme-rose">
+            <div class="theme-name">🌹 Rose Elegance</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #e11d48;"></div>
+                <div class="color-dot" style="background: #be185d;"></div>
+                <div class="color-dot" style="background: #f43f5e;"></div>
+                <div class="color-dot" style="background: #9f1239;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Bold and confident! Perfect for users who want a distinctive, premium feel. Great for occasions and special dining experiences.
+            </div>
+        </div>
+
+        <!-- Ocean Teal Theme -->
+        <div class="theme-card theme-ocean">
+            <div class="theme-name">🌊 Ocean Depths</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #0891b2;"></div>
+                <div class="color-dot" style="background: #0e7490;"></div>
+                <div class="color-dot" style="background: #22d3ee;"></div>
+                <div class="color-dot" style="background: #155e75;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Calm and professional! Inspired by clear waters. Perfect for business use and creates a sense of reliability and trust.
+            </div>
+        </div>
+
+        <!-- Dark Galaxy Theme -->
+        <div class="theme-card theme-galaxy">
+            <div class="theme-name">🌌 Dark Galaxy</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #1e1b4b;"></div>
+                <div class="color-dot" style="background: #312e81;"></div>
+                <div class="color-dot" style="background: #4c1d95;"></div>
+                <div class="color-dot" style="background: #581c87;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Mysterious and sophisticated! Perfect for night owls and users who prefer darker interfaces. Excellent battery life on OLED screens.
+            </div>
+        </div>
+
+        <!-- Golden Amber Theme -->
+        <div class="theme-card theme-amber">
+            <div class="theme-name">✨ Golden Amber</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #d97706;"></div>
+                <div class="color-dot" style="background: #b45309;"></div>
+                <div class="color-dot" style="background: #f59e0b;"></div>
+                <div class="color-dot" style="background: #92400e;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Luxurious and premium! Golden tones evoke wealth and high-end experiences. Perfect for fine dining and upscale venues.
+            </div>
+        </div>
+
+        <!-- Violet Purple Theme -->
+        <div class="theme-card theme-violet">
+            <div class="theme-name">💜 Violet Dreams</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #7c3aed;"></div>
+                <div class="color-dot" style="background: #6d28d9;"></div>
+                <div class="color-dot" style="background: #a78bfa;"></div>
+                <div class="color-dot" style="background: #5b21b6;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Creative and inspiring! Similar to your current theme but with more violet tones. Perfect for artistic and creative users.
+            </div>
+        </div>
+
+        <!-- Fresh Mint Theme -->
+        <div class="theme-card theme-mint">
+            <div class="theme-name">🌿 Fresh Mint</div>
+            <div class="color-palette">
+                <div class="color-dot" style="background: #06b6d4;"></div>
+                <div class="color-dot" style="background: #0891b2;"></div>
+                <div class="color-dot" style="background: #67e8f9;"></div>
+                <div class="color-dot" style="background: #0e7490;"></div>
+            </div>
+            <div class="preview-container">
+                <div class="upload-card">
+                    <div class="upload-title">📷 Upload Bill</div>
+                    <div class="upload-desc">Take a photo or select from gallery</div>
+                    <div class="buttons-demo">
+                        <button class="btn">Take Photo</button>
+                        <button class="btn">Gallery</button>
+                        <button class="btn">Flash Auto</button>
+                    </div>
+                </div>
+                <div class="totals-card">
+                    <div class="totals-title">💰 Bill Summary</div>
+                    <div class="summary-row"><span>Subtotal</span><span>£45.67</span></div>
+                    <div class="summary-row"><span>Discount</span><span>-£6.85</span></div>
+                    <div class="summary-row total"><span>Total</span><span>£38.82</span></div>
+                    <div class="member-pills">
+                        <div class="pill">JK</div>
+                        <div class="pill">NANDAN</div>
+                        <div class="pill">JERRY</div>
+                    </div>
+                </div>
+            </div>
+            <div class="theme-description">
+                Clean and refreshing! Light cyan tones create a modern, clean feeling. Perfect for health-conscious users and organic restaurants.
+            </div>
+        </div>
+    </div>
+
+    <div class="recommendation">
+        <h3>💡 My Recommendation</h3>
+        <p>Based on your current app's style and the financial nature of bill-splitting, I highly recommend the <strong>Emerald Forest</strong> theme! Green is traditionally associated with money, trust, and success. It's also excellent for accessibility and works beautifully in both light and dark modes.</p>
+        <br>
+        <p>Your current Purple/Blue theme is also excellent - it's modern, professional, and already well-implemented!</p>
+    </div>
+</body>
+</html>

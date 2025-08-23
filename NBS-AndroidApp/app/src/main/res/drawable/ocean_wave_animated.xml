@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="120dp"
+            android:height="120dp"
+            android:viewportWidth="120"
+            android:viewportHeight="120">
+            
+            <!-- Ocean background circle -->
+            <path
+                android:name="background"
+                android:pathData="M60,60 m-50,0 a50,50 0,1,1 100,0 a50,50 0,1,1 -100,0"
+                android:fillColor="#0891b2"
+                android:fillAlpha="0.1" />
+            
+            <!-- Animated circles for wave effect -->
+            <group android:name="wave_group_1">
+                <path
+                    android:name="wave1"
+                    android:pathData="M60,60 m-20,0 a20,20 0,1,1 40,0 a20,20 0,1,1 -40,0"
+                    android:fillColor="#22d3ee"
+                    android:fillAlpha="0.3" />
+            </group>
+            
+            <group android:name="wave_group_2">
+                <path
+                    android:name="wave2"
+                    android:pathData="M60,60 m-15,0 a15,15 0,1,1 30,0 a15,15 0,1,1 -30,0"
+                    android:fillColor="#06b6d4"
+                    android:fillAlpha="0.5" />
+            </group>
+            
+            <group android:name="wave_group_3">
+                <path
+                    android:name="wave3"
+                    android:pathData="M60,60 m-10,0 a10,10 0,1,1 20,0 a10,10 0,1,1 -20,0"
+                    android:fillColor="#0891b2"
+                    android:fillAlpha="0.7" />
+            </group>
+            
+            <!-- Center loading dot -->
+            <path
+                android:name="center_dot"
+                android:pathData="M60,56 a4,4 0,1,1 0,8 a4,4 0,1,1 0,-8"
+                android:fillColor="#ffffff" />
+                
+        </vector>
+    </aapt:attr>
+    
+    <!-- Wave 1 Animation - Scale based ripple effect -->
+    <target android:name="wave_group_1">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="2000"
+                    android:valueFrom="0.5"
+                    android:valueTo="1.2"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="2000"
+                    android:valueFrom="0.5"
+                    android:valueTo="1.2"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="2000"
+                    android:valueFrom="0.8"
+                    android:valueTo="0.0"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Wave 2 Animation -->
+    <target android:name="wave_group_2">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="2000"
+                    android:valueFrom="0.7"
+                    android:valueTo="1.4"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="400"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="2000"
+                    android:valueFrom="0.7"
+                    android:valueTo="1.4"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="400"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="2000"
+                    android:valueFrom="0.6"
+                    android:valueTo="0.0"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="400"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Wave 3 Animation -->
+    <target android:name="wave_group_3">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="2000"
+                    android:valueFrom="0.8"
+                    android:valueTo="1.6"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="800"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="2000"
+                    android:valueFrom="0.8"
+                    android:valueTo="1.6"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="800"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="2000"
+                    android:valueFrom="0.4"
+                    android:valueTo="0.0"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="restart"
+                    android:startOffset="800"
+                    android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Center dot pulse animation -->
+    <target android:name="center_dot">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="1000"
+                    android:valueFrom="1.0"
+                    android:valueTo="0.3"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+                    android:repeatMode="reverse"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+</animated-vector>

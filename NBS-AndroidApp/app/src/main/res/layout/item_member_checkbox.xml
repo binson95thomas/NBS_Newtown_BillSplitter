@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:buttonTint="@color/blue_600"
+        android:buttonTint="@color/accent_600"
         android:checked="false" />
 
     <TextView
@@ -22,8 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Member Name"
-        android:textSize="14sp"
-        android:textColor="@color/blue_700"
-        android:textStyle="bold" />
+        style="@style/TextStyle.MemberName" />
 
 </LinearLayout> 

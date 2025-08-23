@@ -15,7 +15,9 @@ class MemberCarouselAdapter(
 ) : RecyclerView.Adapter<MemberCarouselAdapter.VH>() {
 
     class VH(view: View) : RecyclerView.ViewHolder(view) {
+        val memberPill: TextView = view.findViewById(R.id.memberPill)
         val memberName: TextView = view.findViewById(R.id.memberName)
+        val memberEmoji: TextView = view.findViewById(R.id.memberEmoji)
         val subtotalText: TextView = view.findViewById(R.id.subtotalText)
         val discountText: TextView = view.findViewById(R.id.discountText)
         val finalAmountText: TextView = view.findViewById(R.id.finalAmountText)
@@ -32,13 +34,25 @@ class MemberCarouselAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val breakdown = data[position]
+        holder.memberPill.text = breakdown.memberName
         holder.memberName.text = breakdown.memberName
+        
+        // Set member emoji if available
+        val member = findMemberByName(breakdown.memberName)
+        holder.memberEmoji.text = member?.emoji ?: "😀"
+        
         holder.subtotalText.text = "Subtotal: £%.2f".format(breakdown.subtotal)
         holder.discountText.text = "Discount: -£%.2f".format(breakdown.discountShare)
         holder.finalAmountText.text = "Final: £%.2f".format(breakdown.finalAmount)
         val itemsList = breakdown.items.joinToString(", ") { "${it.name} (£%.2f)".format(it.price) }
         holder.itemsText.text = "Items: $itemsList"
         holder.copyButton.setOnClickListener { onCopyClick?.invoke(breakdown) }
+    }
+    
+    private fun findMemberByName(name: String): com.newtown.billsplitter.model.Member? {
+        // This is a simple implementation - in a real app you'd want to pass the members list
+        // For now, we'll use a default emoji
+        return null
     }
 
     fun update(newData: List<MainViewModel.MemberBreakdown>) {

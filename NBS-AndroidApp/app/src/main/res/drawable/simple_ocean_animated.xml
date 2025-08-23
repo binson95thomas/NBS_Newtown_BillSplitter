@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="120dp"
+            android:height="120dp"
+            android:viewportWidth="120"
+            android:viewportHeight="120">
+            
+            <!-- Background -->
+            <path
+                android:name="background"
+                android:pathData="M60,60 m-50,0 a50,50 0,1,1 100,0 a50,50 0,1,1 -100,0"
+                android:fillColor="#0891b2"
+                android:fillAlpha="0.1" />
+            
+            <!-- Rotating ring 1 -->
+            <group 
+                android:name="ring1_group"
+                android:pivotX="60"
+                android:pivotY="60">
+                <path
+                    android:name="ring1"
+                    android:pathData="M60,60 m-25,0 a25,25 0,1,1 50,0 a25,25 0,1,1 -50,0"
+                    android:strokeColor="#22d3ee"
+                    android:strokeWidth="2"
+                    android:fillType="nonZero"
+                    android:strokeAlpha="0.6" />
+            </group>
+            
+            <!-- Rotating ring 2 -->
+            <group 
+                android:name="ring2_group"
+                android:pivotX="60"
+                android:pivotY="60">
+                <path
+                    android:name="ring2"
+                    android:pathData="M60,60 m-35,0 a35,35 0,1,1 70,0 a35,35 0,1,1 -70,0"
+                    android:strokeColor="#06b6d4"
+                    android:strokeWidth="1.5"
+                    android:fillType="nonZero"
+                    android:strokeAlpha="0.4" />
+            </group>
+            
+            <!-- Center dot -->
+            <path
+                android:name="center_dot"
+                android:pathData="M60,57 a3,3 0,1,1 0,6 a3,3 0,1,1 0,-6"
+                android:fillColor="#ffffff" />
+                
+        </vector>
+    </aapt:attr>
+    
+    <!-- Ring 1 rotation -->
+    <target android:name="ring1_group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="rotation"
+                android:duration="3000"
+                android:valueFrom="0"
+                android:valueTo="360"
+                android:valueType="floatType"
+                android:repeatCount="infinite"
+                android:interpolator="@android:interpolator/linear" />
+        </aapt:attr>
+    </target>
+    
+    <!-- Ring 2 rotation (opposite direction) -->
+    <target android:name="ring2_group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="rotation"
+                android:duration="4000"
+                android:valueFrom="360"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:repeatCount="infinite"
+                android:interpolator="@android:interpolator/linear" />
+        </aapt:attr>
+    </target>
+    
+    <!-- Center dot pulse -->
+    <target android:name="center_dot">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="alpha"
+                android:duration="1000"
+                android:valueFrom="1.0"
+                android:valueTo="0.3"
+                android:valueType="floatType"
+                android:repeatCount="infinite"
+                android:repeatMode="reverse"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    
+</animated-vector>

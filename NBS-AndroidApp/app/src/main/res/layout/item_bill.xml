@@ -32,9 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Item Name"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    style="@style/TextStyle.ItemName.OnOcean" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -47,9 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="£0.00"
-                        android:textColor="?android:textColorPrimary"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        style="@style/TextStyle.ItemPrice.OnOcean" />
                     <TextView
                         android:id="@+id/itemConfidence"
                         android:layout_width="wrap_content"
@@ -125,9 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="👥 Assigned to:"
-                android:textColor="?android:textColorSecondary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                style="@style/TextStyle.MemberAssignment" />
 
             <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/memberCheckboxContainer"

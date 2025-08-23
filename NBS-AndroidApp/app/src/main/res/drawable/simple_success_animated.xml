@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="100dp"
+            android:height="100dp"
+            android:viewportWidth="100"
+            android:viewportHeight="100">
+            
+            <!-- Simple success circle -->
+            <group android:name="circle_group">
+                <path
+                    android:name="circle"
+                    android:pathData="M50,50 m-30,0 a30,30 0,1,1 60,0 a30,30 0,1,1 -60,0"
+                    android:fillColor="#22d3ee"
+                    android:fillAlpha="0.3" />
+            </group>
+            
+            <!-- Simple checkmark -->
+            <path
+                android:name="checkmark"
+                android:pathData="M35,50 L45,60 L65,40"
+                android:strokeColor="#0891b2"
+                android:strokeWidth="3"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:fillType="nonZero" />
+                
+        </vector>
+    </aapt:attr>
+    
+    <!-- Simple circle pulse -->
+    <target android:name="circle_group">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="alpha"
+                android:duration="800"
+                android:valueFrom="0.3"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:repeatCount="2"
+                android:repeatMode="reverse"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    
+    <!-- Checkmark draw -->
+    <target android:name="checkmark">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:duration="500"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:startOffset="200"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    
+</animated-vector>

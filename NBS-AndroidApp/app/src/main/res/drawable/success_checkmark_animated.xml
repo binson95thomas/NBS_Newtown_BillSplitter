@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="100dp"
+            android:height="100dp"
+            android:viewportWidth="100"
+            android:viewportHeight="100">
+            
+            <!-- Success circle background with group for animation -->
+            <group android:name="circle_group">
+                <path
+                    android:name="success_circle"
+                    android:pathData="M50,50 m-40,0 a40,40 0,1,1 80,0 a40,40 0,1,1 -80,0"
+                    android:fillColor="#22d3ee"
+                    android:strokeColor="#0891b2"
+                    android:strokeWidth="3"
+                    android:fillAlpha="0.2" />
+            </group>
+            
+            <!-- Checkmark path -->
+            <path
+                android:name="checkmark"
+                android:pathData="M30,50 L42,62 L70,34"
+                android:strokeColor="#0891b2"
+                android:strokeWidth="4"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:fillType="nonZero" />
+            
+            <!-- Simplified celebration dots with groups -->
+            <group android:name="dot_group_1">
+                <path
+                    android:name="dot1"
+                    android:pathData="M25,23 a2,2 0,1,1 0,4 a2,2 0,1,1 0,-4"
+                    android:fillColor="#22d3ee" />
+            </group>
+                
+            <group android:name="dot_group_2">
+                <path
+                    android:name="dot2"
+                    android:pathData="M75,23 a2,2 0,1,1 0,4 a2,2 0,1,1 0,-4"
+                    android:fillColor="#67e8f9" />
+            </group>
+                
+            <group android:name="dot_group_3">
+                <path
+                    android:name="dot3"
+                    android:pathData="M25,73 a2,2 0,1,1 0,4 a2,2 0,1,1 0,-4"
+                    android:fillColor="#06b6d4" />
+            </group>
+                
+            <group android:name="dot_group_4">
+                <path
+                    android:name="dot4"
+                    android:pathData="M75,73 a2,2 0,1,1 0,4 a2,2 0,1,1 0,-4"
+                    android:fillColor="#22d3ee" />
+            </group>
+                
+        </vector>
+    </aapt:attr>
+    
+    <!-- Circle scale animation using group -->
+    <target android:name="circle_group">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="400"
+                    android:valueFrom="0"
+                    android:valueTo="1.1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="400"
+                    android:valueFrom="0"
+                    android:valueTo="1.1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="200"
+                    android:valueFrom="1.1"
+                    android:valueTo="1.0"
+                    android:valueType="floatType"
+                    android:startOffset="400"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="200"
+                    android:valueFrom="1.1"
+                    android:valueTo="1.0"
+                    android:valueType="floatType"
+                    android:startOffset="400"
+                    android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <!-- Checkmark draw animation -->
+    <target android:name="checkmark">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathEnd"
+                android:duration="600"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:startOffset="200"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    
+    <!-- Celebration dots animations using groups -->
+    <target android:name="dot_group_1">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="800"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="800"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="500"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:startOffset="1100" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="dot_group_2">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="900"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="900"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="500"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:startOffset="1200" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="dot_group_3">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="1000"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="1000"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="500"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:startOffset="1300" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+    <target android:name="dot_group_4">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="1100"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="1.5"
+                    android:valueType="floatType"
+                    android:startOffset="1100"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="500"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:startOffset="1400" />
+            </set>
+        </aapt:attr>
+    </target>
+    
+</animated-vector>

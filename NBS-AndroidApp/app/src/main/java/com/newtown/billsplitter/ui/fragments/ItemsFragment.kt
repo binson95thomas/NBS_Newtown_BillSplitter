@@ -16,6 +16,10 @@ import com.newtown.billsplitter.ui.adapter.ItemsAdapter
 import com.newtown.billsplitter.viewmodel.MainViewModel
 import android.widget.TextView
 import android.view.inputmethod.InputMethodManager
+import com.newtown.billsplitter.utils.HapticUtils
+import com.newtown.billsplitter.utils.AnimationUtils
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.button.MaterialButton
 
 class ItemsFragment : Fragment() {
     private var _binding: FragmentItemsBinding? = null
@@ -96,6 +100,8 @@ class ItemsFragment : Fragment() {
 
     private fun setupAddItemButton() {
         binding.addItemButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
             showAddItemDialog()
         }
         binding.clearAllButton.setOnClickListener {
@@ -112,212 +118,198 @@ class ItemsFragment : Fragment() {
     }
 
     private fun showAddItemDialog() {
-        val nameEditText = EditText(context).apply {
-            hint = "Enter item name (e.g., Pizza, Coffee)"
-            setPadding(20, 16, 20, 16)
-            background = android.graphics.drawable.GradientDrawable().apply {
-                shape = android.graphics.drawable.GradientDrawable.RECTANGLE
-                cornerRadius = 12f
-                setColor(android.graphics.Color.parseColor("#F5F5F5"))
-                setStroke(2, android.graphics.Color.parseColor("#E0E0E0"))
-            }
-        }
-        val priceEditText = EditText(context).apply {
-            hint = "Enter price (e.g., 5.99)"
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-            setPadding(20, 16, 20, 16)
-            background = android.graphics.drawable.GradientDrawable().apply {
-                shape = android.graphics.drawable.GradientDrawable.RECTANGLE
-                cornerRadius = 12f
-                setColor(android.graphics.Color.parseColor("#F5F5F5"))
-                setStroke(2, android.graphics.Color.parseColor("#E0E0E0"))
-            }
-        }
-
-        val dialogLayout = android.widget.LinearLayout(context).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            setPadding(32, 24, 32, 24)
-            
-            // Title for name
-            val nameLabel = TextView(context).apply {
-                text = "Item Name"
-                textSize = 14f
-                setTextColor(android.graphics.Color.parseColor("#666666"))
-                setPadding(0, 0, 0, 8)
-            }
-            addView(nameLabel)
-            addView(nameEditText)
-            
-            // Spacing
-            val spacing1 = View(context).apply {
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                    24
-                )
-            }
-            addView(spacing1)
-            
-            // Title for price
-            val priceLabel = TextView(context).apply {
-                text = "Price (£)"
-                textSize = 14f
-                setTextColor(android.graphics.Color.parseColor("#666666"))
-                setPadding(0, 0, 0, 8)
-            }
-            addView(priceLabel)
-            addView(priceEditText)
-        }
-
+        // Create dialog with custom layout
+        val dialogView = LayoutInflater.from(requireContext()).inflate(
+            com.newtown.billsplitter.R.layout.dialog_add_item, null
+        )
+        
+        // Get references to views
+        val nameEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemNameEditText)
+        val priceEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemPriceEditText)
+        val quickPrice1 = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.quickPrice1)
+        val quickPrice2 = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.quickPrice2)
+        val quickPrice3 = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.quickPrice3)
+        val cancelButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.cancelButton)
+        val addButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.addButton)
+        
+        // Create dialog with no title (we have custom header)
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("➕ Add New Item")
-            .setView(dialogLayout)
-            .setPositiveButton("Add Item") { _, _ ->
-                val name = nameEditText.text.toString().trim()
-                val priceText = priceEditText.text.toString().trim()
-                
-                when {
-                    name.isEmpty() -> {
-                        Toast.makeText(context, "Please enter an item name", Toast.LENGTH_SHORT).show()
-                        return@setPositiveButton
-                    }
-                    priceText.isEmpty() -> {
-                        Toast.makeText(context, "Please enter a price", Toast.LENGTH_SHORT).show()
-                        return@setPositiveButton
-                    }
-                    else -> {
-                        try {
-                            val price = priceText.toDouble()
-                            if (price <= 0) {
-                                Toast.makeText(context, "Price must be greater than 0", Toast.LENGTH_SHORT).show()
-                                return@setPositiveButton
-                            }
-                            val newItem = BillItem(
-                                id = System.currentTimeMillis(),
-                                name = name,
-                                price = price
-                            )
-                            viewModel.addBillItem(newItem)
-                            Toast.makeText(context, "✅ Item added successfully", Toast.LENGTH_SHORT).show()
-                        } catch (e: NumberFormatException) {
-                            Toast.makeText(context, "Please enter a valid price (e.g., 5.99)", Toast.LENGTH_SHORT).show()
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+        
+        // Setup quick price buttons with haptic feedback
+        quickPrice1.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
+            priceEditText.setText("2.50")
+        }
+        
+        quickPrice2.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
+            priceEditText.setText("5.00")
+        }
+        
+        quickPrice3.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
+            priceEditText.setText("10.00")
+        }
+        
+        // Setup cancel button
+        cancelButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            dialog.dismiss()
+        }
+        
+        // Setup add button
+        addButton.setOnClickListener {
+            HapticUtils.mediumTap(it)
+            AnimationUtils.bounceButton(it)
+            
+            val name = nameEditText.text.toString().trim()
+            val priceText = priceEditText.text.toString().trim()
+            
+            when {
+                name.isEmpty() -> {
+                    nameEditText.error = "Item name is required"
+                    HapticUtils.errorPattern(requireContext())
+                    return@setOnClickListener
+                }
+                priceText.isEmpty() -> {
+                    priceEditText.error = "Price is required"
+                    HapticUtils.errorPattern(requireContext())
+                    return@setOnClickListener
+                }
+                else -> {
+                    try {
+                        val price = priceText.toDouble()
+                        if (price <= 0) {
+                            priceEditText.error = "Price must be greater than 0"
+                            HapticUtils.errorPattern(requireContext())
+                            return@setOnClickListener
                         }
+                        
+                        // Success - add the item
+                        val newItem = BillItem(
+                            id = System.currentTimeMillis(),
+                            name = name,
+                            price = price
+                        )
+                        viewModel.addBillItem(newItem)
+                        
+                        // Success feedback
+                        HapticUtils.successPattern(requireContext())
+                        Toast.makeText(context, "🌊 Item added successfully!", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                        
+                    } catch (e: NumberFormatException) {
+                        priceEditText.error = "Please enter a valid number (e.g., 5.99)"
+                        HapticUtils.errorPattern(requireContext())
                     }
                 }
             }
-            .setNegativeButton("Cancel", null)
-            .create()
+        }
         
+        // Show dialog
         dialog.show()
+        
+        // Add entrance animation
+        AnimationUtils.slideInFromBottom(dialogView)
         
         // Focus on name field and show keyboard
         nameEditText.requestFocus()
-        val imm = context?.getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as? android.view.inputmethod.InputMethodManager
-        imm?.showSoftInput(nameEditText, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+        val imm = context?.getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.showSoftInput(nameEditText, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun showEditItemDialog(item: BillItem) {
-        val nameEditText = EditText(context).apply {
-            hint = "Enter item name (e.g., Pizza, Coffee)"
-            setText(item.name)
-            setPadding(20, 16, 20, 16)
-            background = android.graphics.drawable.GradientDrawable().apply {
-                shape = android.graphics.drawable.GradientDrawable.RECTANGLE
-                cornerRadius = 12f
-                setColor(android.graphics.Color.parseColor("#F5F5F5"))
-                setStroke(2, android.graphics.Color.parseColor("#E0E0E0"))
-            }
-        }
-        val priceEditText = EditText(context).apply {
-            hint = "Enter price (e.g., 5.99)"
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-            setText(item.price.toString())
-            setPadding(20, 16, 20, 16)
-            background = android.graphics.drawable.GradientDrawable().apply {
-                shape = android.graphics.drawable.GradientDrawable.RECTANGLE
-                cornerRadius = 12f
-                setColor(android.graphics.Color.parseColor("#F5F5F5"))
-                setStroke(2, android.graphics.Color.parseColor("#E0E0E0"))
-            }
-        }
-
-        val dialogLayout = android.widget.LinearLayout(context).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            setPadding(32, 24, 32, 24)
-            
-            // Title for name
-            val nameLabel = TextView(context).apply {
-                text = "Item Name"
-                textSize = 14f
-                setTextColor(android.graphics.Color.parseColor("#666666"))
-                setPadding(0, 0, 0, 8)
-            }
-            addView(nameLabel)
-            addView(nameEditText)
-            
-            // Spacing
-            val spacing1 = View(context).apply {
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                    24
-                )
-            }
-            addView(spacing1)
-            
-            // Title for price
-            val priceLabel = TextView(context).apply {
-                text = "Price (£)"
-                textSize = 14f
-                setTextColor(android.graphics.Color.parseColor("#666666"))
-                setPadding(0, 0, 0, 8)
-            }
-            addView(priceLabel)
-            addView(priceEditText)
-        }
-
+        // Create dialog with custom layout
+        val dialogView = LayoutInflater.from(requireContext()).inflate(
+            com.newtown.billsplitter.R.layout.dialog_edit_item, null
+        )
+        
+        // Get references to views
+        val nameEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemNameEditText)
+        val priceEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemPriceEditText)
+        val cancelButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.cancelButton)
+        val updateButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.updateButton)
+        
+        // Pre-fill with current values
+        nameEditText.setText(item.name)
+        priceEditText.setText(item.price.toString())
+        
+        // Create dialog with no title (we have custom header)
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("✏️ Edit Item")
-            .setView(dialogLayout)
-            .setPositiveButton("Update Item") { _, _ ->
-                val name = nameEditText.text.toString().trim()
-                val priceText = priceEditText.text.toString().trim()
-                
-                when {
-                    name.isEmpty() -> {
-                        Toast.makeText(context, "Please enter an item name", Toast.LENGTH_SHORT).show()
-                        return@setPositiveButton
-                    }
-                    priceText.isEmpty() -> {
-                        Toast.makeText(context, "Please enter a price", Toast.LENGTH_SHORT).show()
-                        return@setPositiveButton
-                    }
-                    else -> {
-                        try {
-                            val price = priceText.toDouble()
-                            if (price <= 0) {
-                                Toast.makeText(context, "Price must be greater than 0", Toast.LENGTH_SHORT).show()
-                                return@setPositiveButton
-                            }
-                            val updatedItem = item.copy(
-                                name = name,
-                                price = price
-                            )
-                            viewModel.updateBillItem(updatedItem)
-                            Toast.makeText(context, "✅ Item updated successfully", Toast.LENGTH_SHORT).show()
-                        } catch (e: NumberFormatException) {
-                            Toast.makeText(context, "Please enter a valid price (e.g., 5.99)", Toast.LENGTH_SHORT).show()
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+        
+        // Setup cancel button
+        cancelButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            dialog.dismiss()
+        }
+        
+        // Setup update button
+        updateButton.setOnClickListener {
+            HapticUtils.mediumTap(it)
+            AnimationUtils.bounceButton(it)
+            
+            val name = nameEditText.text.toString().trim()
+            val priceText = priceEditText.text.toString().trim()
+            
+            when {
+                name.isEmpty() -> {
+                    nameEditText.error = "Item name is required"
+                    HapticUtils.errorPattern(requireContext())
+                    return@setOnClickListener
+                }
+                priceText.isEmpty() -> {
+                    priceEditText.error = "Price is required"
+                    HapticUtils.errorPattern(requireContext())
+                    return@setOnClickListener
+                }
+                else -> {
+                    try {
+                        val price = priceText.toDouble()
+                        if (price <= 0) {
+                            priceEditText.error = "Price must be greater than 0"
+                            HapticUtils.errorPattern(requireContext())
+                            return@setOnClickListener
                         }
+                        
+                        // Success - update the item
+                        val updatedItem = item.copy(
+                            name = name,
+                            price = price
+                        )
+                        viewModel.updateBillItem(updatedItem)
+                        
+                        // Success feedback
+                        HapticUtils.successPattern(requireContext())
+                        Toast.makeText(context, "🌊 Item updated successfully!", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                        
+                    } catch (e: NumberFormatException) {
+                        priceEditText.error = "Please enter a valid number (e.g., 5.99)"
+                        HapticUtils.errorPattern(requireContext())
                     }
                 }
             }
-            .setNegativeButton("Cancel", null)
-            .create()
+        }
         
+        // Show dialog
         dialog.show()
+        
+        // Add entrance animation
+        AnimationUtils.slideInFromBottom(dialogView)
         
         // Focus on name field and show keyboard
         nameEditText.requestFocus()
-        val imm = context?.getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as? android.view.inputmethod.InputMethodManager
-        imm?.showSoftInput(nameEditText, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
+        val imm = context?.getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.showSoftInput(nameEditText, InputMethodManager.SHOW_IMPLICIT)
     }
 
     override fun onDestroyView() {

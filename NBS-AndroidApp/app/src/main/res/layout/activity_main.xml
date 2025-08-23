@@ -5,30 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/background_primary">
 
-    <!-- Gradient App Bar -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_primary"
-        app:elevation="0dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="NBS - Newtown Bill Splitter"
-            app:titleTextColor="@color/text_inverse"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
 
         <!-- Tab Layout with Modern Styling -->
         <com.google.android.material.tabs.TabLayout

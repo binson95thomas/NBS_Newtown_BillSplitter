@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Outer glow -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#300066FF" />
+            <corners android:radius="20dp" />
+            <padding android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp" />
+        </shape>
+    </item>
+    
+    <!-- Main background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1A1A2E" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner highlight -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="#10FFFFFF" />
+            <corners android:radius="18dp" />
+            <padding android:top="2dp" />
+        </shape>
+    </item>
+    
+</layer-list>

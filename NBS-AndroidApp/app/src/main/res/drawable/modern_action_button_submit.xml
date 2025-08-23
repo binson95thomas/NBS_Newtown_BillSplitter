@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Outer glow -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#6000FF88" />
+            <size android:width="68dp" android:height="68dp" />
+        </shape>
+    </item>
+    
+    <!-- Main button background with Ocean gradient -->
+    <item>
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:startColor="#22d3ee"
+                android:centerColor="#06b6d4"
+                android:endColor="#0891b2" />
+            <size android:width="64dp" android:height="64dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner highlight -->
+    <item android:gravity="top">
+        <shape android:shape="oval">
+            <solid android:color="#30FFFFFF" />
+            <size android:width="64dp" android:height="64dp" />
+            <padding android:top="3dp" />
+        </shape>
+    </item>
+    
+</layer-list>

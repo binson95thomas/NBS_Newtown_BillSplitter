@@ -10,6 +10,7 @@
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- Camera features -->
     <uses-feature
@@ -40,22 +41,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.camera.CameraActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".ui.bill.BillDetailActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.members.MembersActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.totals.TotalsActivity"
-            android:exported="false" />
 
         <!-- File provider for camera -->
         <provider

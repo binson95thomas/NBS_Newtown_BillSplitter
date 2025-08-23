@@ -1,15 +1,15 @@
 [
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_arrow_back.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_arrow_back.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_dialog_add_member.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\dialog_add_member.xml"
-    },
-    {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_delete.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_delete.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_pill_active_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_pill_active_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_amount_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_amount_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-hdpi_ic_launcher.xml.flat",
@@ -24,12 +24,12 @@
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_error.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_splash_logo.png.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\splash_logo.png"
-    },
-    {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-hdpi_ic_launcher_round.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-hdpi\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_splash_logo.png.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\splash_logo.png"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_items_background.xml.flat",
@@ -40,76 +40,60 @@
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\tab_background_selector.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_check.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_check.xml"
+        "merged": "com.newtown.billsplitter.app-debug-60:/drawable_modern_camera_button_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-62:/drawable/modern_camera_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_enhanced_text_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\enhanced_text_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_detail_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_detail_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_item_member_breakdown.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\item_member_breakdown.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_fragment_members.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\fragment_members.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_simple_ocean_animated.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\simple_ocean_animated.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_item_member.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\item_member.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxxhdpi_ic_launcher.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xxxhdpi\\ic_launcher.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_dialog_edit_item.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\dialog_edit_item.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_member_checkbox_background.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\member_checkbox_background.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_copy.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_copy.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_gradient_secondary.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\gradient_secondary.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_clear_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_clear_button_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_camera.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_camera.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_splash_screen.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\splash_screen.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_gradient_accent.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\gradient_accent.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-mdpi_ic_launcher.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-mdpi\\ic_launcher.xml"
-    },
-    {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_fragment_totals.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\fragment_totals.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_people.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_people.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_input_background.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_input_background.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\xml_file_paths.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\xml\\file_paths.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\xml_data_extraction_rules.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_camera_button_background.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\camera_button_background.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_enhanced_toggle_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_enhanced_toggle_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_nav_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_nav_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_launcher_foreground.xml.flat",
@@ -124,56 +108,52 @@
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\badge_ok.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_gradient_primary.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\gradient_primary.xml"
-    },
-    {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_fragment_items.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\fragment_items.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_item_member_checkbox.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\item_member_checkbox.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_camera_preview_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_camera_preview_background.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-mdpi_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-mdpi\\ic_launcher_round.xml"
+        "merged": "com.newtown.billsplitter.app-debug-60:/drawable_modern_gallery_button_background.xml.flat",
+        "source": "com.newtown.billsplitter.app-main-62:/drawable/modern_gallery_button_background.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxhdpi_ic_launcher.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xxhdpi\\ic_launcher.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_retake.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_retake.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_pill_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_pill_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_action_button_retake.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_action_button_retake.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_card_background.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_card_background.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_discount.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_discount.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_button_background_selector.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\button_background_selector.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_items_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_items_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_edit.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_edit.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_avatar_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_avatar_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_calculator.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_calculator.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-anydpi-v26\\ic_launcher.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_text_background_ocean.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\text_background_ocean.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxxhdpi_ic_launcher_round.xml.flat",
@@ -182,6 +162,10 @@
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_money_splash.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_money_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_circular_icon_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\circular_icon_background.xml"
     },
     {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\menu_bottom_nav_menu.xml.flat",
@@ -196,6 +180,210 @@
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\item_bill.xml"
     },
     {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_pill_active.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_pill_active.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_dialog_add_item.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\dialog_add_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xxhdpi\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_whatsapp_share_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_whatsapp_share_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_list.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xhdpi\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_flash_auto.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_flash_auto.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_arrow_back.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_arrow_back.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_dialog_add_member.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\dialog_add_member.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_delete_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_delete_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_item_member_nav_chip.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\item_member_nav_chip.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_check.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_check.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_discount_input_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_discount_input_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_fragment_members.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\fragment_members.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xxxhdpi\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_success_checkmark_animated.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\success_checkmark_animated.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_copy.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_copy.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_gradient_secondary.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\gradient_secondary.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_splash_screen.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\splash_screen.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_card_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_card_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_share_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_share_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_gradient_accent.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\gradient_accent.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-mdpi\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_people.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_people.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_pill_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_pill_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_input_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_input_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\xml_file_paths.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\xml\\file_paths.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ocean_wave_animated.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ocean_wave_animated.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_camera_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\camera_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_gradient_primary.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\gradient_primary.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_item_member_checkbox.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\item_member_checkbox.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_add_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_add_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-mdpi\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_neumorphic_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\neumorphic_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_flash_on.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_flash_on.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xxhdpi\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_action_button_submit.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_action_button_submit.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_dialog_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_dialog_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_input_background_dark.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_input_background_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_discount.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_discount.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_button_background_selector.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\button_background_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_flash_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_flash_button_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_simple_success_animated.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\simple_success_animated.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_flash_off.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_flash_off.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_member_breakdown_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_member_breakdown_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_upload_card_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_upload_card_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_bill_summary_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_bill_summary_background.xml"
+    },
+    {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\color_bottom_nav_color.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\color\\bottom_nav_color.xml"
     },
@@ -204,23 +392,15 @@
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xhdpi\\ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xxhdpi_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xxhdpi\\ic_launcher_round.xml"
-    },
-    {
         "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_circular_button_background.xml.flat",
         "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\circular_button_background.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\mipmap-xhdpi_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\mipmap-xhdpi\\ic_launcher_round.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_copy_button_background.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_copy_button_background.xml"
     },
     {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_ic_list.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\ic_list.xml"
-    },
-    {
-        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\xml_backup_rules.xml.flat",
-        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\xml\\backup_rules.xml"
+        "merged": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-debug-60:\\drawable_modern_gradient_header.xml.flat",
+        "source": "C:\\Users\\binso\\.gradle\\daemon\\8.13\\com.newtown.billsplitter.app-main-62:\\drawable\\modern_gradient_header.xml"
     }
 ]

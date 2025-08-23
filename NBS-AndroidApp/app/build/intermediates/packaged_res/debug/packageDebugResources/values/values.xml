@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="accent_500">#4facfe</color>
-    <color name="accent_600">#4599e5</color>
-    <color name="accent_700">#3a86cc</color>
-    <color name="accent_800">#2f73b3</color>
-    <color name="accent_900">#24609a</color>
-    <color name="accent_gradient_end">#00f2fe</color>
-    <color name="accent_gradient_start">#4facfe</color>
+    <color name="accent_200">#a5f3fc</color>
+    <color name="accent_300">#67e8f9</color>
+    <color name="accent_400">#22d3ee</color>
+    <color name="accent_500">#06b6d4</color>
+    <color name="accent_600">#0891b2</color>
+    <color name="accent_700">#0e7490</color>
+    <color name="accent_800">#155e75</color>
+    <color name="accent_900">#164e63</color>
+    <color name="accent_gradient_end">#0891b2</color>
+    <color name="accent_gradient_start">#06b6d4</color>
     <color name="background_card">#ffffff</color>
     <color name="background_card_dark">#2d2d2d</color>
     <color name="background_overlay">#00000080</color>
@@ -41,33 +44,38 @@
     <color name="ic_launcher_background">@android:color/transparent</color>
     <color name="ic_launcher_background_white">#FFFFFF</color>
     <color name="on_surface_variant">#64748B</color>
-    <color name="primary_500">#667eea</color>
-    <color name="primary_600">#5a6fd8</color>
-    <color name="primary_700">#4e5fc6</color>
-    <color name="primary_800">#424fb4</color>
-    <color name="primary_900">#363fa2</color>
-    <color name="primary_gradient_end">#764ba2</color>
-    <color name="primary_gradient_start">#667eea</color>
+    <color name="primary_500">#0891b2</color>
+    <color name="primary_600">#0e7490</color>
+    <color name="primary_700">#155e75</color>
+    <color name="primary_800">#164e63</color>
+    <color name="primary_900">#083344</color>
+    <color name="primary_gradient_end">#0e7490</color>
+    <color name="primary_gradient_start">#0891b2</color>
     <color name="purple_200">#BFDBFE</color>
     <color name="purple_500">#3B82F6</color>
     <color name="purple_700">#1D4ED8</color>
-    <color name="secondary_500">#f093fb</color>
-    <color name="secondary_600">#e682f2</color>
-    <color name="secondary_700">#dc71e9</color>
-    <color name="secondary_800">#d260e0</color>
-    <color name="secondary_900">#c84fd7</color>
-    <color name="secondary_gradient_end">#f5576c</color>
-    <color name="secondary_gradient_start">#f093fb</color>
+    <color name="secondary_500">#22d3ee</color>
+    <color name="secondary_600">#06b6d4</color>
+    <color name="secondary_700">#0891b2</color>
+    <color name="secondary_800">#0e7490</color>
+    <color name="secondary_900">#155e75</color>
+    <color name="secondary_gradient_end">#155e75</color>
+    <color name="secondary_gradient_start">#22d3ee</color>
     <color name="success_500">#10b981</color>
     <color name="success_600">#059669</color>
     <color name="text_inverse">#ffffff</color>
-    <color name="text_inverse_dark">#000000</color>
-    <color name="text_primary">#1e293b</color>
+    <color name="text_inverse_dark">#0f172a</color>
+    <color name="text_on_ocean">#ffffff</color>
+    <color name="text_on_ocean_dark">#ffffff</color>
+    <color name="text_on_ocean_emphasis">#cffafe</color>
+    <color name="text_on_ocean_secondary">#f1f5f9</color>
+    <color name="text_on_ocean_secondary_dark">#f8fafc</color>
+    <color name="text_primary">#0f172a</color>
     <color name="text_primary_dark">#ffffff</color>
-    <color name="text_secondary">#64748b</color>
-    <color name="text_secondary_dark">#b0b0b0</color>
-    <color name="text_tertiary">#94a3b8</color>
-    <color name="text_tertiary_dark">#808080</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_secondary_dark">#e2e8f0</color>
+    <color name="text_tertiary">#64748b</color>
+    <color name="text_tertiary_dark">#cbd5e1</color>
     <color name="warning_500">#f59e0b</color>
     <color name="warning_600">#d97706</color>
     <color name="white">#FFFFFF</color>
@@ -159,6 +167,84 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_secondary</item>
+    </style>
+    <style name="TextStyle"/>
+    <style name="TextStyle.Button"/>
+    <style name="TextStyle.Button.Primary">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:shadowColor">#60000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    <style name="TextStyle.ItemName"/>
+    <style name="TextStyle.ItemName.OnOcean">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+    <style name="TextStyle.ItemPrice"/>
+    <style name="TextStyle.ItemPrice.OnOcean">
+        <item name="android:textColor">@color/text_on_ocean_emphasis</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+    <style name="TextStyle.MemberAssignment">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/text_background_ocean</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="TextStyle.MemberName">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+    <style name="TextStyle.OnOcean">
+        <item name="android:textColor">@color/text_on_ocean</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    <style name="TextStyle.OnOcean.Emphasis">
+        <item name="android:textColor">@color/text_on_ocean_emphasis</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#60000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+    <style name="TextStyle.OnOcean.Large">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+    <style name="TextStyle.OnOcean.Medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="TextStyle.OnOcean.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_on_ocean_secondary</item>
     </style>
     <style name="Theme.NBS.Splash" parent="Theme.Material3.DayNight">
         <item name="android:windowBackground">@drawable/splash_screen</item>

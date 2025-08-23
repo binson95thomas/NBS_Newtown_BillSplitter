@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Outer glow with Ocean Depths accent -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#4006B6D4" />
+            <corners android:radius="20dp" />
+            <padding android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp" />
+        </shape>
+    </item>
+    
+    <!-- Main background with Ocean Depths gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#06B6D4"
+                android:centerColor="#0899AA"
+                android:endColor="#067799" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner highlight for depth -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="#20FFFFFF" />
+            <corners android:radius="18dp" />
+            <padding android:top="2dp" />
+        </shape>
+    </item>
+    
+    <!-- Subtle inner shadow for modern look -->
+    <item android:gravity="bottom">
+        <shape android:shape="rectangle">
+            <solid android:color="#10000000" />
+            <corners android:radius="18dp" />
+            <padding android:bottom="1dp" />
+        </shape>
+    </item>
+    
+</layer-list>

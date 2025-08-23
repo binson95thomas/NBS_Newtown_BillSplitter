@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -36,10 +37,13 @@ public final class FragmentTotalsBinding implements ViewBinding {
   public final TextView discountText;
 
   @NonNull
+  public final LinearLayout emptyStateContainer;
+
+  @NonNull
   public final RecyclerView memberCarouselRecyclerView;
 
   @NonNull
-  public final TextView memberPagerTitle;
+  public final LinearLayout memberPillsContainer;
 
   @NonNull
   public final MaterialButton recalculateButton;
@@ -50,22 +54,28 @@ public final class FragmentTotalsBinding implements ViewBinding {
   @NonNull
   public final TextView totalText;
 
+  @NonNull
+  public final LinearLayout whatsappShareButton;
+
   private FragmentTotalsBinding(@NonNull ScrollView rootView,
       @NonNull MaterialCardView dealsDiscountsCard, @NonNull TextView dealsDiscountsText,
       @NonNull EditText discountEditText, @NonNull TextView discountText,
-      @NonNull RecyclerView memberCarouselRecyclerView, @NonNull TextView memberPagerTitle,
-      @NonNull MaterialButton recalculateButton, @NonNull TextView subtotalText,
-      @NonNull TextView totalText) {
+      @NonNull LinearLayout emptyStateContainer, @NonNull RecyclerView memberCarouselRecyclerView,
+      @NonNull LinearLayout memberPillsContainer, @NonNull MaterialButton recalculateButton,
+      @NonNull TextView subtotalText, @NonNull TextView totalText,
+      @NonNull LinearLayout whatsappShareButton) {
     this.rootView = rootView;
     this.dealsDiscountsCard = dealsDiscountsCard;
     this.dealsDiscountsText = dealsDiscountsText;
     this.discountEditText = discountEditText;
     this.discountText = discountText;
+    this.emptyStateContainer = emptyStateContainer;
     this.memberCarouselRecyclerView = memberCarouselRecyclerView;
-    this.memberPagerTitle = memberPagerTitle;
+    this.memberPillsContainer = memberPillsContainer;
     this.recalculateButton = recalculateButton;
     this.subtotalText = subtotalText;
     this.totalText = totalText;
+    this.whatsappShareButton = whatsappShareButton;
   }
 
   @Override
@@ -119,15 +129,21 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.emptyStateContainer;
+      LinearLayout emptyStateContainer = ViewBindings.findChildViewById(rootView, id);
+      if (emptyStateContainer == null) {
+        break missingId;
+      }
+
       id = R.id.memberCarouselRecyclerView;
       RecyclerView memberCarouselRecyclerView = ViewBindings.findChildViewById(rootView, id);
       if (memberCarouselRecyclerView == null) {
         break missingId;
       }
 
-      id = R.id.memberPagerTitle;
-      TextView memberPagerTitle = ViewBindings.findChildViewById(rootView, id);
-      if (memberPagerTitle == null) {
+      id = R.id.memberPillsContainer;
+      LinearLayout memberPillsContainer = ViewBindings.findChildViewById(rootView, id);
+      if (memberPillsContainer == null) {
         break missingId;
       }
 
@@ -149,9 +165,16 @@ public final class FragmentTotalsBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.whatsappShareButton;
+      LinearLayout whatsappShareButton = ViewBindings.findChildViewById(rootView, id);
+      if (whatsappShareButton == null) {
+        break missingId;
+      }
+
       return new FragmentTotalsBinding((ScrollView) rootView, dealsDiscountsCard,
-          dealsDiscountsText, discountEditText, discountText, memberCarouselRecyclerView,
-          memberPagerTitle, recalculateButton, subtotalText, totalText);
+          dealsDiscountsText, discountEditText, discountText, emptyStateContainer,
+          memberCarouselRecyclerView, memberPillsContainer, recalculateButton, subtotalText,
+          totalText, whatsappShareButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

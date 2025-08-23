@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Outer glow for active state -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#600066FF" />
+            <corners android:radius="24dp" />
+            <padding android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp" />
+        </shape>
+    </item>
+    
+    <!-- Main pill background with enhanced gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#4FACFE"
+                android:centerColor="#00F2FE"
+                android:endColor="#667eea" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+    
+    <!-- Inner highlight -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="#30FFFFFF" />
+            <corners android:radius="21dp" />
+            <padding android:top="3dp" />
+        </shape>
+    </item>
+    
+</layer-list>

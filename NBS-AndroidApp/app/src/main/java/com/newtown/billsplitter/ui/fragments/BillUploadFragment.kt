@@ -35,6 +35,9 @@ import android.graphics.BitmapFactory
 import android.os.Environment
 import java.io.FileOutputStream
 import android.util.Log
+import com.newtown.billsplitter.utils.HapticUtils
+import com.newtown.billsplitter.utils.AnimationUtils
+import android.widget.ImageView
 
 class BillUploadFragment : Fragment() {
     private var _binding: FragmentBillUploadBinding? = null
@@ -43,7 +46,7 @@ class BillUploadFragment : Fragment() {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
     private var currentPhotoUri: Uri? = null
-    private var currentFlashMode: Int = ImageCapture.FLASH_MODE_AUTO
+    private var currentFlashMode: Int = ImageCapture.FLASH_MODE_ON
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -100,9 +103,18 @@ class BillUploadFragment : Fragment() {
 
     private fun observeProcessingStatus() {
         viewModel.isProcessing.observe(viewLifecycleOwner) { isProcessing ->
-            binding.processingCard.visibility = if (isProcessing) View.VISIBLE else View.GONE
             if (isProcessing) {
+                // Show ocean loading animation
+                binding.processingCard.visibility = View.VISIBLE
                 binding.resultCard.visibility = View.GONE
+                
+                // Show ocean wave loading animation
+                AnimationUtils.showOceanLoadingAnimation(binding.oceanLoadingAnimation, requireContext())
+                
+                // Ocean wave haptic pattern for processing start
+                HapticUtils.oceanWavePattern(requireContext())
+            } else {
+                binding.processingCard.visibility = View.GONE
             }
         }
 
@@ -112,12 +124,30 @@ class BillUploadFragment : Fragment() {
             } else {
                 binding.resultCard.visibility = View.VISIBLE
                 binding.resultText.text = result.message
+                
                 if (result.success) {
+                    // Success state with animations and haptics
                     binding.resultIcon.setImageResource(com.newtown.billsplitter.R.drawable.ic_check)
                     binding.resultIcon.setColorFilter(resources.getColor(com.newtown.billsplitter.R.color.secondary_500, null))
+                    
+                    // Show success animation
+                    AnimationUtils.showSuccessAnimation(binding.resultIcon, requireContext())
+                    
+                    // Success haptic pattern
+                    HapticUtils.successPattern(requireContext())
+                    
+                    // Slide in result card with ocean wave entrance
+                    AnimationUtils.oceanWaveEntrance(binding.resultCard)
                 } else {
+                    // Error state with haptics
                     binding.resultIcon.setImageResource(com.newtown.billsplitter.R.drawable.ic_error)
                     binding.resultIcon.setColorFilter(resources.getColor(com.newtown.billsplitter.R.color.error_500, null))
+                    
+                    // Error haptic pattern
+                    HapticUtils.errorPattern(requireContext())
+                    
+                    // Fade in result card
+                    AnimationUtils.fadeIn(binding.resultCard)
                 }
             }
         }
@@ -125,43 +155,46 @@ class BillUploadFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.cameraButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
             openCamera()
         }
 
         binding.galleryButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
             openGallery()
         }
         
         binding.captureButton?.setOnClickListener {
+            HapticUtils.mediumTap(it)
+            AnimationUtils.bounceButton(it)
             takePhoto()
         }
         
         binding.cancelCaptureButton?.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
             cancelCapture()
         }
         
-        // Flash control buttons
-        binding.flashAutoButton?.setOnClickListener {
-            setFlashMode(ImageCapture.FLASH_MODE_AUTO)
-            updateFlashButtonStates()
+        // Single flash toggle button with haptic feedback
+        binding.flashToggleButton?.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.pulseView(it)
+            toggleFlashMode()
         }
         
-        binding.flashOnButton?.setOnClickListener {
-            setFlashMode(ImageCapture.FLASH_MODE_ON)
-            updateFlashButtonStates()
-        }
-        
-        binding.flashOffButton?.setOnClickListener {
-            setFlashMode(ImageCapture.FLASH_MODE_OFF)
-            updateFlashButtonStates()
-        }
-        
-        // Photo preview buttons
+        // Photo preview buttons with haptic feedback
         binding.retakeButton?.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
             showCameraPreview()
         }
         
         binding.submitButton?.setOnClickListener {
+            HapticUtils.mediumTap(it)
+            AnimationUtils.bounceButton(it)
             submitPhoto()
         }
     }
@@ -175,103 +208,175 @@ class BillUploadFragment : Fragment() {
     }
 
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-        
-        cameraProviderFuture.addListener({
-            val cameraProvider = cameraProviderFuture.get()
-            
-            // Configure preview with better quality
-            val preview = Preview.Builder()
-                .build()
-            
-            // Configure image capture with maximum quality
-            imageCapture = ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
-                .setFlashMode(currentFlashMode) // Use current flash mode
-                .build()
-            
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-            
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    viewLifecycleOwner,
-                    cameraSelector,
-                    preview,
-                    imageCapture
-                )
-                
-                // Connect preview to PreviewView
-                preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
-                
-                // Show camera preview with animation
-                binding.cameraPreviewContainer.visibility = View.VISIBLE
-                binding.cameraButton.visibility = View.GONE
-                binding.galleryButton.visibility = View.GONE
-                
-                // Add a small delay to ensure camera is ready
-                binding.cameraPreview.postDelayed({
-                    Toast.makeText(context, "Camera ready! Position your receipt", Toast.LENGTH_SHORT).show()
-                    updateFlashButtonStates() // Initialize flash button states
-                }, 500)
-                
-            } catch (e: Exception) {
-                Log.e("CameraX", "Camera binding failed", e)
-                Toast.makeText(context, "Failed to start camera: ${e.message}", Toast.LENGTH_LONG).show()
-                
-                // Reset UI on error
-                binding.cameraPreviewContainer.visibility = View.GONE
-                binding.cameraButton.visibility = View.VISIBLE
-                binding.galleryButton.visibility = View.VISIBLE
+        try {
+            // Check if fragment is still attached
+            if (!isAdded || context == null) {
+                Log.w("CameraX", "Fragment not attached, cannot start camera")
+                return
             }
-        }, ContextCompat.getMainExecutor(requireContext()))
+            
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+            
+            cameraProviderFuture.addListener({
+                try {
+                    // Double check fragment is still attached
+                    if (!isAdded || context == null) {
+                        Log.w("CameraX", "Fragment detached while starting camera")
+                        return@addListener
+                    }
+                    
+                    val cameraProvider = cameraProviderFuture.get()
+                    
+                    // Configure preview with better quality
+                    val preview = Preview.Builder()
+                        .build()
+                    
+                    // Configure image capture with maximum quality
+                    imageCapture = ImageCapture.Builder()
+                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+                        .setFlashMode(currentFlashMode) // Use current flash mode
+                        .build()
+                    
+                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                    
+                    try {
+                        cameraProvider.unbindAll()
+                        cameraProvider.bindToLifecycle(
+                            viewLifecycleOwner,
+                            cameraSelector,
+                            preview,
+                            imageCapture
+                        )
+                        
+                        // Connect preview to PreviewView
+                        preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+                        
+                        // Show camera preview with animation
+                        binding.cameraPreviewContainer.visibility = View.VISIBLE
+                        binding.cameraButton.visibility = View.GONE
+                        binding.galleryButton.visibility = View.GONE
+                        
+                        // Add a small delay to ensure camera is ready
+                        binding.cameraPreview.postDelayed({
+                            if (isAdded && context != null) {
+                                Toast.makeText(context, "Camera ready! Position your receipt", Toast.LENGTH_SHORT).show()
+                                updateFlashToggleButton() // Initialize flash button state
+                            }
+                        }, 500)
+                        
+                        Log.d("CameraX", "Camera started successfully")
+                        
+                    } catch (e: Exception) {
+                        Log.e("CameraX", "Camera binding failed", e)
+                        if (isAdded && context != null) {
+                            Toast.makeText(context, "Failed to start camera: ${e.message}", Toast.LENGTH_LONG).show()
+                            
+                            // Reset UI on error
+                            binding.cameraPreviewContainer.visibility = View.GONE
+                            binding.cameraButton.visibility = View.VISIBLE
+                            binding.galleryButton.visibility = View.VISIBLE
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("CameraX", "Error getting camera provider", e)
+                    if (isAdded && context != null) {
+                        Toast.makeText(context, "Camera initialization failed: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }, ContextCompat.getMainExecutor(requireContext()))
+            
+        } catch (e: Exception) {
+            Log.e("CameraX", "Error starting camera", e)
+            if (isAdded && context != null) {
+                Toast.makeText(context, "Cannot start camera: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun takePhoto() {
-        val imageCapture = imageCapture ?: return
+        val imageCapture = imageCapture ?: run {
+            Toast.makeText(context, "Camera not ready. Please try again.", Toast.LENGTH_LONG).show()
+            return
+        }
+        
+        // Check if fragment is still attached
+        if (!isAdded || context == null) {
+            Log.w("CameraX", "Fragment not attached during photo capture")
+            return
+        }
         
         // Show capture feedback
         Toast.makeText(context, "Capturing image...", Toast.LENGTH_SHORT).show()
         
-        val photoFile = File(
-            requireContext().getExternalFilesDir(null),
-            "bill_${System.currentTimeMillis()}.jpg"
-        )
-        
-        val photoUri = FileProvider.getUriForFile(
-            requireContext(),
-            "${requireContext().packageName}.fileprovider",
-            photoFile
-        )
-        
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-        
-        imageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(requireContext()),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    Log.d("CameraX", "Photo saved successfully: ${photoFile.absolutePath}")
-                    Log.d("CameraX", "File size: ${photoFile.length()} bytes")
-                    
-                    // Show photo preview instead of processing immediately
-                    showPhotoPreview(photoUri)
-                }
-                
-                override fun onError(exc: ImageCaptureException) {
-                    Log.e("CameraX", "Photo capture failed", exc)
-                    val errorMessage = when (exc.imageCaptureError) {
-                        ImageCapture.ERROR_CAPTURE_FAILED -> "Capture failed. Please try again."
-                        ImageCapture.ERROR_CAMERA_CLOSED -> "Camera was closed unexpectedly."
-                        ImageCapture.ERROR_INVALID_CAMERA -> "Invalid camera configuration."
-                        ImageCapture.ERROR_FILE_IO -> "Failed to save image. Check storage permissions."
-                        ImageCapture.ERROR_UNKNOWN -> "Unknown error occurred."
-                        else -> "Capture failed: ${exc.message}"
+        try {
+            val photoFile = File(
+                requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                "bill_${System.currentTimeMillis()}.jpg"
+            )
+            
+            // Ensure directory exists
+            photoFile.parentFile?.mkdirs()
+            
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+            
+            imageCapture.takePicture(
+                outputOptions,
+                ContextCompat.getMainExecutor(requireContext()),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                        try {
+                            if (!isAdded || context == null) {
+                                Log.w("CameraX", "Fragment detached after photo capture")
+                                return
+                            }
+                            
+                            Log.d("CameraX", "Photo saved successfully: ${photoFile.absolutePath}")
+                            Log.d("CameraX", "File size: ${photoFile.length()} bytes")
+                            
+                            // Check if file exists and has content
+                            if (!photoFile.exists() || photoFile.length() == 0L) {
+                                Toast.makeText(context, "Photo file is empty or missing", Toast.LENGTH_LONG).show()
+                                return
+                            }
+                            
+                            // Use file URI directly instead of FileProvider for internal storage
+                            val photoUri = Uri.fromFile(photoFile)
+                            
+                            // Show photo preview instead of processing immediately
+                            showPhotoPreview(photoUri)
+                            
+                        } catch (e: Exception) {
+                            Log.e("CameraX", "Error in onImageSaved", e)
+                            if (isAdded && context != null) {
+                                Toast.makeText(context, "Error processing captured photo: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
+                        }
                     }
-                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                    
+                    override fun onError(exc: ImageCaptureException) {
+                        Log.e("CameraX", "Photo capture failed", exc)
+                        if (!isAdded || context == null) {
+                            return
+                        }
+                        
+                        val errorMessage = when (exc.imageCaptureError) {
+                            ImageCapture.ERROR_CAPTURE_FAILED -> "Capture failed. Please try again."
+                            ImageCapture.ERROR_CAMERA_CLOSED -> "Camera was closed unexpectedly."
+                            ImageCapture.ERROR_INVALID_CAMERA -> "Invalid camera configuration."
+                            ImageCapture.ERROR_FILE_IO -> "Failed to save image. Check storage permissions."
+                            ImageCapture.ERROR_UNKNOWN -> "Unknown error occurred."
+                            else -> "Capture failed: ${exc.message}"
+                        }
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                    }
                 }
+            )
+        } catch (e: Exception) {
+            Log.e("CameraX", "Error setting up photo capture", e)
+            if (isAdded && context != null) {
+                Toast.makeText(context, "Failed to setup photo capture: ${e.message}", Toast.LENGTH_LONG).show()
             }
-        )
+        }
     }
 
     private fun cancelCapture() {
@@ -293,31 +398,166 @@ class BillUploadFragment : Fragment() {
 
     private fun showPhotoPreview(photoUri: Uri) {
         try {
+            if (!isAdded || context == null) {
+                Log.w("PhotoPreview", "Fragment not attached during photo preview")
+                return
+            }
+            
+            Log.d("PhotoPreview", "Starting photo preview for URI: $photoUri")
+            
             // Store the current photo URI for later use
             currentPhotoUri = photoUri
             
-            // Load the captured image into the preview
-            val inputStream = requireContext().contentResolver.openInputStream(photoUri)
-            val bitmap: Bitmap? = BitmapFactory.decodeStream(inputStream)
-            inputStream?.close()
+            // Load the captured image with proper orientation
+            val rotatedBitmap = loadAndRotateImage(photoUri)
             
-            if (bitmap != null) {
-                binding.capturedImageView.setImageBitmap(bitmap)
+            if (rotatedBitmap != null) {
+                Log.d("PhotoPreview", "Rotated bitmap loaded successfully: ${rotatedBitmap.width}x${rotatedBitmap.height}")
+                
+                binding.capturedImageView.setImageBitmap(rotatedBitmap)
                 
                 // Hide camera and show photo preview
                 binding.cameraPreviewContainer.visibility = View.GONE
                 binding.photoPreviewContainer.visibility = View.VISIBLE
                 
+                Log.d("PhotoPreview", "Camera hidden, photo preview shown")
                 Toast.makeText(context, "Photo captured! Review and submit", Toast.LENGTH_SHORT).show()
+                
+                // Success haptic for photo capture
+                HapticUtils.successPattern(requireContext())
             } else {
-                throw Exception("Failed to decode captured image")
+                Log.e("PhotoPreview", "Failed to load bitmap for preview")
+                Toast.makeText(context, "Failed to load photo preview. Please try again.", Toast.LENGTH_LONG).show()
+                
+                // Reset UI on error
+                binding.cameraPreviewContainer.visibility = View.VISIBLE
+                binding.photoPreviewContainer.visibility = View.GONE
             }
         } catch (e: Exception) {
             Log.e("PhotoPreview", "Failed to show photo preview", e)
-            Toast.makeText(context, "Failed to show photo preview", Toast.LENGTH_SHORT).show()
+            if (isAdded && context != null) {
+                Toast.makeText(context, "Failed to show photo preview: ${e.message}", Toast.LENGTH_LONG).show()
+                
+                // Reset UI on error
+                binding.cameraPreviewContainer.visibility = View.VISIBLE
+                binding.photoPreviewContainer.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun loadAndRotateImage(uri: Uri): Bitmap? {
+        try {
+            if (!isAdded || context == null) {
+                Log.w("PhotoPreview", "Fragment not attached during image loading")
+                return null
+            }
             
-            // Fallback to direct processing
-            viewModel.processBillImage(photoUri.toString())
+            Log.d("PhotoPreview", "Loading image from URI: $uri")
+            
+            // Handle file URIs differently from content URIs
+            val inputStream = when (uri.scheme) {
+                "file" -> {
+                    val file = File(uri.path ?: "")
+                    if (!file.exists()) {
+                        Log.e("PhotoPreview", "File does not exist: ${uri.path}")
+                        return null
+                    }
+                    file.inputStream()
+                }
+                "content" -> {
+                    requireContext().contentResolver.openInputStream(uri)
+                }
+                else -> {
+                    Log.e("PhotoPreview", "Unsupported URI scheme: ${uri.scheme}")
+                    return null
+                }
+            } ?: run {
+                Log.e("PhotoPreview", "Failed to open input stream")
+                return null
+            }
+            
+            // First pass: get image dimensions
+            val options = BitmapFactory.Options().apply {
+                inJustDecodeBounds = true
+            }
+            BitmapFactory.decodeStream(inputStream, null, options)
+            inputStream.close()
+            
+            // Calculate sample size to avoid OutOfMemoryError
+            val maxSize = 1024
+            val sampleSize = maxOf(1, minOf(options.outWidth / maxSize, options.outHeight / maxSize))
+            
+            Log.d("PhotoPreview", "Image dimensions: ${options.outWidth}x${options.outHeight}, sample size: $sampleSize")
+            
+            // Second pass: decode with sample size
+            val inputStream2 = when (uri.scheme) {
+                "file" -> File(uri.path ?: "").inputStream()
+                "content" -> requireContext().contentResolver.openInputStream(uri)
+                else -> null
+            } ?: run {
+                Log.e("PhotoPreview", "Failed to open input stream for decoding")
+                return null
+            }
+            
+            val options2 = BitmapFactory.Options().apply {
+                inSampleSize = sampleSize
+            }
+            val bitmap = BitmapFactory.decodeStream(inputStream2, null, options2)
+            inputStream2.close()
+            
+            if (bitmap == null) {
+                Log.e("PhotoPreview", "Failed to decode bitmap")
+                return null
+            }
+            
+            Log.d("PhotoPreview", "Bitmap decoded: ${bitmap.width}x${bitmap.height}")
+            
+            // Get EXIF orientation (only for content URIs or if file has EXIF)
+            try {
+                val exifInputStream = when (uri.scheme) {
+                    "file" -> File(uri.path ?: "").inputStream()
+                    "content" -> requireContext().contentResolver.openInputStream(uri)
+                    else -> null
+                }
+                
+                if (exifInputStream != null) {
+                    val exif = android.media.ExifInterface(exifInputStream)
+                    val orientation = exif.getAttributeInt(
+                        android.media.ExifInterface.TAG_ORIENTATION,
+                        android.media.ExifInterface.ORIENTATION_NORMAL
+                    )
+                    exifInputStream.close()
+                    
+                    val matrix = android.graphics.Matrix()
+                    when (orientation) {
+                        android.media.ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
+                        android.media.ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
+                        android.media.ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
+                        android.media.ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.postScale(-1f, 1f)
+                        android.media.ExifInterface.ORIENTATION_FLIP_VERTICAL -> matrix.postScale(1f, -1f)
+                    }
+                    
+                    return if (matrix.isIdentity) {
+                        bitmap
+                    } else {
+                        try {
+                            android.graphics.Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+                        } catch (e: Exception) {
+                            Log.e("PhotoPreview", "Error creating rotated bitmap", e)
+                            bitmap // Return original if rotation fails
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.w("PhotoPreview", "Error reading EXIF data", e)
+                // Continue without rotation
+            }
+            
+            return bitmap
+            
+        } catch (e: Exception) {
+            Log.e("PhotoPreview", "Error loading and rotating image", e)
+            return null
         }
     }
 
@@ -331,19 +571,34 @@ class BillUploadFragment : Fragment() {
     }
 
     private fun submitPhoto() {
-        // Get the current photo URI from the captured image view
-        val currentPhotoUri = currentPhotoUri
-        if (currentPhotoUri != null) {
-            // Hide photo preview and show main buttons
-            binding.photoPreviewContainer.visibility = View.GONE
-            binding.cameraButton.visibility = View.VISIBLE
-            binding.galleryButton.visibility = View.VISIBLE
+        try {
+            if (!isAdded || context == null) {
+                Log.w("PhotoPreview", "Fragment not attached during photo submission")
+                return
+            }
             
-            // Process the captured image
-            viewModel.processBillImage(currentPhotoUri.toString())
-            Toast.makeText(context, "Processing bill with AI...", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "No photo to submit", Toast.LENGTH_SHORT).show()
+            // Get the current photo URI from the captured image view
+            val currentPhotoUri = currentPhotoUri
+            if (currentPhotoUri != null) {
+                Log.d("PhotoPreview", "Submitting photo: $currentPhotoUri")
+                
+                // Hide photo preview and show main buttons
+                binding.photoPreviewContainer.visibility = View.GONE
+                binding.cameraButton.visibility = View.VISIBLE
+                binding.galleryButton.visibility = View.VISIBLE
+                
+                // Process the captured image
+                viewModel.processBillImage(currentPhotoUri.toString())
+                Toast.makeText(context, "Processing bill with AI...", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.w("PhotoPreview", "No photo URI available for submission")
+                Toast.makeText(context, "No photo to submit", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Log.e("PhotoPreview", "Error submitting photo", e)
+            if (isAdded && context != null) {
+                Toast.makeText(context, "Error submitting photo: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -356,55 +611,80 @@ class BillUploadFragment : Fragment() {
         requireContext(), Manifest.permission.CAMERA
     ) == PackageManager.PERMISSION_GRANTED
 
-    private fun setFlashMode(flashMode: Int) {
-        currentFlashMode = flashMode
-        imageCapture?.flashMode = flashMode
+
+
+    private fun toggleFlashMode() {
+        // Toggle between flash ON and OFF (no auto mode)
+        currentFlashMode = when (currentFlashMode) {
+            ImageCapture.FLASH_MODE_ON -> ImageCapture.FLASH_MODE_OFF
+            ImageCapture.FLASH_MODE_OFF -> ImageCapture.FLASH_MODE_ON
+            else -> ImageCapture.FLASH_MODE_ON // Default to ON
+        }
+        
+        // Update camera flash mode
+        imageCapture?.flashMode = currentFlashMode
+        
+        // Update button appearance
+        updateFlashToggleButton()
         
         // Show feedback
-        val flashText = when (flashMode) {
-            ImageCapture.FLASH_MODE_AUTO -> "Flash: Auto"
+        val flashText = when (currentFlashMode) {
             ImageCapture.FLASH_MODE_ON -> "Flash: On"
             ImageCapture.FLASH_MODE_OFF -> "Flash: Off"
-            else -> "Flash: Unknown"
+            else -> "Flash: On"
         }
         Toast.makeText(context, flashText, Toast.LENGTH_SHORT).show()
     }
 
-    private fun updateFlashButtonStates() {
-        // Update button styles based on current flash mode
-        binding.flashAutoButton?.let { button ->
-            if (currentFlashMode == ImageCapture.FLASH_MODE_AUTO) {
-                button.setBackgroundColor(resources.getColor(com.newtown.billsplitter.R.color.accent_500, null))
-                button.setTextColor(resources.getColor(com.newtown.billsplitter.R.color.white, null))
-            } else {
-                button.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
-                button.setTextColor(resources.getColor(com.newtown.billsplitter.R.color.accent_500, null))
+    private fun updateFlashToggleButton() {
+        try {
+            if (!isAdded || context == null) {
+                return
             }
-        }
-        
-        binding.flashOnButton?.let { button ->
-            if (currentFlashMode == ImageCapture.FLASH_MODE_ON) {
-                button.setBackgroundColor(resources.getColor(com.newtown.billsplitter.R.color.accent_500, null))
-                button.setTextColor(resources.getColor(com.newtown.billsplitter.R.color.white, null))
-            } else {
-                button.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
-                button.setTextColor(resources.getColor(com.newtown.billsplitter.R.color.accent_500, null))
+            
+            binding.flashToggleButton?.let { button ->
+                val (iconRes, backgroundTint) = when (currentFlashMode) {
+                    ImageCapture.FLASH_MODE_ON -> {
+                        Pair(com.newtown.billsplitter.R.drawable.ic_flash_on, "#80FFD700")
+                    }
+                    ImageCapture.FLASH_MODE_OFF -> {
+                        Pair(com.newtown.billsplitter.R.drawable.ic_flash_off, "#80FF6B6B")
+                    }
+                    else -> {
+                        Pair(com.newtown.billsplitter.R.drawable.ic_flash_on, "#80FFD700") // Default to ON
+                    }
+                }
+                
+                try {
+                    button.setIconResource(iconRes)
+                    button.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor(backgroundTint))
+                } catch (e: Exception) {
+                    Log.e("CameraX", "Failed to update flash button", e)
+                }
             }
-        }
-        
-        binding.flashOffButton?.let { button ->
-            if (currentFlashMode == ImageCapture.FLASH_MODE_OFF) {
-                button.setBackgroundColor(resources.getColor(com.newtown.billsplitter.R.color.accent_500, null))
-                button.setTextColor(resources.getColor(com.newtown.billsplitter.R.color.white, null))
-            } else {
-                button.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
-                button.setTextColor(resources.getColor(com.newtown.billsplitter.R.color.accent_500, null))
-            }
+        } catch (e: Exception) {
+            Log.e("CameraX", "Error updating flash toggle button", e)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        
+        // Properly shutdown camera
+        try {
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+            cameraProviderFuture.addListener({
+                try {
+                    val cameraProvider = cameraProviderFuture.get()
+                    cameraProvider.unbindAll()
+                } catch (e: Exception) {
+                    Log.e("CameraX", "Failed to unbind camera in onDestroyView", e)
+                }
+            }, ContextCompat.getMainExecutor(requireContext()))
+        } catch (e: Exception) {
+            Log.e("CameraX", "Error getting camera provider in onDestroyView", e)
+        }
+        
         cameraExecutor.shutdown()
         _binding = null
     }

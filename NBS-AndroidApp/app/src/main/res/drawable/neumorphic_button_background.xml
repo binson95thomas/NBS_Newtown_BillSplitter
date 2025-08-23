@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Bottom shadow (darker) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1A000000" />
+            <corners android:radius="24dp" />
+            <padding android:bottom="2dp" />
+        </shape>
+    </item>
+    
+    <!-- Main button background -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/background_card" />
+            <corners android:radius="24dp" />
+        </shape>
+    </item>
+    
+    <!-- Top highlight (lighter) -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="#15FFFFFF" />
+            <corners android:radius="24dp" />
+            <padding android:top="2dp" />
+        </shape>
+    </item>
+    
+</layer-list>

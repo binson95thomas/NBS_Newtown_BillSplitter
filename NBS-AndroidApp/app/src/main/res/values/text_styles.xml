@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Enhanced Text Styles for Ocean Depths Theme -->
+    
+    <!-- Base Text Style -->
+    <style name="TextStyle" />
+    
+    <!-- Text on Ocean Backgrounds -->
+    <style name="TextStyle.OnOcean">
+        <item name="android:textColor">@color/text_on_ocean</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    
+    <style name="TextStyle.OnOcean.Large">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+    
+    <style name="TextStyle.OnOcean.Medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    
+    <style name="TextStyle.OnOcean.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_on_ocean_secondary</item>
+    </style>
+    
+    <!-- Emphasis Text on Ocean -->
+    <style name="TextStyle.OnOcean.Emphasis">
+        <item name="android:textColor">@color/text_on_ocean_emphasis</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#60000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+    
+    <!-- Member Assignment Text -->
+    <style name="TextStyle.MemberAssignment">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/text_background_ocean</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    
+    <!-- Item Name Base -->
+    <style name="TextStyle.ItemName" />
+    
+    <!-- Item Name on Ocean Cards -->
+    <style name="TextStyle.ItemName.OnOcean">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+    
+    <!-- Item Price Base -->
+    <style name="TextStyle.ItemPrice" />
+    
+    <!-- Item Price on Ocean Cards -->
+    <style name="TextStyle.ItemPrice.OnOcean">
+        <item name="android:textColor">@color/text_on_ocean_emphasis</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+    
+    <!-- Button Base -->
+    <style name="TextStyle.Button" />
+    
+    <!-- Button Text Styles -->
+    <style name="TextStyle.Button.Primary">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:shadowColor">#60000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+    
+    <!-- Member Name Styles -->
+    <style name="TextStyle.MemberName">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+    
+</resources>
