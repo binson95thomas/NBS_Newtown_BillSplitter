@@ -89,9 +89,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="12dp"
                 android:gravity="center">
+                
+                <!-- First Row: Camera and Gallery -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
 
                 <!-- Camera Button -->
                 <LinearLayout
@@ -129,9 +137,9 @@
                 <!-- Gallery Button -->
                 <LinearLayout
                     android:id="@+id/galleryButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/modern_gallery_button_background"
                     android:clickable="true"
@@ -156,6 +164,39 @@
                         android:textStyle="bold"
                         android:letterSpacing="0.02"
                         android:gravity="center" />
+
+                </LinearLayout>
+
+                </LinearLayout>
+                
+                <!-- Load Bills Button -->
+                <LinearLayout
+                    android:id="@+id/loadBillsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/modern_load_bills_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_history"
+                        android:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Load Previous Bills"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02" />
 
                 </LinearLayout>
 
@@ -335,6 +376,107 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Model Selection Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/accent_200"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🤖 AI Model"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/refreshModelsButton"
+                        style="@style/Widget.Material3.Button.IconButton"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/modern_refresh_button_background"
+                        app:icon="@drawable/ic_refresh"
+                        app:iconSize="18dp"
+                        app:iconTint="@color/white"
+                        app:iconPadding="0dp"
+                        app:cornerRadius="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/modelSelectionLayout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Select AI Model"
+                        app:boxStrokeColor="@color/accent_300"
+                        app:hintTextColor="@color/accent_300"
+                        app:startIconDrawable="@drawable/ic_ai"
+                        app:startIconTint="@color/accent_300">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/modelSelectionDropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/modelStatusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⚡"
+                        android:textColor="@color/accent_300"
+                        android:textSize="12sp"
+                        android:alpha="0.8" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/modelInfoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Using cached models (24h cache)"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:alpha="0.7" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Compact Uploaded Image Preview -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/imagePreviewCard"
@@ -370,13 +512,13 @@
                     android:background="@drawable/modern_camera_preview_background"
                     android:padding="3dp">
 
-                    <ImageView
-                        android:id="@+id/uploadedImageView"
-                        android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/uploadedImageView"
+                    android:layout_width="match_parent"
                         android:layout_height="180dp"
-                        android:background="@color/gray_100"
-                        android:contentDescription="Uploaded bill image"
-                        android:scaleType="centerCrop" />
+                    android:background="@color/gray_100"
+                    android:contentDescription="Uploaded bill image"
+                    android:scaleType="centerCrop" />
 
                 </FrameLayout>
 
@@ -425,7 +567,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Extracting items using AI"
+                    android:text="Extracting items using AI (Gemini 2.0 Lite)"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:alpha="0.9" />

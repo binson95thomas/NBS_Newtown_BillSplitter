@@ -35,12 +35,15 @@ object UniversalShareUtils {
                 subtotal, discountAmount, finalTotal
             )
             
-            // Use universal share intent
+            // Use universal share intent with clipboard fallback
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, formattedMessage)
                 putExtra(Intent.EXTRA_SUBJECT, "Bill Split Breakdown")
             }
+            
+            // Add a flag to prevent truncation
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             
             context.startActivity(Intent.createChooser(intent, "Share Bill Breakdown"))
             
@@ -51,6 +54,8 @@ object UniversalShareUtils {
             Toast.makeText(context, "Failed to share bill: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
+    
+
     
     /**
      * Format the bill breakdown into a clean message without advertising
@@ -70,6 +75,9 @@ object UniversalShareUtils {
             // Header
             appendLine("💰 BILL SPLIT BREAKDOWN")
             appendLine("📅 $currentDate")
+            if (discountPercentage > 0) {
+                appendLine("(Prices marked with 📉 include discount)")
+            }
             appendLine()
             
             // Bill Items Section
@@ -82,9 +90,10 @@ object UniversalShareUtils {
                 val itemLine = "${index + 1}. ${item.name}"
                 
                 // Add special formatting for deals/discounts
-                when (item.itemType) {
-                    "deal" -> appendLine("🎯 $itemLine - $priceStr")
-                    "discount" -> appendLine("💫 $itemLine - $priceStr")
+                when {
+                    item.isExemptFromDiscount -> appendLine("🎟️ $itemLine - $priceStr")
+                    item.itemType == "deal" -> appendLine("🎯 $itemLine - $priceStr")
+                    item.itemType == "discount" -> appendLine("💫 $itemLine - $priceStr")
                     else -> appendLine("🍽️ $itemLine - $priceStr")
                 }
             }
@@ -115,8 +124,31 @@ object UniversalShareUtils {
                 if (breakdown.items.isNotEmpty()) {
                     appendLine("└─ Items:")
                     breakdown.items.forEach { item ->
-                        val itemPrice = "£%.2f".format(item.price)
-                        appendLine("   • ${item.name} - $itemPrice")
+                        val fullPrice = "£%.2f".format(item.price)
+                        val originalSplitAmount = if (item.assignedTo.isNotEmpty()) {
+                            item.price / item.assignedTo.size
+                        } else {
+                            0.0
+                        }
+                        val splitAmountStr = "£%.2f".format(originalSplitAmount)
+                        
+                        var splitText = if (item.assignedTo.size > 1) {
+                            "(${fullPrice} ÷ ${item.assignedTo.size}) = ${splitAmountStr}"
+                        } else {
+                            fullPrice
+                        }
+                        
+                        // Add discounted price if applicable
+                        if (discountPercentage > 0 && !item.isExemptFromDiscount) {
+                            val discountedSplitAmount = originalSplitAmount * (1 - discountPercentage / 100.0)
+                            splitText += " 📉 £%.2f".format(discountedSplitAmount)
+                        } else if (item.isExemptFromDiscount) {
+                            splitText += " (🎟️ Voucher)"
+                        }
+                        
+                        // Use voucher icon for exempt items
+                        val bullet = if (item.isExemptFromDiscount) "🎟️" else "•"
+                        appendLine("   $bullet ${item.name} - $splitText")
                     }
                 }
             }
@@ -131,7 +163,14 @@ object UniversalShareUtils {
             }
             
             appendLine()
-            appendLine("✅ Total Verified: £%.2f".format(memberBreakdowns.sumOf { it.finalAmount }))
+            appendLine("━━━━━━━━━━━━━━━━━━━━━━")
+            val totalVerified = try {
+                memberBreakdowns.sumOf { it.finalAmount }
+            } catch (e: Exception) {
+                finalTotal // Fallback to final total if calculation fails
+            }
+            appendLine("✅ TOTAL VERIFIED: £%.2f".format(totalVerified))
+            appendLine("━━━━━━━━━━━━━━━━━━━━━━")
         }
     }
     
@@ -206,7 +245,7 @@ object UniversalShareUtils {
         // Make the message scrollable if it's long
         dialog.findViewById<android.widget.TextView>(android.R.id.message)?.apply {
             movementMethod = ScrollingMovementMethod()
-            maxHeight = 600 // Limit height so it doesn't take full screen
+            maxHeight = 800 // Increased height to show more content
         }
     }
 }

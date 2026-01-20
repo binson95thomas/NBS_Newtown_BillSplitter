@@ -16,14 +16,18 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         
-        // Read API key from local.properties
-        def localProperties = new Properties()
-        def localPropertiesFile = rootProject.file("local.properties")
-        if (localPropertiesFile.exists()) {
-            localProperties.load(new FileInputStream(localPropertiesFile))
+        // Read API key from environment variables first, then fallback to local.properties
+        def geminiApiKey = System.getenv('GEMINI_API_KEY')
+        if (geminiApiKey == null || geminiApiKey.isEmpty()) {
+            // Fallback to local.properties
+            def localProperties = new Properties()
+            def localPropertiesFile = rootProject.file("local.properties")
+            if (localPropertiesFile.exists()) {
+                localProperties.load(new FileInputStream(localPropertiesFile))
+            }
+            geminiApiKey = localProperties.getProperty('GEMINI_API_KEY', '')
         }
-        def geminiApiKey = localProperties.getProperty('GEMINI_API_KEY', '')
-        buildConfigField "String", "GEMINI_API_KEY", "\"$geminiApiKey\""
+        buildConfigField "String", "GEMINI_API_KEY", "\"${geminiApiKey ?: ''}\""
     }
 
     buildTypes {
@@ -81,7 +85,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     
     // Gemini AI
-    implementation 'com.google.ai.client.generativeai:generativeai:0.1.2'
+    implementation 'com.google.ai.client.generativeai:generativeai:0.9.0'
     
     // Testing
     testImplementation 'junit:junit:4.13.2'

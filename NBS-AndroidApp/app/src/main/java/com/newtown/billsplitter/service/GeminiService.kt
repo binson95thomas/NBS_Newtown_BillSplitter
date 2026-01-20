@@ -9,54 +9,114 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.generationConfig
 import com.google.ai.client.generativeai.type.content
 import com.newtown.billsplitter.model.BillItem
+import com.newtown.billsplitter.utils.ModelManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 class GeminiService(private val context: Context) {
     
     private var model: GenerativeModel? = null
+    private lateinit var modelManager: ModelManager
     
     // Allow quick switch between legacy and enhanced prompt/response formats
     enum class PromptMode { LEGACY, ENHANCED }
     private var promptMode: PromptMode = PromptMode.ENHANCED
     fun setPromptMode(mode: PromptMode) { this.promptMode = mode }
     
+    fun updateSelectedModel() {
+        try {
+            initializeModel()
+            Log.d("GeminiService", "Model updated successfully")
+        } catch (e: Exception) {
+            Log.e("GeminiService", "Failed to update model", e)
+            // Try to continue with existing model if available
+            if (model == null) {
+                Log.e("GeminiService", "No model available after update failure")
+            }
+        }
+    }
+    
     init {
         try {
             Log.d("GeminiService", "Starting GeminiService initialization...")
-            val apiKey = com.newtown.billsplitter.BuildConfig.GEMINI_API_KEY
-            Log.d("GeminiService", "Raw API Key: '$apiKey'")
-        Log.d("GeminiService", "API Key length: ${apiKey.length}")
-        Log.d("GeminiService", "API Key starts with: ${apiKey.take(10)}...")
-            Log.d("GeminiService", "API Key ends with: ...${apiKey.takeLast(10)}")
-            
-            if (apiKey.isEmpty() || apiKey == "\"\"") {
-                Log.e("GeminiService", "API Key is empty or not set properly")
-                throw Exception("API Key not configured")
-            }
-            
-            if (!apiKey.startsWith("AIza")) {
-                Log.e("GeminiService", "API Key format is invalid - should start with 'AIza'")
-                throw Exception("Invalid API Key format")
-            }
-            
-            model = GenerativeModel(
-                modelName = "gemini-1.5-flash",
-                apiKey = apiKey,
-                generationConfig = generationConfig {
-                    temperature = 0.15f
-                    topK = 1
-                    topP = 0.1f
-                }
-            )
-            Log.d("GeminiService", "GeminiService initialized successfully")
+            modelManager = ModelManager(context)
+            initializeModel()
         } catch (e: Exception) {
             Log.e("GeminiService", "Failed to initialize GeminiService", e)
             Log.e("GeminiService", "Exception message: ${e.message}")
             Log.e("GeminiService", "Exception stack trace: ${e.stackTraceToString()}")
+        }
+    }
+    
+    private fun initializeModel() {
+        try {
+            val apiKey = getApiKey()
+            if (apiKey.isNullOrEmpty()) {
+                Log.e("GeminiService", "API Key not found")
+                throw Exception("API Key not configured")
+            }
+            
+            val selectedModel = modelManager.getSelectedModel()
+            if (selectedModel.isNullOrEmpty()) {
+                Log.w("GeminiService", "No model selected, using fallback")
+                // Use fallback model
+                val fallbackModel = "models/gemini-2.5-flash"
+                modelManager.setSelectedModel(fallbackModel)
+                initializeModelWithName(fallbackModel, apiKey)
+                return
+            }
+            
+            Log.d("GeminiService", "Using selected model: $selectedModel")
+            initializeModelWithName(selectedModel, apiKey)
+            
+        } catch (e: Exception) {
+            Log.e("GeminiService", "Failed to initialize model", e)
+            // Try fallback model
+            try {
+                Log.d("GeminiService", "Attempting fallback model initialization")
+                val apiKey = getApiKey()
+                if (!apiKey.isNullOrEmpty()) {
+                    val fallbackModel = "models/gemini-2.5-flash"
+                    initializeModelWithName(fallbackModel, apiKey)
+                    modelManager.setSelectedModel(fallbackModel)
+                    Log.d("GeminiService", "Fallback model initialized successfully")
+                    return
+                }
+            } catch (fallbackError: Exception) {
+                Log.e("GeminiService", "Even fallback model failed", fallbackError)
+            }
+            throw e
+        }
+    }
+    
+    private fun initializeModelWithName(modelName: String, apiKey: String) {
+        model = GenerativeModel(
+            modelName = modelName,
+            apiKey = apiKey,
+            generationConfig = generationConfig {
+                temperature = 0.15f
+                topK = 1
+                topP = 0.1f
+            }
+        )
+        Log.d("GeminiService", "GeminiService initialized successfully with $modelName")
+    }
+    
+    private fun getApiKey(): String? {
+        return try {
+            val apiKey = com.newtown.billsplitter.BuildConfig.GEMINI_API_KEY
+            if (apiKey.isEmpty() || apiKey == "\"\"" || !apiKey.startsWith("AIza")) {
+                null
+            } else {
+                apiKey
+            }
+        } catch (e: Exception) {
+            Log.e("GeminiService", "Error getting API key from BuildConfig", e)
+            null
         }
     }
     
@@ -74,12 +134,15 @@ class GeminiService(private val context: Context) {
                 PromptMode.ENHANCED -> buildEnhancedPrompt()
             }
             
-            val response = model?.generateContent(
-                content {
-                    text(prompt)
-                    image(loadImageFromUri(imageUri))
-                }
-            )
+            
+            val response = retryWithBackoff {
+                model?.generateContent(
+                    content {
+                        text(prompt)
+                        image(loadImageFromUri(imageUri))
+                    }
+                )
+            }
             
             Log.d("GeminiService", "Gemini API response received")
             val responseText = response?.text ?: "[]"
@@ -167,7 +230,7 @@ class GeminiService(private val context: Context) {
                         .mapIndexed { index, item ->
                             val priceDouble = item.price?.replace(',', '.')?.toDoubleOrNull()
                                 ?: (item.price_minor?.let { it.toDouble() / 100.0 } ?: 0.0)
-                            BillItem(
+                BillItem(
                                 id = System.currentTimeMillis() + index + (index * 1000),
                                 name = item.name ?: "Item",
                                 price = priceDouble,
@@ -390,4 +453,39 @@ class GeminiService(private val context: Context) {
 
         Return ONLY the JSON object.
     """.trimIndent()
+    
+    /**
+     * Retries a suspend block with exponential backoff if it fails with specific errors.
+     */
+    private suspend fun <T> retryWithBackoff(
+        times: Int = 3,
+        initialDelay: Long = 1000, // 1 second
+        maxDelay: Long = 10000,    // 10 seconds
+        factor: Double = 2.0,
+        block: suspend () -> T
+    ): T {
+        var currentDelay = initialDelay
+        repeat(times - 1) {
+            try {
+                return block()
+            } catch (e: Exception) {
+                // Check if error is retryable (429 Resource Exhausted or 503 Service Unavailable)
+                val errorMessage = e.message ?: ""
+                val isRetryable = errorMessage.contains("429") || 
+                                  errorMessage.contains("Resource has been exhausted") ||
+                                  errorMessage.contains("quota") ||
+                                  errorMessage.contains("503") ||
+                                  errorMessage.contains("The service is currently unavailable")
+                
+                if (!isRetryable) {
+                    throw e
+                }
+                
+                Log.w("GeminiService", "Gemini API busy (attempt ${it + 1}), retrying in ${currentDelay}ms...", e)
+                delay(currentDelay)
+                currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
+            }
+        }
+        return block() // Last attempt
+    }
 } 

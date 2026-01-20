@@ -11,6 +11,8 @@ import com.google.gson.reflect.TypeToken
 import com.newtown.billsplitter.model.BillItem
 import com.newtown.billsplitter.model.Member
 import com.newtown.billsplitter.model.MEMBER_COLORS
+import com.newtown.billsplitter.model.SavedBill
+import com.newtown.billsplitter.utils.SavedBillManager
 import com.newtown.billsplitter.service.GeminiService
 import kotlinx.coroutines.launch
 
@@ -38,6 +40,7 @@ class MainViewModel : ViewModel() {
     private var sharedPreferences: SharedPreferences? = null
     private val gson = Gson()
     private var geminiService: GeminiService? = null
+    private var savedBillManager: SavedBillManager? = null
     
     fun setPromptModeEnhanced(isEnhanced: Boolean) {
         geminiService?.setPromptMode(
@@ -49,7 +52,8 @@ class MainViewModel : ViewModel() {
         _members.value = emptyList()
         _billItems.value = emptyList()
         _totalAmount.value = 0.0
-        _discountPercentage.value = 0.0
+        // Don't initialize discount percentage here - let loadDiscountPercentage() handle it
+        _discountPercentage.value = null
         _isProcessing.value = false
         _processingResult.value = null
     }
@@ -57,6 +61,7 @@ class MainViewModel : ViewModel() {
     fun initialize(context: Context) {
         sharedPreferences = context.getSharedPreferences("BillSplitterPrefs", Context.MODE_PRIVATE)
         geminiService = GeminiService(context)
+        savedBillManager = SavedBillManager(context)
         loadMembers()
         loadDiscountPercentage()
     }
@@ -73,7 +78,7 @@ class MainViewModel : ViewModel() {
         val prefs = sharedPreferences ?: return
         val percentage = prefs.getFloat("discount_percentage", 0.0f).toDouble()
         _discountPercentage.value = percentage
-        android.util.Log.d("MainViewModel", "Loaded discount percentage: $percentage")
+        android.util.Log.d("MainViewModel", "Loaded discount percentage: $percentage from SharedPreferences")
     }
 
     private fun saveMembers() {
@@ -86,7 +91,7 @@ class MainViewModel : ViewModel() {
         val prefs = sharedPreferences ?: return
         val percentage = _discountPercentage.value ?: 0.0
         prefs.edit().putFloat("discount_percentage", percentage.toFloat()).apply()
-        android.util.Log.d("MainViewModel", "Saved discount percentage: $percentage")
+        android.util.Log.d("MainViewModel", "Saved discount percentage: $percentage to SharedPreferences")
     }
 
     fun addMember(member: Member) {
@@ -107,9 +112,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun addBillItem(item: BillItem) {
-        // Completely reject colleague discount items
+        // Only reject colleague discount items, not regular deals
         val itemName = item.name.lowercase()
-        if (itemName.contains("colleague") || itemName.contains("employee") || itemName.contains("disc") || item.itemType == "colleague_discount") {
+        if (itemName.contains("colleague") || itemName.contains("employee") || item.itemType == "colleague_discount") {
             android.util.Log.d("MainViewModel", "Rejected colleague discount item: ${item.name}")
             return
         }
@@ -161,6 +166,21 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun toggleItemExemption(item: BillItem, isExempt: Boolean) {
+        val currentItems = _billItems.value.orEmpty().toMutableList()
+        val index = currentItems.indexOfFirst { it.id == item.id }
+        if (index != -1) {
+            val currentItem = currentItems[index]
+            val updatedItem = currentItem.copy(isExemptFromDiscount = isExempt)
+            currentItems[index] = updatedItem
+            _billItems.value = currentItems
+            // While total amount doesn't change, the final breakdown does, so we trigger updates
+            // (LiveData observers will handle UI refresh)
+            _billItems.postValue(currentItems)
+            android.util.Log.d("MainViewModel", "Toggled exemption for ${item.name}: $isExempt")
+        }
+    }
+
     private fun updateTotalAmount() {
         try {
             val items = _billItems.value ?: emptyList()
@@ -182,15 +202,19 @@ class MainViewModel : ViewModel() {
             null -> 0.0
             else -> percentage.coerceIn(0.0, 100.0)
         }
+        android.util.Log.d("MainViewModel", "Setting discount percentage: $safePercentage (input was: $percentage)")
         _discountPercentage.value = safePercentage
         saveDiscountPercentage()
-        android.util.Log.d("MainViewModel", "Set discount percentage: $safePercentage (input was: $percentage)")
+        android.util.Log.d("MainViewModel", "Discount percentage set and saved: $safePercentage")
     }
 
     fun getSubtotal(): Double {
         val items = _billItems.value ?: emptyList()
-        // Include all items (positive and negative) except colleague discounts
-        // Negative items are item-specific deals that should be included in splitting
+        // Include all items (positive and negative) except colleague discounts and EXEMPT items
+        // NOTE: We only filter exempt items here for DISCOUNT CALCULATION purposes. 
+        // But getSubtotal() is usually expected to return the raw bill subtotal.
+        // Wait, discount calculation: (Subtotal - ExemptItems) * Percentage
+        // So this method should return TRUE subtotal. We should handle exemption in getDiscountAmount.
         val filteredItems = items.filter { 
             it.itemType != "colleague_discount"
         }
@@ -206,9 +230,18 @@ class MainViewModel : ViewModel() {
     }
 
     fun getDiscountAmount(): Double {
-        val subtotal = getSubtotal()
+        val items = _billItems.value ?: emptyList()
+        
+        // Filter out colleague discounts (never included) AND items marked as exempt from discount
+        val discountableItems = items.filter { 
+            it.itemType != "colleague_discount" && !it.isExemptFromDiscount 
+        }
+        
+        val discountableSubtotal = discountableItems.sumOf { it.price }
         val discountPercentage = _discountPercentage.value ?: 0.0
-        return (subtotal * discountPercentage) / 100.0
+        
+        // Calculate discount only on the non-exempt portion
+        return (discountableSubtotal * discountPercentage) / 100.0
     }
 
     fun getDiscountPercentageSafe(): Double {
@@ -264,19 +297,28 @@ class MainViewModel : ViewModel() {
             android.util.Log.d("MainViewModel", "Member ${member.name}: ${memberItems.size} items assigned")
             
             // Calculate member's share of each item (include both positive and negative items)
-            val memberSubtotal = memberItems.sumOf { item ->
-                if (item.assignedTo.isNotEmpty()) {
+            // Calculate member's share of each item (include both positive and negative items)
+            var memberSubtotal = 0.0
+            var memberDiscountableSubtotal = 0.0
+            
+            memberItems.forEach { item ->
+                val itemShare = if (item.assignedTo.isNotEmpty()) {
                     item.price / item.assignedTo.size
                 } else {
                     0.0
                 }
+                
+                memberSubtotal += itemShare
+                
+                if (!item.isExemptFromDiscount) {
+                    memberDiscountableSubtotal += itemShare
+                }
             }
-            // Calculate discount share proportionally based on member's subtotal
-            val memberDiscountShare = if (subtotal > 0) {
-                (memberSubtotal / subtotal) * totalDiscount
-            } else {
-                0.0
-            }
+
+            // Calculate discount share based on member's DISCOUNTABLE subtotal
+            val discountPercentage = getDiscountPercentageSafe()
+            val memberDiscountShare = (memberDiscountableSubtotal * discountPercentage) / 100.0
+            
             val memberFinalAmount = memberSubtotal - memberDiscountShare
             
             android.util.Log.d("MainViewModel", "Member ${member.name}: subtotal=$memberSubtotal, discount=$memberDiscountShare, final=$memberFinalAmount")
@@ -307,6 +349,63 @@ class MainViewModel : ViewModel() {
         _discountPercentage.value = 0.0
         saveMembers()
     }
+    
+    // Saved Bills functionality
+    private val _savedBills = MutableLiveData<List<SavedBill>>()
+    val savedBills: LiveData<List<SavedBill>> = _savedBills
+    
+    fun loadSavedBills() {
+        val bills = savedBillManager?.getLastThreeBills() ?: emptyList()
+        _savedBills.value = bills
+    }
+    
+    fun saveCurrentBill(billName: String) {
+        val currentItems = _billItems.value.orEmpty()
+        val currentMembers = _members.value.orEmpty()
+        val currentSubtotal = getSubtotal()
+        val currentDiscountPercentage = _discountPercentage.value ?: 0.0
+        val currentDiscountAmount = getDiscountAmount()
+        val currentFinalTotal = getFinalTotal()
+        val memberNames = currentMembers.map { it.name }
+        
+        if (currentItems.isNotEmpty()) {
+            savedBillManager?.saveBill(
+                billName = billName,
+                billItems = currentItems,
+                subtotal = currentSubtotal,
+                discountPercentage = currentDiscountPercentage,
+                discountAmount = currentDiscountAmount,
+                finalTotal = currentFinalTotal,
+                memberNames = memberNames
+            )
+            
+            // Reload saved bills
+            loadSavedBills()
+        }
+    }
+    
+    fun loadSavedBill(savedBill: SavedBill) {
+        // Load the saved bill data into the current state
+        _billItems.value = savedBill.billItems
+        _discountPercentage.value = savedBill.discountPercentage
+        _totalAmount.value = savedBill.finalTotal
+        
+        // Load members if they don't exist
+        val currentMembers = _members.value.orEmpty()
+        val savedMemberNames = savedBill.memberNames
+        
+        if (currentMembers.isEmpty() && savedMemberNames.isNotEmpty()) {
+            val newMembers = savedMemberNames.mapIndexed { index, name ->
+                Member(
+                    id = System.currentTimeMillis() + index,
+                    name = name,
+                    color = MEMBER_COLORS[index % MEMBER_COLORS.size]
+                )
+            }
+            _members.value = newMembers
+            saveMembers()
+        }
+    }
 
     fun clearItemsOnly() {
         // Clear only items and totals, keep members
@@ -336,6 +435,11 @@ class MainViewModel : ViewModel() {
                     }
 
                     val count = extractedItems.size
+                    if (count > 0) {
+                        // Auto-save the bill with a default name
+                        val billName = "Bill ${System.currentTimeMillis()}"
+                        saveCurrentBill(billName)
+                    }
                     _processingResult.value = ProcessingResult(true, if (count > 0) "$count items extracted successfully" else "No items found. Please try a clearer photo.")
                 } else {
                     // Fallback: add a placeholder item
@@ -360,6 +464,10 @@ class MainViewModel : ViewModel() {
                 _isProcessing.value = false
             }
         }
+    }
+    
+    fun updateGeminiModel() {
+        geminiService?.updateSelectedModel()
     }
 
     override fun onCleared() {

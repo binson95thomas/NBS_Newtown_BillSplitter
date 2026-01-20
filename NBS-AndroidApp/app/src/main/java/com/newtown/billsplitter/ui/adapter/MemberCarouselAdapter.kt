@@ -44,7 +44,7 @@ class MemberCarouselAdapter(
         holder.subtotalText.text = "Subtotal: £%.2f".format(breakdown.subtotal)
         holder.discountText.text = "Discount: -£%.2f".format(breakdown.discountShare)
         holder.finalAmountText.text = "Final: £%.2f".format(breakdown.finalAmount)
-        val itemsList = breakdown.items.joinToString(", ") { "${it.name} (£%.2f)".format(it.price) }
+        val itemsList = breakdown.items.joinToString(", ") { "${it.name} (£${"%.2f".format(it.price)})" }
         holder.itemsText.text = "Items: $itemsList"
         holder.copyButton.setOnClickListener { onCopyClick?.invoke(breakdown) }
     }

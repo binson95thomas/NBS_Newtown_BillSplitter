@@ -6,6 +6,7 @@ data class BillItem(
     val price: Double,
     val assignedTo: List<Long> = emptyList(), // Use member IDs
     val isMultibuy: Boolean = false,
+    val isExemptFromDiscount: Boolean = false,
     val itemType: String = "item", // "item", "deal", "discount"
     val createdAt: Long = System.currentTimeMillis(),
     val confidence: Double? = null

@@ -231,7 +231,7 @@ class TotalsFragment : Fragment() {
 
     private fun copyToClipboard(breakdown: MainViewModel.MemberBreakdown) {
         val clipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val copyText = "${breakdown.memberName}: $%.2f".format(breakdown.finalAmount)
+        val copyText = "${breakdown.memberName}: £${"%.2f".format(breakdown.finalAmount)}"
         val clip = ClipData.newPlainText("Member Amount", copyText)
         clipboardManager.setPrimaryClip(clip)
         

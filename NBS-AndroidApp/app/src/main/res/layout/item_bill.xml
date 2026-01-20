@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="28dp">
 
         <!-- Item Header -->
         <LinearLayout
@@ -25,7 +25,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
 
                 <TextView
                     android:id="@+id/itemName"
@@ -38,8 +39,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center_vertical">
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
                     <TextView
                         android:id="@+id/itemPrice"
                         android:layout_width="wrap_content"
@@ -60,25 +62,52 @@
                         android:textSize="12sp"
                         android:background="@drawable/badge_ok"
                         android:visibility="gone"/>
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/splitEvenlyButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="28dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="10dp"
-                        android:background="@drawable/button_background_selector"
                         android:text="Split Evenly"
                         android:textColor="@color/white"
-                        android:drawableLeft="@drawable/ic_people"
-                        android:drawablePadding="8dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
                         android:textSize="12sp"
-                        android:elevation="2dp"
+                        android:textStyle="bold"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:elevation="4dp"
                         android:minWidth="0dp"
                         android:minHeight="0dp"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        style="@style/Widget.Material3.Button"
+                        android:background="@drawable/split_evenly_button_background"
+                        app:icon="@drawable/ic_people"
+                        app:iconTint="@color/white"
+                        app:iconGravity="textStart"
+                        app:iconPadding="5dp"
+                        app:cornerRadius="18dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/voucherToggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="10dp"
+                        android:text="📉 Discount"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:elevation="4dp"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:gravity="center"
+                        style="@style/Widget.Material3.Button"
+                        android:backgroundTint="#64748B"
+                        app:cornerRadius="18dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -113,7 +142,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:orientation="vertical">
 
             <TextView
@@ -129,7 +158,9 @@
                 android:layout_height="wrap_content"
                 app:flexWrap="wrap"
                 app:justifyContent="flex_start"
-                app:alignItems="center" />
+                app:alignItems="center"
+                app:alignContent="flex_start"
+                android:layout_marginTop="-4dp" />
 
         </LinearLayout>
 

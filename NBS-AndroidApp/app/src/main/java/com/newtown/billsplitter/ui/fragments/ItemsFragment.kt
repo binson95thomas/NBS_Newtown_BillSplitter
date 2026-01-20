@@ -20,6 +20,7 @@ import com.newtown.billsplitter.utils.HapticUtils
 import com.newtown.billsplitter.utils.AnimationUtils
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.button.MaterialButton
+import android.content.res.ColorStateList
 
 class ItemsFragment : Fragment() {
     private var _binding: FragmentItemsBinding? = null
@@ -57,6 +58,9 @@ class ItemsFragment : Fragment() {
             },
             onSplitEvenly = { updatedItem ->
                 viewModel.updateBillItem(updatedItem)
+            },
+            onToggleExempt = { item, isExempt ->
+                viewModel.toggleItemExemption(item, isExempt)
             }
         )
         binding.itemsRecyclerView.apply {
@@ -70,10 +74,22 @@ class ItemsFragment : Fragment() {
             itemsAdapter.updateItems(items)
             updateEmptyState(items.isEmpty())
             
-            // Calculate and display totals
-            val subtotal = items.filter { !it.isDealOrDiscount() }.sumOf { it.price }
-            val deals = items.filter { it.itemType == "deal" }.sumOf { kotlin.math.abs(it.price) }
-            val discounts = items.filter { it.itemType == "discount" }.sumOf { kotlin.math.abs(it.price) }
+            // Calculate and display totals with error handling
+            val subtotal = try {
+                items.filter { !it.isDealOrDiscount() && it.price.isFinite() }.sumOf { it.price }
+            } catch (e: Exception) {
+                0.0
+            }
+            val deals = try {
+                items.filter { it.itemType == "deal" && it.price.isFinite() }.sumOf { kotlin.math.abs(it.price) }
+            } catch (e: Exception) {
+                0.0
+            }
+            val discounts = try {
+                items.filter { it.itemType == "discount" && it.price.isFinite() }.sumOf { kotlin.math.abs(it.price) }
+            } catch (e: Exception) {
+                0.0
+            }
             
             binding.totalAmountText.text = "Total: £%.2f".format(subtotal)
             
@@ -126,6 +142,8 @@ class ItemsFragment : Fragment() {
         // Get references to views
         val nameEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemNameEditText)
         val priceEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemPriceEditText)
+        val itemTypeButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.itemTypeButton)
+        val dealTypeButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.dealTypeButton)
         val quickPrice1 = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.quickPrice1)
         val quickPrice2 = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.quickPrice2)
         val quickPrice3 = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.quickPrice3)
@@ -137,6 +155,67 @@ class ItemsFragment : Fragment() {
             .setView(dialogView)
             .setCancelable(true)
             .create()
+        
+        // Track selected item type (default: item)
+        var isDealSelected = false
+        
+        // Setup segmented control
+        fun updateSegmentedControl() {
+            if (isDealSelected) {
+                // Deal selected
+                itemTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                dealTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_100))
+                itemTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_200))
+                dealTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                
+                // Add border to selected button
+                dealTypeButton.strokeColor = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_300))
+                dealTypeButton.strokeWidth = 4
+                itemTypeButton.strokeWidth = 0
+                
+                // Animate the selected button
+                dealTypeButton.scaleX = 0.95f
+                dealTypeButton.scaleY = 0.95f
+                dealTypeButton.animate().scaleX(1.05f).scaleY(1.05f).setDuration(150).withEndAction {
+                    dealTypeButton.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                }.start()
+            } else {
+                // Item selected
+                itemTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_100))
+                dealTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                itemTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                dealTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_200))
+                
+                // Add border to selected button
+                itemTypeButton.strokeColor = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_300))
+                itemTypeButton.strokeWidth = 4
+                dealTypeButton.strokeWidth = 0
+                
+                // Animate the selected button
+                itemTypeButton.scaleX = 0.95f
+                itemTypeButton.scaleY = 0.95f
+                itemTypeButton.animate().scaleX(1.05f).scaleY(1.05f).setDuration(150).withEndAction {
+                    itemTypeButton.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                }.start()
+            }
+        }
+        
+        // Setup item type button
+        itemTypeButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            isDealSelected = false
+            updateSegmentedControl()
+        }
+        
+        // Setup deal type button
+        dealTypeButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            isDealSelected = true
+            updateSegmentedControl()
+        }
+        
+        // Initialize segmented control
+        updateSegmentedControl()
         
         // Setup quick price buttons with haptic feedback
         quickPrice1.setOnClickListener {
@@ -185,23 +264,23 @@ class ItemsFragment : Fragment() {
                 else -> {
                     try {
                         val price = priceText.toDouble()
-                        if (price <= 0) {
-                            priceEditText.error = "Price must be greater than 0"
-                            HapticUtils.errorPattern(requireContext())
-                            return@setOnClickListener
-                        }
+                        
+                        // For deals, make positive prices negative
+                        val finalPrice = if (isDealSelected && price > 0) -price else price
                         
                         // Success - add the item
                         val newItem = BillItem(
                             id = System.currentTimeMillis(),
                             name = name,
-                            price = price
+                            price = finalPrice,
+                            itemType = if (isDealSelected) "deal" else "item"
                         )
                         viewModel.addBillItem(newItem)
                         
                         // Success feedback
                         HapticUtils.successPattern(requireContext())
-                        Toast.makeText(context, "🌊 Item added successfully!", Toast.LENGTH_SHORT).show()
+                        val message = if (isDealSelected) "🎯 Deal added successfully!" else "🌊 Item added successfully!"
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
                         
                     } catch (e: NumberFormatException) {
@@ -233,18 +312,82 @@ class ItemsFragment : Fragment() {
         // Get references to views
         val nameEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemNameEditText)
         val priceEditText = dialogView.findViewById<TextInputEditText>(com.newtown.billsplitter.R.id.itemPriceEditText)
+        val itemTypeButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.itemTypeButton)
+        val dealTypeButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.dealTypeButton)
         val cancelButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.cancelButton)
         val updateButton = dialogView.findViewById<MaterialButton>(com.newtown.billsplitter.R.id.updateButton)
         
         // Pre-fill with current values
         nameEditText.setText(item.name)
-        priceEditText.setText(item.price.toString())
+        priceEditText.setText(kotlin.math.abs(item.price).toString())
+        val isDealItem = item.itemType == "deal"
         
         // Create dialog with no title (we have custom header)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .setCancelable(true)
             .create()
+        
+        // Track selected item type
+        var isDealSelected = isDealItem
+        
+        // Setup segmented control
+        fun updateSegmentedControl() {
+            if (isDealSelected) {
+                // Deal selected
+                itemTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                dealTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_100))
+                itemTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_200))
+                dealTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                
+                // Add border to selected button
+                dealTypeButton.strokeColor = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_300))
+                dealTypeButton.strokeWidth = 4
+                itemTypeButton.strokeWidth = 0
+                
+                // Animate the selected button
+                dealTypeButton.scaleX = 0.95f
+                dealTypeButton.scaleY = 0.95f
+                dealTypeButton.animate().scaleX(1.05f).scaleY(1.05f).setDuration(150).withEndAction {
+                    dealTypeButton.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                }.start()
+            } else {
+                // Item selected
+                itemTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_100))
+                dealTypeButton.backgroundTintList = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                itemTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_800))
+                dealTypeButton.setTextColor(requireContext().getColor(com.newtown.billsplitter.R.color.gray_200))
+                
+                // Add border to selected button
+                itemTypeButton.strokeColor = ColorStateList.valueOf(requireContext().getColor(com.newtown.billsplitter.R.color.accent_300))
+                itemTypeButton.strokeWidth = 4
+                dealTypeButton.strokeWidth = 0
+                
+                // Animate the selected button
+                itemTypeButton.scaleX = 0.95f
+                itemTypeButton.scaleY = 0.95f
+                itemTypeButton.animate().scaleX(1.05f).scaleY(1.05f).setDuration(150).withEndAction {
+                    itemTypeButton.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                }.start()
+            }
+        }
+        
+        // Setup item type button
+        itemTypeButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            isDealSelected = false
+            updateSegmentedControl()
+        }
+        
+        // Setup deal type button
+        dealTypeButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            isDealSelected = true
+            updateSegmentedControl()
+        }
+        
+        // Initialize segmented control
+        updateSegmentedControl()
         
         // Setup cancel button
         cancelButton.setOnClickListener {
@@ -274,22 +417,22 @@ class ItemsFragment : Fragment() {
                 else -> {
                     try {
                         val price = priceText.toDouble()
-                        if (price <= 0) {
-                            priceEditText.error = "Price must be greater than 0"
-                            HapticUtils.errorPattern(requireContext())
-                            return@setOnClickListener
-                        }
+                        
+                        // For deals, make positive prices negative
+                        val finalPrice = if (isDealSelected && price > 0) -price else price
                         
                         // Success - update the item
                         val updatedItem = item.copy(
                             name = name,
-                            price = price
+                            price = finalPrice,
+                            itemType = if (isDealSelected) "deal" else "item"
                         )
                         viewModel.updateBillItem(updatedItem)
                         
                         // Success feedback
                         HapticUtils.successPattern(requireContext())
-                        Toast.makeText(context, "🌊 Item updated successfully!", Toast.LENGTH_SHORT).show()
+                        val message = if (isDealSelected) "🎯 Deal updated successfully!" else "🌊 Item updated successfully!"
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                         dialog.dismiss()
                         
                     } catch (e: NumberFormatException) {

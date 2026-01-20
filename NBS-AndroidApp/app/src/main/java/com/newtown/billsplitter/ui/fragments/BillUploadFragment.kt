@@ -38,6 +38,17 @@ import android.util.Log
 import com.newtown.billsplitter.utils.HapticUtils
 import com.newtown.billsplitter.utils.AnimationUtils
 import android.widget.ImageView
+import com.newtown.billsplitter.ui.adapter.SavedBillsAdapter
+import com.newtown.billsplitter.model.SavedBill
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.newtown.billsplitter.utils.ModelManager
+import com.newtown.billsplitter.utils.GeminiModel
+import android.widget.ArrayAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BillUploadFragment : Fragment() {
     private var _binding: FragmentBillUploadBinding? = null
@@ -47,6 +58,9 @@ class BillUploadFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private var currentPhotoUri: Uri? = null
     private var currentFlashMode: Int = ImageCapture.FLASH_MODE_ON
+    private var savedBillsAdapter: SavedBillsAdapter? = null
+    private lateinit var modelManager: ModelManager
+    private var modelAdapter: ArrayAdapter<String>? = null
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -83,8 +97,12 @@ class BillUploadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         cameraExecutor = Executors.newSingleThreadExecutor()
+        
+        // Initialize ModelManager
+        modelManager = ModelManager(requireContext())
 
         setupClickListeners()
+        setupModelSelection()
         observeProcessingStatus()
 
         // Wire prompt mode toggle with persistence
@@ -157,13 +175,19 @@ class BillUploadFragment : Fragment() {
         binding.cameraButton.setOnClickListener {
             HapticUtils.lightTap(it)
             AnimationUtils.bounceButton(it)
-            openCamera()
+                openCamera()
         }
 
         binding.galleryButton.setOnClickListener {
             HapticUtils.lightTap(it)
             AnimationUtils.bounceButton(it)
             openGallery()
+        }
+        
+        binding.loadBillsButton.setOnClickListener {
+            HapticUtils.lightTap(it)
+            AnimationUtils.bounceButton(it)
+            showSavedBillsDialog()
         }
         
         binding.captureButton?.setOnClickListener {
@@ -687,5 +711,284 @@ class BillUploadFragment : Fragment() {
         
         cameraExecutor.shutdown()
         _binding = null
+    }
+    
+    private fun showSavedBillsDialog() {
+        // Load saved bills from ViewModel
+        viewModel.loadSavedBills()
+        
+        // Create dialog
+        val dialogView = LayoutInflater.from(requireContext()).inflate(
+            com.newtown.billsplitter.R.layout.dialog_saved_bills, null
+        )
+        
+        val recyclerView = dialogView.findViewById<androidx.recyclerview.widget.RecyclerView>(
+            com.newtown.billsplitter.R.id.savedBillsRecyclerView
+        )
+        val emptyStateLayout = dialogView.findViewById<android.view.View>(
+            com.newtown.billsplitter.R.id.emptyStateLayout
+        )
+        
+        // Show dialog
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setNegativeButton("Cancel", null)
+            .create()
+        
+        // Setup RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        savedBillsAdapter = SavedBillsAdapter(emptyList()) { savedBill ->
+            // Load the selected bill
+            viewModel.loadSavedBill(savedBill)
+            
+            // Close the dialog
+            dialog.dismiss()
+            
+            // Show success message
+            Toast.makeText(requireContext(), "Bill loaded successfully: ${savedBill.billName}", Toast.LENGTH_LONG).show()
+            HapticUtils.successPattern(requireContext())
+        }
+        recyclerView.adapter = savedBillsAdapter
+        
+        // Observe saved bills
+        viewModel.savedBills.observe(viewLifecycleOwner) { savedBills ->
+            savedBillsAdapter?.updateSavedBills(savedBills)
+            
+            if (savedBills.isEmpty()) {
+                recyclerView.visibility = android.view.View.GONE
+                emptyStateLayout.visibility = android.view.View.VISIBLE
+            } else {
+                recyclerView.visibility = android.view.View.VISIBLE
+                emptyStateLayout.visibility = android.view.View.GONE
+            }
+        }
+        
+        dialog.show()
+    }
+    
+    private fun setupModelSelection() {
+        try {
+            // Only load cached models, don't fetch from API
+            loadCachedModelsOnly()
+            
+            // Set up refresh button
+            binding.refreshModelsButton?.setOnClickListener {
+                HapticUtils.lightTap(it)
+                loadModelsToDropdown(true) // Force refresh from API
+            }
+        } catch (e: Exception) {
+            Log.e("ModelSelection", "Error setting up model selection", e)
+            // Set fallback text
+            binding.modelInfoText?.text = "Using default model"
+            binding.modelStatusText?.text = "🔧"
+        }
+        
+        // Set up dropdown selection listener
+        binding.modelSelectionDropdown.setOnItemClickListener { _, _, position, _ ->
+            val selectedModelDisplayName = modelAdapter?.getItem(position)
+            if (selectedModelDisplayName != null && selectedModelDisplayName.isNotEmpty()) {
+                // Extract the actual model name from the display name
+                val actualModelName = selectedModelDisplayName.substringAfter(" ").trim()
+                
+                if (actualModelName.isNotEmpty()) {
+                    // Find the full model name from the cached models in a coroutine
+                    CoroutineScope(Dispatchers.Main).launch {
+                        try {
+                            val models = withContext(Dispatchers.IO) {
+                                modelManager.getAvailableModels(false)
+                            }
+                            val fullModelName = models.find { it.name.endsWith(actualModelName) }?.name
+                            
+                            if (fullModelName != null && fullModelName.isNotEmpty()) {
+                                modelManager.setSelectedModel(fullModelName)
+                                
+                                // Update GeminiService with new model
+                                viewModel.updateGeminiModel()
+                                
+                                updateModelStatus()
+                                Toast.makeText(context, "Model changed to: $actualModelName", Toast.LENGTH_SHORT).show()
+                                Log.d("ModelSelection", "Successfully changed model to: $fullModelName")
+                            } else {
+                                Log.w("ModelSelection", "Could not find full model name for: $actualModelName")
+                                Toast.makeText(context, "Model selection failed", Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: Exception) {
+                            Log.e("ModelSelection", "Error changing model", e)
+                            Toast.makeText(context, "Error changing model", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Log.w("ModelSelection", "Empty model name extracted from: $selectedModelDisplayName")
+                }
+            } else {
+                Log.w("ModelSelection", "No model selected or adapter is null")
+            }
+        }
+    }
+    
+    private fun loadCachedModelsOnly() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                binding.modelInfoText.text = "Loading cached models..."
+                
+                val models = withContext(Dispatchers.IO) {
+                    modelManager.getAvailableModels(false) // false = don't fetch from API
+                }
+                
+                if (models.isNotEmpty()) {
+                    setupModelDropdown(models)
+                    updateModelStatus()
+                    
+                    // Update info text
+                    val cacheAge = modelManager.getCacheAgeHours()
+                    val infoText = when {
+                        cacheAge < 0 -> "Using fallback models"
+                        cacheAge == 0L -> "Using cached models"
+                        cacheAge < 24 -> "Using cached models (${cacheAge}h old)"
+                        else -> "Using cached models (24h+ old)"
+                    }
+                    binding.modelInfoText.text = infoText
+                    
+                } else {
+                    // No cached models, use fallback
+                    binding.modelInfoText.text = "Using fallback models"
+                    Toast.makeText(context, "Using fallback models", Toast.LENGTH_SHORT).show()
+                }
+                
+            } catch (e: Exception) {
+                Log.e("ModelSelection", "Error loading cached models", e)
+                binding.modelInfoText.text = "Using fallback models"
+                Toast.makeText(context, "Using fallback models", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    
+    private fun loadModelsToDropdown(forceRefresh: Boolean) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                binding.modelInfoText.text = if (forceRefresh) "Refreshing models..." else "Loading models..."
+                
+                val models = withContext(Dispatchers.IO) {
+                    modelManager.getAvailableModels(forceRefresh)
+                }
+                
+                if (models.isNotEmpty()) {
+                    setupModelDropdown(models)
+                    updateModelStatus()
+                    
+                    // Update info text with null safety
+                    val cacheAge = modelManager.getCacheAgeHours()
+                    val infoText = when {
+                        cacheAge < 0 -> "Using fallback models"
+                        cacheAge == 0L -> "Models just loaded"
+                        cacheAge < 24 -> "Using cached models (${cacheAge}h old)"
+                        else -> "Using cached models (24h+ old)"
+                    }
+                    binding.modelInfoText.text = infoText
+                    
+                    if (forceRefresh) {
+                        Toast.makeText(context, "Models refreshed successfully!", Toast.LENGTH_SHORT).show()
+                    }
+                    
+                } else {
+                    // This should never happen due to fallback models, but just in case
+                    Log.e("ModelSelection", "No models available - this should not happen")
+                    binding.modelInfoText.text = "Using default model"
+                    Toast.makeText(context, "Using default model", Toast.LENGTH_SHORT).show()
+                }
+                
+            } catch (e: Exception) {
+                Log.e("ModelSelection", "Error loading models", e)
+                binding.modelInfoText.text = "Using fallback model"
+                Toast.makeText(context, "Error loading models, using fallback", Toast.LENGTH_SHORT).show()
+                
+                // Even on error, try to set a basic model
+                try {
+                    val fallbackModel = "models/gemini-2.5-flash"
+                    modelManager.setSelectedModel(fallbackModel)
+                    updateModelStatus()
+                } catch (fallbackError: Exception) {
+                    Log.e("ModelSelection", "Even fallback failed", fallbackError)
+                }
+            }
+        }
+    }
+    
+    private fun setupModelDropdown(models: List<com.newtown.billsplitter.utils.GeminiModel>) {
+        // Create model display names with speed indicators
+        val modelDisplayNames = models.map { model ->
+            val speedIcon = when {
+                model.isFast -> "⚡"
+                model.isStable -> "🛡️"
+                else -> "🔧"
+            }
+            val modelShortName = model.name.substringAfterLast("/")
+            "$speedIcon $modelShortName"
+        }
+        
+        // Create adapter
+        modelAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, modelDisplayNames)
+        binding.modelSelectionDropdown.setAdapter(modelAdapter)
+        
+        // Set selected model with null safety
+        val selectedModel = modelManager.getSelectedModel()
+        val selectedIndex = models.indexOfFirst { it.name == selectedModel }
+        
+        if (selectedIndex >= 0) {
+            binding.modelSelectionDropdown.setText(modelDisplayNames[selectedIndex], false)
+            Log.d("ModelSelection", "Selected model found: $selectedModel")
+        } else {
+            // If selected model not found, select fastest available
+            val fastestModel = modelManager.getFastestModel()
+            val fastestIndex = models.indexOfFirst { it.name == fastestModel }
+            if (fastestIndex >= 0) {
+                binding.modelSelectionDropdown.setText(modelDisplayNames[fastestIndex], false)
+                modelManager.setSelectedModel(fastestModel)
+                Log.d("ModelSelection", "Using fastest model: $fastestModel")
+            } else {
+                // Last resort: use first available model
+                if (models.isNotEmpty()) {
+                    binding.modelSelectionDropdown.setText(modelDisplayNames[0], false)
+                    modelManager.setSelectedModel(models[0].name)
+                    Log.d("ModelSelection", "Using first available model: ${models[0].name}")
+                }
+            }
+        }
+    }
+    
+    private fun updateModelStatus() {
+        val selectedModel = modelManager.getSelectedModel()
+        val modelShortName = selectedModel.substringAfterLast("/")
+        
+        // Update status icon based on model type
+        val statusIcon = when {
+            selectedModel.contains("lite") -> "⚡" // Fast
+            selectedModel.contains("flash") -> "🚀" // Fast but not lite
+            selectedModel.contains("pro") -> "🧠" // Powerful
+            else -> "🔧" // Default
+        }
+        
+        binding.modelStatusText.text = statusIcon
+        
+        // Update processing message
+        val processingMessage = when {
+            selectedModel.contains("lite") -> "Extracting items using AI (Gemini 2.0 Lite)"
+            selectedModel.contains("2.5") -> "Extracting items using AI (Gemini 2.5)"
+            selectedModel.contains("2.0") -> "Extracting items using AI (Gemini 2.0)"
+            selectedModel.contains("1.5") -> "Extracting items using AI (Gemini 1.5)"
+            else -> "Extracting items using AI (Gemini)"
+        }
+        
+        // Find and update the processing message text
+        val processingTextViews = arrayOf(
+            "Extracting items using AI (Gemini 2.0 Lite)",
+            "Extracting items using AI (Gemini 2.5)",
+            "Extracting items using AI (Gemini 2.0)",
+            "Extracting items using AI (Gemini 1.5)",
+            "Extracting items using AI (Gemini)"
+        )
+        
+        // This will be updated when the processing card becomes visible
+        // The actual text update happens in the processing status observer
     }
 } 

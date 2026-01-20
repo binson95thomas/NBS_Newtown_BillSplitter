@@ -4,6 +4,7 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -16,6 +17,7 @@ import androidx.viewbinding.ViewBindings;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.android.material.textfield.TextInputLayout;
 import com.newtown.billsplitter.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -53,6 +55,21 @@ public final class FragmentBillUploadBinding implements ViewBinding {
   public final MaterialCardView imagePreviewCard;
 
   @NonNull
+  public final LinearLayout loadBillsButton;
+
+  @NonNull
+  public final TextView modelInfoText;
+
+  @NonNull
+  public final AutoCompleteTextView modelSelectionDropdown;
+
+  @NonNull
+  public final TextInputLayout modelSelectionLayout;
+
+  @NonNull
+  public final TextView modelStatusText;
+
+  @NonNull
   public final ImageView oceanLoadingAnimation;
 
   @NonNull
@@ -63,6 +80,9 @@ public final class FragmentBillUploadBinding implements ViewBinding {
 
   @NonNull
   public final MaterialSwitch promptModeSwitch;
+
+  @NonNull
+  public final MaterialButton refreshModelsButton;
 
   @NonNull
   public final MaterialCardView resultCard;
@@ -87,9 +107,12 @@ public final class FragmentBillUploadBinding implements ViewBinding {
       @NonNull LinearLayout cameraPreviewContainer, @NonNull MaterialButton cancelCaptureButton,
       @NonNull MaterialButton captureButton, @NonNull ImageView capturedImageView,
       @NonNull MaterialButton flashToggleButton, @NonNull LinearLayout galleryButton,
-      @NonNull MaterialCardView imagePreviewCard, @NonNull ImageView oceanLoadingAnimation,
-      @NonNull LinearLayout photoPreviewContainer, @NonNull MaterialCardView processingCard,
-      @NonNull MaterialSwitch promptModeSwitch, @NonNull MaterialCardView resultCard,
+      @NonNull MaterialCardView imagePreviewCard, @NonNull LinearLayout loadBillsButton,
+      @NonNull TextView modelInfoText, @NonNull AutoCompleteTextView modelSelectionDropdown,
+      @NonNull TextInputLayout modelSelectionLayout, @NonNull TextView modelStatusText,
+      @NonNull ImageView oceanLoadingAnimation, @NonNull LinearLayout photoPreviewContainer,
+      @NonNull MaterialCardView processingCard, @NonNull MaterialSwitch promptModeSwitch,
+      @NonNull MaterialButton refreshModelsButton, @NonNull MaterialCardView resultCard,
       @NonNull ImageView resultIcon, @NonNull TextView resultText,
       @NonNull MaterialButton retakeButton, @NonNull MaterialButton submitButton,
       @NonNull ImageView uploadedImageView) {
@@ -103,10 +126,16 @@ public final class FragmentBillUploadBinding implements ViewBinding {
     this.flashToggleButton = flashToggleButton;
     this.galleryButton = galleryButton;
     this.imagePreviewCard = imagePreviewCard;
+    this.loadBillsButton = loadBillsButton;
+    this.modelInfoText = modelInfoText;
+    this.modelSelectionDropdown = modelSelectionDropdown;
+    this.modelSelectionLayout = modelSelectionLayout;
+    this.modelStatusText = modelStatusText;
     this.oceanLoadingAnimation = oceanLoadingAnimation;
     this.photoPreviewContainer = photoPreviewContainer;
     this.processingCard = processingCard;
     this.promptModeSwitch = promptModeSwitch;
+    this.refreshModelsButton = refreshModelsButton;
     this.resultCard = resultCard;
     this.resultIcon = resultIcon;
     this.resultText = resultText;
@@ -196,6 +225,36 @@ public final class FragmentBillUploadBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.loadBillsButton;
+      LinearLayout loadBillsButton = ViewBindings.findChildViewById(rootView, id);
+      if (loadBillsButton == null) {
+        break missingId;
+      }
+
+      id = R.id.modelInfoText;
+      TextView modelInfoText = ViewBindings.findChildViewById(rootView, id);
+      if (modelInfoText == null) {
+        break missingId;
+      }
+
+      id = R.id.modelSelectionDropdown;
+      AutoCompleteTextView modelSelectionDropdown = ViewBindings.findChildViewById(rootView, id);
+      if (modelSelectionDropdown == null) {
+        break missingId;
+      }
+
+      id = R.id.modelSelectionLayout;
+      TextInputLayout modelSelectionLayout = ViewBindings.findChildViewById(rootView, id);
+      if (modelSelectionLayout == null) {
+        break missingId;
+      }
+
+      id = R.id.modelStatusText;
+      TextView modelStatusText = ViewBindings.findChildViewById(rootView, id);
+      if (modelStatusText == null) {
+        break missingId;
+      }
+
       id = R.id.oceanLoadingAnimation;
       ImageView oceanLoadingAnimation = ViewBindings.findChildViewById(rootView, id);
       if (oceanLoadingAnimation == null) {
@@ -217,6 +276,12 @@ public final class FragmentBillUploadBinding implements ViewBinding {
       id = R.id.promptModeSwitch;
       MaterialSwitch promptModeSwitch = ViewBindings.findChildViewById(rootView, id);
       if (promptModeSwitch == null) {
+        break missingId;
+      }
+
+      id = R.id.refreshModelsButton;
+      MaterialButton refreshModelsButton = ViewBindings.findChildViewById(rootView, id);
+      if (refreshModelsButton == null) {
         break missingId;
       }
 
@@ -258,9 +323,10 @@ public final class FragmentBillUploadBinding implements ViewBinding {
 
       return new FragmentBillUploadBinding((ScrollView) rootView, cameraButton, cameraPreview,
           cameraPreviewContainer, cancelCaptureButton, captureButton, capturedImageView,
-          flashToggleButton, galleryButton, imagePreviewCard, oceanLoadingAnimation,
-          photoPreviewContainer, processingCard, promptModeSwitch, resultCard, resultIcon,
-          resultText, retakeButton, submitButton, uploadedImageView);
+          flashToggleButton, galleryButton, imagePreviewCard, loadBillsButton, modelInfoText,
+          modelSelectionDropdown, modelSelectionLayout, modelStatusText, oceanLoadingAnimation,
+          photoPreviewContainer, processingCard, promptModeSwitch, refreshModelsButton, resultCard,
+          resultIcon, resultText, retakeButton, submitButton, uploadedImageView);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

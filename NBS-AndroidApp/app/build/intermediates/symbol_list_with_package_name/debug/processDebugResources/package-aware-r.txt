@@ -1426,6 +1426,7 @@ color abc_tint_edittext
 color abc_tint_seek_thumb
 color abc_tint_spinner
 color abc_tint_switch_track
+color accent_100
 color accent_200
 color accent_300
 color accent_400
@@ -3179,6 +3180,7 @@ drawable googleg_standard_color_18
 drawable gradient_accent
 drawable gradient_primary
 drawable gradient_secondary
+drawable ic_ai
 drawable ic_arrow_back
 drawable ic_arrow_back_black_24
 drawable ic_calculator
@@ -3200,6 +3202,7 @@ drawable ic_error
 drawable ic_flash_auto
 drawable ic_flash_off
 drawable ic_flash_on
+drawable ic_history
 drawable ic_keyboard_black_24dp
 drawable ic_launcher_foreground
 drawable ic_list
@@ -3212,6 +3215,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_people
+drawable ic_refresh
 drawable ic_retake
 drawable ic_search_black_24
 drawable icon_background
@@ -3260,12 +3264,14 @@ drawable modern_gradient_header
 drawable modern_input_background
 drawable modern_input_background_dark
 drawable modern_items_background
+drawable modern_load_bills_background
 drawable modern_member_breakdown_background
 drawable modern_member_card_background
 drawable modern_member_pill_active
 drawable modern_member_pill_active_background
 drawable modern_member_pill_background
 drawable modern_pill_background
+drawable modern_refresh_button_background
 drawable modern_share_background
 drawable modern_upload_card_background
 drawable modern_whatsapp_share_background
@@ -3322,10 +3328,13 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable ocean_wave_animated
+drawable segmented_control_selection
+drawable segmented_control_unselected
 drawable simple_ocean_animated
 drawable simple_success_animated
 drawable splash_logo
 drawable splash_screen
+drawable split_evenly_button_background
 drawable success_checkmark_animated
 drawable tab_background_selector
 drawable test_level_drawable
@@ -3430,6 +3439,7 @@ id baseline
 id beginOnFirstDraw
 id beginning
 id bestChoice
+id billNameText
 id blocking
 id bottom
 id bounce
@@ -3490,6 +3500,7 @@ id cut
 id dark
 id dataBinding
 id date_picker_actions
+id dealTypeButton
 id dealsDiscountsCard
 id dealsDiscountsText
 id dealsInfoText
@@ -3602,10 +3613,12 @@ id invisible
 id inward
 id italic
 id itemConfidence
+id itemCountText
 id itemName
 id itemNameEditText
 id itemPrice
 id itemPriceEditText
+id itemTypeButton
 id item_touch_helper_previous_elevation
 id itemsRecyclerView
 id itemsText
@@ -3622,6 +3635,7 @@ id line3
 id linear
 id listMode
 id list_item
+id loadBillsButton
 id locale
 id ltr
 id m3_side_sheet
@@ -3665,9 +3679,14 @@ id memberNameEditText
 id memberPill
 id memberPillsContainer
 id membersRecyclerView
+id membersText
 id message
 id middle
 id mini
+id modelInfoText
+id modelSelectionDropdown
+id modelSelectionLayout
+id modelStatusText
 id month_grid
 id month_navigation_bar
 id month_navigation_fragment_toggle
@@ -3776,6 +3795,7 @@ id radio
 id ratio
 id recalculateButton
 id rectangles
+id refreshModelsButton
 id report_drawn
 id resultCard
 id resultIcon
@@ -3793,8 +3813,10 @@ id row_reverse
 id rtl
 id save_non_transition_alpha
 id save_overlay_view
+id savedBillsRecyclerView
 id sawtooth
 id scale
+id scanDateText
 id screen
 id scroll
 id scrollIndicatorDown
@@ -3928,6 +3950,7 @@ id view_tree_saved_state_registry_owner
 id view_tree_view_model_store_owner
 id visible
 id visible_removing_fragment_view_tag
+id voucherToggleButton
 id west
 id whatsappShareButton
 id wide
@@ -4077,6 +4100,7 @@ layout design_text_input_start_icon
 layout dialog_add_item
 layout dialog_add_member
 layout dialog_edit_item
+layout dialog_saved_bills
 layout fragment_bill_upload
 layout fragment_items
 layout fragment_members
@@ -4087,6 +4111,7 @@ layout item_bill
 layout item_member
 layout item_member_breakdown
 layout item_member_checkbox
+layout item_saved_bill
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title

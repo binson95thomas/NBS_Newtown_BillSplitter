@@ -4,7 +4,6 @@ package com.newtown.billsplitter.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -13,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.material.button.MaterialButton;
 import com.newtown.billsplitter.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -41,12 +41,16 @@ public final class ItemBillBinding implements ViewBinding {
   public final FlexboxLayout memberCheckboxContainer;
 
   @NonNull
-  public final Button splitEvenlyButton;
+  public final MaterialButton splitEvenlyButton;
+
+  @NonNull
+  public final MaterialButton voucherToggleButton;
 
   private ItemBillBinding(@NonNull CardView rootView, @NonNull ImageButton deleteItemButton,
       @NonNull ImageButton editItemButton, @NonNull TextView itemConfidence,
       @NonNull TextView itemName, @NonNull TextView itemPrice,
-      @NonNull FlexboxLayout memberCheckboxContainer, @NonNull Button splitEvenlyButton) {
+      @NonNull FlexboxLayout memberCheckboxContainer, @NonNull MaterialButton splitEvenlyButton,
+      @NonNull MaterialButton voucherToggleButton) {
     this.rootView = rootView;
     this.deleteItemButton = deleteItemButton;
     this.editItemButton = editItemButton;
@@ -55,6 +59,7 @@ public final class ItemBillBinding implements ViewBinding {
     this.itemPrice = itemPrice;
     this.memberCheckboxContainer = memberCheckboxContainer;
     this.splitEvenlyButton = splitEvenlyButton;
+    this.voucherToggleButton = voucherToggleButton;
   }
 
   @Override
@@ -121,13 +126,20 @@ public final class ItemBillBinding implements ViewBinding {
       }
 
       id = R.id.splitEvenlyButton;
-      Button splitEvenlyButton = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton splitEvenlyButton = ViewBindings.findChildViewById(rootView, id);
       if (splitEvenlyButton == null) {
         break missingId;
       }
 
+      id = R.id.voucherToggleButton;
+      MaterialButton voucherToggleButton = ViewBindings.findChildViewById(rootView, id);
+      if (voucherToggleButton == null) {
+        break missingId;
+      }
+
       return new ItemBillBinding((CardView) rootView, deleteItemButton, editItemButton,
-          itemConfidence, itemName, itemPrice, memberCheckboxContainer, splitEvenlyButton);
+          itemConfidence, itemName, itemPrice, memberCheckboxContainer, splitEvenlyButton,
+          voucherToggleButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

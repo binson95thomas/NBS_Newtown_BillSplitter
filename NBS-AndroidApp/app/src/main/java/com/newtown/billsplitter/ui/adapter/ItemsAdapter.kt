@@ -22,13 +22,15 @@ class ItemsAdapter(
     private val onEditItem: ((BillItem) -> Unit)? = null,
     private val onDeleteItem: ((BillItem) -> Unit)? = null,
     private val onMemberToggle: ((BillItem, Long, Boolean) -> Unit)? = null,
-    private val onSplitEvenly: ((BillItem) -> Unit)? = null
+    private val onSplitEvenly: ((BillItem) -> Unit)? = null,
+    private val onToggleExempt: ((BillItem, Boolean) -> Unit)? = null
 ) : RecyclerView.Adapter<ItemsAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
         val itemPrice: TextView = itemView.findViewById(R.id.itemPrice)
         val splitEvenlyButton: Button = itemView.findViewById(R.id.splitEvenlyButton)
+        val voucherToggleButton: Button = itemView.findViewById(R.id.voucherToggleButton)
         // Optional confidence badge; if not present in layout, we'll ignore
         val confidenceBadge: TextView? = itemView.findViewById(R.id.itemConfidence)
         val editItemButton: ImageButton = itemView.findViewById(R.id.editItemButton)
@@ -48,14 +50,19 @@ class ItemsAdapter(
         holder.itemPrice.text = item.getDisplayPrice()
         holder.confidenceBadge?.let { badge ->
             val conf = item.confidence
-            if (conf != null) {
-                badge.visibility = View.VISIBLE
-                badge.text = "%.0f%%".format(conf * 100)
-                if (conf < 0.7) {
-                    // low confidence -> highlight
-                    badge.setBackgroundResource(R.drawable.badge_warning)
-                } else {
-                    badge.setBackgroundResource(R.drawable.badge_ok)
+            if (conf != null && conf.isFinite()) {
+                try {
+                    badge.visibility = View.VISIBLE
+                    badge.text = "%.0f%%".format(conf * 100)
+                    if (conf < 0.7) {
+                        // low confidence -> highlight
+                        badge.setBackgroundResource(R.drawable.badge_warning)
+                    } else {
+                        badge.setBackgroundResource(R.drawable.badge_ok)
+                    }
+                } catch (e: Exception) {
+                    // Hide badge if formatting fails
+                    badge.visibility = View.GONE
                 }
             } else {
                 badge.visibility = View.GONE
@@ -74,11 +81,36 @@ class ItemsAdapter(
             holder.itemPrice.setTextColor(android.graphics.Color.parseColor("#4FACFE")) // Blue for regular items
             holder.itemName.setTextColor(android.graphics.Color.WHITE) // White for better readability
         }
-        
-        // Setup member checkboxes and avatars
-        setupMemberCheckboxes(holder.memberCheckboxContainer, item, false)
-        // Setup Split Evenly button
+
+        // Show exemption toggle for negative items (deals/discounts)
+        if (item.price < 0) {
+            // It's a deal/discount
+            holder.voucherToggleButton.visibility = View.VISIBLE
+            
+            if (item.isExemptFromDiscount) {
+                holder.voucherToggleButton.text = "🎟️ Voucher"
+                holder.voucherToggleButton.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#8B5CF6")) // Purple
+            } else {
+                holder.voucherToggleButton.text = "📉 Discount"
+                holder.voucherToggleButton.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#64748B")) // Grey
+            }
+            
+            holder.voucherToggleButton.setOnClickListener {
+                onToggleExempt?.invoke(item, !item.isExemptFromDiscount)
+            }
+        } else {
+            // Regular item
+            holder.voucherToggleButton.visibility = View.GONE
+        }
+
+        // Always show Split Evenly button (for both items and deals)
+        holder.splitEvenlyButton.visibility = View.VISIBLE
+        holder.splitEvenlyButton.text = "Split All"
+        holder.splitEvenlyButton.backgroundTintList = null // Reset any potential tint from recycling if needed
         setupSplitEvenlyButton(holder, item)
+
+        // Always setup member checkboxes (Restore missing functionality)
+        setupMemberCheckboxes(holder.memberCheckboxContainer, item, false)
         // Setup edit button
         holder.editItemButton.setOnClickListener {
             onEditItem?.invoke(item)
@@ -111,7 +143,7 @@ class ItemsAdapter(
     private fun setupMemberCheckboxes(container: FlexboxLayout, item: BillItem, animate: Boolean) {
         container.removeAllViews()
         val density = container.resources.displayMetrics.density
-        val margin = (8 * density).toInt()
+        val margin = (4 * density).toInt()
         val padding = (12 * density).toInt()
         val minHeightPx = (56 * density).toInt()
         members.forEach { member ->
@@ -132,7 +164,7 @@ class ItemsAdapter(
                 FlexboxLayout.LayoutParams.WRAP_CONTENT,
                 FlexboxLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                setMargins(margin, margin, margin, margin)
+                setMargins(margin, 2, margin, 2)
             }
             container.addView(checkbox, lp)
             if (animate && item.assignedTo.contains(member.id)) {
@@ -148,20 +180,26 @@ class ItemsAdapter(
     override fun getItemCount(): Int = items.size
 
     fun updateItems(newItems: List<BillItem>) {
-        val oldItems = items.toList()
-        // Filter out colleague discount items completely
-        items = newItems.filter { it.itemType != "colleague_discount" }
-        
-        // Use notifyItemChanged for better performance and state preservation
-        if (oldItems.size == items.size) {
-            // Same size, update each item individually
-            for (i in items.indices) {
-                if (i < oldItems.size && oldItems[i] != items[i]) {
-                    notifyItemChanged(i)
+        try {
+            val oldItems = items.toList()
+            // Filter out colleague discount items completely
+            items = newItems.filter { it.itemType != "colleague_discount" }
+            
+            // Use notifyItemChanged for better performance and state preservation
+            if (oldItems.size == items.size) {
+                // Same size, update each item individually
+                for (i in items.indices) {
+                    if (i < oldItems.size && oldItems[i] != items[i]) {
+                        notifyItemChanged(i)
+                    }
                 }
+            } else {
+                // Different size, use notifyDataSetChanged
+                notifyDataSetChanged()
             }
-        } else {
-            // Different size, use notifyDataSetChanged
+        } catch (e: Exception) {
+            // Fallback to safe update
+            items = newItems.filter { it.itemType != "colleague_discount" }
             notifyDataSetChanged()
         }
     }
