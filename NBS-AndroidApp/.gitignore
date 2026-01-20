@@ -1,5 +1,6 @@
+# Gradle files
 *.iml
-.gradle
+.gradle/
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -19,11 +20,27 @@ app/build
 build/
 *.apk
 *.ap_
+*.aab
+output-metadata.json
 
 # IntelliJ
 .idea/
 *.class
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
 
 # Generated files
 bin/
 gen/
+
+# Log/OS Files
+*.log
+*.hprof
+
+# Keystore files (Security)
+*.jks
+*.keystore
+
+# Google Services (Configuration)
+google-services.json
